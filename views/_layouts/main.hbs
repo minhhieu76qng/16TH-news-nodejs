@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> {{ header.title }} </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700" rel="stylesheet">
+
+    <!-- my css -->
+    <link rel="stylesheet" href="asset/css/body.css">
+    <link rel="stylesheet" href="asset/css/content.css">
+
+    <link rel="stylesheet" href="asset/css/color_widget.css">
+
+    <link rel="stylesheet" data="color_custom" href="asset/css/color_red.css">
+    <link rel="stylesheet" data="color_custom" href="asset/css/responsive.css">
+</head>
+
+<body>
+    <div id="top"></div>
+    <header id="header" class="shadow">
+        <div class="top-header pt-2 pb-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="main-logo">
+                            <a href="index.html">
+                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-5 col-sm-4 col-lg-2 current-date">
+                        <span>Thứ 2, 08/04/2019</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id="nav-search" class="navbar navbar-expand-md">
+            <div class="container">
+
+                <div class="sub-logo logo-mobile">
+                    <div class="main-logo">
+                        <a href="index.html">
+                            <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                        </a>
+                    </div>
+                </div>
+
+                <button style="outline : 0;" class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+
+                <div class="main-nav collapse navbar-collapse" id="navbarToggle">
+
+                    <div class="sub-logo logo-desktop">
+                        <div class="main-logo">
+                            <a href="index.html">
+                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="menu navbar-nav">
+                        <li>
+                            <a class="link active" href="index.html">
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li>
+                            <a class="link" href="list_post.html">Giáo dục</a>
+
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="link" href="list_post.html">Tin tuyển sinh</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Khuyến học</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Du học</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="link" href="list_post.html">Thể thao</a>
+                            <ul class="sub-menu navbar-nav">
+                                <li>
+                                    <a class="link" href="list_post.html">Thể thao trong nước</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Thể thao ngoài nước</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Bóng đá trong nước</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="link" href="list_post.html">Công nghệ</a>
+                        </li>
+                        <li>
+                            <a class="link" href="list_post.html">Giải trí</a>
+                            <ul class="sub-menu navbar-nav">
+                                <li>
+                                    <a class="link" href="list_post.html">Sao Việt</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Thời trang</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Xem - Ăn - Chơi</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="link" href="list_post.html">Sức khỏe</a>
+                            <ul class="sub-menu navbar-nav">
+                                <li>
+                                    <a class="link" href="list_post.html">Kiến thức giới tính</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Làm đẹp</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="login-search">
+                        <form class="form-inline search-box" action="search.html">
+                            <input class="search-bar form-control" placeholder="Tìm kiếm..." aria-label="Search">
+                            <button class="search-button btn" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+
+                        <!-- khi đăng nhập rồi thì sẽ hiển thị phần này, ngược lại sẽ hiển thị nút đăng nhập -->
+                        <div class=" ml-2 dropdown open user-button">
+                            <button class="btn dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i> Hieu Do
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                <div class="dropdown-item user-info">
+                                    <a class="image-wrapper" href="./user.html">
+                                        <img src="asset/images/logo/logo_blue_sky.png" alt="">
+                                    </a>
+                                    <div class="info-wrapper">
+                                        <p class="user-name"><a href="./user.html" class="link">Hieu Do</a></p>
+                                        <p class="email">hieudo123@xyz.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="./user.html"><i class="fa fa-user-circle-o mr-2"
+                                        aria-hidden="true"></i> Tài khoản</a>
+                                <a class="dropdown-item" href="./news_management_phongvien.html"><i
+                                        class="fa fa-cog mr-2" aria-hidden="true"></i> Quản lí</a>
+                                <a class="dropdown-item" href="#"><i class="fa fa-sign-out mr-2" aria-hidden="true"></i>
+                                    Đăng xuất</a>
+                            </div>
+                        </div>
+
+                        <!-- <button class="btn login-button ml-2" type="button" data-toggle="modal"
+                            data-target="#LogInModal" data-backdrop="static">
+                            <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>
+                        </button> -->
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    {{!-- body --}}
+
+
+
+
+    <!-- footer -->
+    <footer class="mt-5">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-2">
+                        <div class="widget logo-page">
+                            <a href="index.html">
+                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Trang chủ"
+                                    title="Trang chủ">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="widget">
+                            <h3 class="widget-title">Chuyên mục</h3>
+                            <ul class="category widget-menu widget-content">
+                                <li>
+                                    <a class="link" href="list_post.html">Giáo dục</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Thể thao</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Công nghệ</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Giải trí</a>
+                                </li>
+                                <li>
+                                    <a class="link" href="list_post.html">Sức khỏe</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <h3 class="widget-title">Liên hệ</h3>
+                        <ul class="contact widget-menu widget-content">
+                            <li>Địa chỉ: 227 đường Nguyễn Văn Cừ, quận 5, TP. Hồ chí Minh, Việt Nam</li>
+                            <li>Số điện thoại: 0123456789</li>
+                            <li><a class="link" href="mailto:vn-news@abc.xyz.xx">Email: vn-news@abc.xyz.xx</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <h3 class="widget-title">Về chúng tôi</h3>
+                        <div class="about-us widget-content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad ducimus corporis vitae qui fugit
+                            laboriosam modi reprehenderit quae ex quisquam consequuntur, explicabo excepturi non maiores
+                            nesciunt necessitatibus voluptate ullam magni.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="text-center mb-0">Copyright &copy; 2019 VN-News. All rights reserved</p>
+        </div>
+    </footer>
+
+    <div id="widget-custom-color" expand="false">
+        <div class="color-wrapper">
+            <p class="mb-1">PRESETS COLOR</p>
+            <div class="color-menu">
+                <div class="color-item red active" colorValue="red"></div>
+                <div class="color-item purple" colorValue="purple"></div>
+                <div class="color-item green" colorValue="green"></div>
+                <div class="color-item blue-sky" colorValue="blue_sky"></div>
+            </div>
+        </div>
+
+        <div class="spin">
+            <i class="fa fa-cog fa-2x fa-fw"></i>
+        </div>
+    </div>
+
+    <div id="back-to-top" class="hidden">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- my js -->
+    <script src="asset/js/color_widget.js"></script>
+
+    <script src="asset/js/main.js"></script>
+</body>
+
+</html>

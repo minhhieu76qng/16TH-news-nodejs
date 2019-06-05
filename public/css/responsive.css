@@ -1,0 +1,191 @@
+@media screen and (max-width: 1024px) {
+    #widget-custom-color {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    #nav-search .container {
+        max-width: 100%;
+    }
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width : 992px){
+    .container {
+        max-width: 100%;
+    }
+
+    .impressive-articles .article-content .article-title .link{
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo-desktop {
+        display: none;
+    }
+    .fixed-top .logo-desktop {
+        display: none;
+    }
+    .fixed-top .logo-mobile {
+        display: block !important;
+    }
+    .main-nav {
+        margin-top: 15px;
+    }
+    .main-nav li {
+        background-color: rgb(199, 199, 199);
+        ;
+        margin-top: 5px;
+        font-size: 16px;
+    }
+    .main-nav li a.link {
+        color: #fff;
+    }
+    .main-nav .menu li .sub-menu {
+        margin-left: 20px;
+        display: none;
+        min-width: auto;
+        border: 0;
+        border-radius: 0;
+        background-color: unset;
+    }
+    .main-nav .menu li:hover .sub-menu {
+        position: unset;
+        top: 0;
+        display: block;
+    }
+    .login-search {
+        margin-top: 25px;
+    }
+    /* nếu responsive xuống mobile thì sẽ cho height va width = 0, va khi nav duoc show thi set lai auto */
+    .main-nav .user-button .dropdown-menu {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    .main-nav.show .user-button.show .dropdown-menu {
+        display: block;
+        width: auto;
+        height: auto;
+    }
+    /* .user-button .dropdown-menu{
+        display: none;
+    } */
+    .impressive-articles .advertisement {
+        position: static;
+        max-height: 100px;
+        margin-top: 20px;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .impressive-articles .advertisement:before{
+        top: 5px;
+        right: 15px;
+    }
+}
+
+@media screen and (max-width : 576px){
+    body {
+        font-size: 16px;
+    }
+    .top-header {
+        font-size: 14px;
+    }
+    .main-nav li {
+        font-size: 14px;
+    }
+    .main-nav {
+        font-size: 14px;
+    }
+    
+    .impressive-articles .article-content .article-title .link{
+        font-size: 16px;
+    }
+
+    .impressive-articles .slick-wrapper .slick-dots{
+        bottom: 5px;
+        right: 10px;
+    }
+    .article-content .published-date{
+        font-size: 12px;
+    }
+
+    .impressive-articles .article .article-content{
+        padding: 20px 10px;
+    }
+
+    .article .article-thumbnail .category{
+        top: 15px;
+        right: 15px;
+        font-size: 13px;
+    }
+
+    .slick-wrapper .slick-dots button{
+        width: 15px;
+        height: 15px;
+    }
+    .slick-wrapper .slick-dots button:before{
+        width: 8px;
+        height: 8px;
+    }
+
+    .article-header{
+        font-size: inherit;
+    }
+
+    .top-10-articles .row [class*="col"] + [class*="col"]{
+        margin-top: 15px;
+    }
+
+    footer{
+        font-size: 14px;
+    }
+
+    footer .footer-widgets [class*="col"] + [class*="col"]{
+        margin-top: 15px;
+    }
+
+    footer .widget.logo-page{
+        text-align: center;
+    }
+
+    footer .widget img{
+        max-width: 25%;
+    }
+
+    ul.list-article li.article-item .article{
+        padding: 15px;
+    }
+
+    .list_post_page .article{
+        display: block;
+    }
+    .list_post_page .article .article-thumbnail,
+    .list_post_page .article .article-content{
+        width: 100%;
+    }
+
+    .list_post_page .article .article-content{
+        padding: 0;
+    }
+
+    .list_post_page .article .article-title .link{
+        font-size: 16px;
+    }
+
+    .list-tags{
+        font-size: 14px;
+    }
+
+    .list_post_page .article .article-thumbnail .category{
+        top: 40px;
+    }
+
+}

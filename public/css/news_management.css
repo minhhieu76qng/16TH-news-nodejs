@@ -1,0 +1,124 @@
+#news-management .wrapper{
+    background-color: #fff;
+    padding: 15px;
+}
+
+#form-created-news > .form-group{
+    display: flex;
+    justify-content: flex-start;
+}
+
+#form-created-news > .form-group > :not(label){
+    width: calc(100% - 120px);
+}
+
+#form-created-news > .form-group > label{
+    width: 120px;
+    margin-bottom: 0;
+}
+
+#news-management .tags .item, #DetailPostModal .tags .item{
+    position: relative;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+#news-management .tags .item .link, #DetailPostModal .tags .item .link{
+    cursor: default;
+}
+
+#news-management .tags .item .exit-button, #DetailPostModal .tags .item .exit-button{
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    right: 0;
+    transform: translate(50%,-50%);
+    transition: all .5s ease;
+}
+
+#news-management .tags .item:hover .exit-button, #DetailPostModal .tags .item:hover .exit-button{
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+#news-management .tags .item.not-stored .link, #DetailPostModal .tags .item.not-stored .link{
+    border: 1px solid red;
+    color: red;
+}
+
+#news-management table.can-be-edit tbody tr{
+    cursor: pointer;
+}
+
+/* ------------------------------------  Css admin ------------------------------------------------------------*/
+
+.menu-management-item>.menu-management{
+    padding-left: 15px;
+    display: none;
+}
+
+.menu-management-item>.menu-management>.menu-management-item{
+    background-color: #f2f2f2;
+}
+
+.content-menu-item>h3, .div-btn-control{
+    display: inline-block;
+}
+
+.div-btn-control, #search-management{
+    float: right;
+}
+
+.colDeleteCategory, .colDeleteTag, #btnEditCategory, #btnEditTag
+{
+    display: none;
+}
+
+#iframe-detail-post-container>iframe{
+    border:0px;
+}
+
+#DenyPost-container, #AcceptPost-container, #RemovePost-container, #UpdateDatePublishPost-container, 
+#btnAcceptPost, #btnUpdateDatePublishPost, #btnDenyPost, #btnRemovePost
+{
+    display: none;
+}
+
+#DenyPost-container, #AcceptPost-container, #RemovePost-container, #UpdateDatePublishPost-container,
+#AssignEditor-container, #RenewSubscriber-container{
+    border-top: 1px solid #dee2e6;
+}
+
+.help-block{
+    color: #ff1a1a;
+    font-size: 14px;
+    display: none;
+}
+
+#DetailAccountModal #category-editor{
+    border: 1px solid #ced4da;
+    list-style-type:none;
+    border-radius: .25rem;
+    font-size: 1rem;
+    padding: .375rem .75rem;
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+#pseudonymDetailAccountModal-container, #sizePostDetailAccountModal-container,
+#nOfDayPreDetailAccountModal-container, #categoryDetailAccountModal-container,
+#btnAssignEditor, #btnRenewSubscriber, #AssignEditor-container, #RenewSubscriber-container
+{
+    display: none;
+}
+
+.bootstrap-select .btn {
+    border: 1px solid #ced4da;
+}
+
+.form-group label {
+    margin-bottom: .25rem;
+}

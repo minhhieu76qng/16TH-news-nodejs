@@ -1,0 +1,19 @@
+{
+  "name": "news-nodejs",
+  "version": "1.0.0",
+  "description": "A news web app using NodeJS + MySQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hieu Do",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.1"
+  }
+}

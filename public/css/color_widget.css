@@ -1,0 +1,84 @@
+#widget-custom-color .color-item{
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    background-color: red;
+    margin-top: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#widget-custom-color .color-item:nth-child(-n + 2){
+    margin-top: 0;
+}
+
+#widget-custom-color .color-item:nth-child(2n){
+    margin-right: 0;
+}
+
+#widget-custom-color .color-menu{
+    width: 75px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#widget-custom-color{
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 30%;
+}
+
+#widget-custom-color > div {
+    background-color: #ddd;
+}
+
+#widget-custom-color .spin{
+    left: 0;
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px;
+    transition: all .7s ease;
+}
+
+#widget-custom-color.expand .spin{
+    left: 100%;
+}
+
+#widget-custom-color .color-wrapper{
+    margin-left: -100%;
+    opacity: 0;
+    position: relative;
+    /* display: none; */
+    padding: 10px;
+    transition: all .7s ease;
+}
+
+#widget-custom-color.expand .color-wrapper{
+    opacity: 1;
+    width: auto;
+    margin-left: 0;
+    display: block;
+}
+
+#widget-custom-color .color-wrapper > p{
+    font-size: 10px;
+}
+
+#widget-custom-color.expand .color-item.active{
+    border: 2px solid rgba(0,0,0,.5);
+}
+
+#widget-custom-color .color-item.red{
+    background-color: rgb(249,89,89);
+}
+#widget-custom-color .color-item.purple{
+    background-color: rgb(98,111,203);
+}
+#widget-custom-color .color-item.green{
+    background-color: rgb(62,167,152);
+}
+#widget-custom-color .color-item.blue-sky{
+    background-color: rgb(93,198,255);
+}

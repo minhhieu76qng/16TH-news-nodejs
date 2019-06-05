@@ -1,0 +1,44 @@
+/* custom slick */
+
+.slick-wrapper .slick-dots {
+    list-style-type: none;
+    position: absolute;
+    margin-bottom: 0;
+}
+
+.impressive-articles .slick-wrapper .slick-dots {
+    bottom: 20px;
+    right: 40px;
+}
+
+.lasted-articles .slick-wrapper .slick-dots{
+    top: -23px;
+    right: 15px;
+    z-index: 100;
+    background-color: #f2f3f5;
+    padding-left: 10px;
+}
+
+.slick-wrapper .slick-dots li {
+    display: inline-block;
+}
+
+.slick-wrapper .slick-dots button {
+    font-size: 0;
+    line-height: 0;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
+
+.slick-wrapper .slick-dots button:before {
+    content: '';
+    margin: 0 auto;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    background-color: #fff;
+}

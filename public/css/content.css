@@ -1,0 +1,655 @@
+.impressive-articles {
+    position: relative;
+}
+
+.article {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.article .article-thumbnail{
+    position: relative;
+}
+
+.article .thumbnail-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+.article .thumbnail-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.article .thumbnail-image:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    transition: all .7s;
+}
+
+.impressive-articles .article:hover .thumbnail-image:after {
+    background-color: #000;
+    top: 0;
+    opacity: .3;
+}
+
+.article .article-thumbnail .thumbnail-image:before {
+    content: '';
+    display: block;
+    padding-top: 50%;
+}
+
+.article .article-thumbnail .category {
+    color: #fff;
+    font-weight: 500;
+    display: inline-block;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    padding: 3px 15px;
+    background-color: blue;
+    text-transform: uppercase;
+}
+
+.article .article-thumbnail .category .link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.impressive-articles .article .article-content {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    color: #fff;
+    z-index: 10;
+    padding: 40px 20px;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, .8) 60%, rgba(0, 0, 0, .1));
+}
+
+.impressive-articles .article-content .article-title .link {
+    font-size: 24px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.impressive-articles .advertisement {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 15px;
+    left: 15px;
+    /* overflow: hidden; */
+}
+
+.impressive-articles .advertisement:before {
+    content: 'Advertisement';
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    position: absolute;
+    top: -15px;
+    right: 0px;
+}
+
+.impressive-articles .advertisement img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* LASTED NEWS */
+
+.article-header {
+    font-size: 25px;
+    position: relative;
+    margin-bottom: 20px;
+    /* color: #525b6e; */
+    text-transform: uppercase;
+}
+
+.article-header:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    z-index: 20;
+}
+
+.article-header:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+    z-index: 10;
+}
+
+.article {
+    background-color: #fff;
+}
+
+.lasted-articles .article .category {
+    top: 20px;
+    right: 20px;
+}
+
+.article-content {
+    padding: 20px 20px 30px 20px;
+}
+
+.article-content .published-date {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.top-10-articles > .row + .row{
+    margin-top: 15px;
+}
+
+.lasted-articles .article-content .published-date, .top-10-articles .article-content .published-date, .most-view .article-content .published-date {
+    color: rgb(110, 110, 110);
+}
+
+.article-content .link {
+    color: inherit;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.article-content .link:hover {
+    color: rgb(110, 110, 110);
+}
+
+.lasted-articles .article-thumbnail .thumbnail-image:before {
+    padding-top: 60%;
+}
+
+.lasted-articles .article-thumbnail {
+    transition: all .7s ease;
+}
+
+.lasted-articles .slick-wrapper:hover .article:not(:hover) .article-thumbnail {
+    opacity: .4;
+}
+
+.lasted-articles .slick-wrapper:hover .article:not(:hover) .thumbnail-image img {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(70%);
+}
+
+.lasted-articles .thumbnail-image img, .top-10-articles .thumbnail-image img, .most-view .thumbnail-image img {
+    transition: all .7s ease;
+}
+
+.lasted-articles .thumbnail-image:hover img, .top-10-articles .thumbnail-image:hover img, .most-view .thumbnail-image:hover img {
+    transform: scale(1.3);
+}
+
+.lasted-articles .slick-dots li button:before {
+    background-color: #ccc;
+}
+
+/* MOST VIEW */
+
+.most-view .article {
+    padding: 20px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid #ccc;
+}
+
+.most-view .article-thumbnail {
+    width: 40%;
+}
+
+.most-view .article-content {
+    width: 60%;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.most-view .published-date {
+    font-size: 12px;
+}
+
+.most-view .article-title .link {
+    font-size: 14px;
+}
+
+.most-view .category {
+    font-size: 16px;
+    color: #525b6e;
+    margin-bottom: 5px;
+}
+
+.most-view .article:last-child {
+    border-bottom: 0;
+}
+
+.article-title>.link {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* LIST TAGS */
+
+.top-10-articles+.widget-sidebar .list-tags {
+    flex-direction: column;
+}
+
+.widget-sidebar .list-tags .tags {
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.widget-sidebar .list-tags .tags .item {
+    margin-bottom: 10px;
+}
+
+/* sidebar */
+
+.widget-sidebar.active_sidebar .sidebar-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    transition: all 1s;
+}
+
+/* ============================ CHI TIẾT BÀI VIẾT ============================ */
+
+.post .post-container {
+    background-color: #fff;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.post .post-container>div:not(.cover-image-container) {
+    padding: 0 15px;
+}
+
+.post .cover-image-container {
+    position: relative;
+}
+
+.post .cover-image-container .cover-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.post .cover-image-container .cover-image:before {
+    content: '';
+    padding-top: 60%;
+    display: block;
+}
+
+.post .cover-image img {
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.post .post-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 25px;
+    font-size: 22px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .7);
+    margin-bottom: 0;
+}
+
+.post .post-description .category a {
+    font-size: 20px;
+}
+
+.post .list-tags {
+    align-items: flex-start;
+}
+
+.post .list-tags .tags .item {
+    margin-bottom: 5px;
+}
+
+.post .media-content-wrapper {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.post .media-content-wrapper .media-frame {
+    display: block;
+    position: relative;
+    height: 0;
+}
+
+.post .media-content-wrapper .media-frame .media-content {
+    position: absolute;
+    top: 0;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.post .media-content-wrapper .sub-description {
+    margin: 0;
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.post-comment ul.list-comment {
+    list-style-type: none;
+    margin-bottom: 0;
+    margin-top: 30px;
+}
+
+.post-comment ul.list-comment .comment-item {
+    margin-top: 30px;
+}
+
+.post-comment .comment-wrapper {
+    padding: 20px;
+    background-color: #eff1f3;
+    border-radius: 3px;
+}
+
+.post-comment ul.list-comment .comment-item:first-child {
+    margin-top: 0px;
+}
+
+.comment-item .user {
+    display: flex;
+    align-items: flex-end;
+}
+
+.comment-item .user .name {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #16bdd8;
+}
+
+.comment-item .user .comment-date {
+    line-height: 20px;
+    font-size: 13px;
+    color: #000;
+    margin-left: 20px;
+}
+
+.comment-item>ul.list-comment {
+    margin-left: 50px;
+}
+
+.comment-item>ul.list-comment .comment-item {
+    border-left: 3px solid #d8d8d8;
+}
+
+#comment-editor {
+    height: 150px;
+}
+
+.pageNumber .page-item .page-link {
+    color: #000;
+    border: 1px solid #d6d6d6;
+}
+
+.page-item.active .page-link {
+    /* background-color: #c8c8c8; */
+}
+
+.page-item.disabled .page-link {
+    color: #525b6e;
+}
+
+.replay {
+    color: rgb(23, 96, 147);
+    padding: 5px 3px;
+}
+
+/* ============================ Modal Login ============================ */
+
+#divSignIn .input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    margin-top: 10px;
+}
+
+#divSignIn .input-group-addon {
+    display: table-cell;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-right: 0px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#divSignIn .input-group-addon, .input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+#divSignIn .input-group .form-control {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    float: left;
+    width: 100%;
+}
+
+#divSignIn .btn-Login{
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top:10px;
+}
+
+#divSignIn .omb_spanOr {
+    position: absolute;
+    left: 50%;
+    top: -0.7em;
+    margin-left: -1.5em;
+    background-color: white;
+    width: 3em;
+    text-align: center;
+    font-size: 1.2em;
+    color: #aaa;
+}
+
+#divSignIn .omb_hrOr {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+#divSignIn .divLoginOr{
+    width: 100%;
+    position: relative;
+}
+
+#divSignIn .divRememberAndForgot{
+    display: block;
+    width: 100%;
+}
+
+#divSignIn .divRememberPass{
+    width: 50%;
+    display: block;
+    float: left;
+}
+
+#divSignIn .divForgotPass{
+    text-align: right;
+}
+
+#divSignIn .divSocialButton{
+    display: block;
+    float: left;
+    
+}
+
+#divSignIn .omb_socialButtons{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+#divSignIn .divSocialButton .omb_btn-facebook{
+    background: #3B5998;
+    color: white;
+    width: 150px;
+    padding: 0px;
+    margin-right: 50px;
+}
+#divSignIn .divSocialButton .omb_btn-facebook .fa {
+    padding: 10px;
+    font-size: 20px;
+}
+
+#divSignIn .divSocialButton .omb_btn-google{
+    background: #dd4b39;
+    color: white;
+    width: 150px;
+    padding: 0px;
+}
+
+#divSignIn .divSocialButton .omb_btn-google .fa {
+    padding: 10px;
+    font-size: 20px;
+}
+
+#divSignIn .modal-footer{
+    justify-content: flex-start;
+}
+
+#divSignIn .divRememberPass, .divForgotPass{
+    font-size: 14px;
+}
+
+.help-block{
+    color: #ff1a1a;
+    font-size: 14px;
+    display: none;
+}
+
+/* ============================ Modal SignUp ============================ */
+#divSignUp, #divForgotPass{
+    display: none;
+}
+.SignUp-container #txtEmail,.SignUp-container #txtName, 
+.SignUp-container #txtPassword, .SignUp-container #txtRepeatPassword, #txtEmail-Forgot{
+    width: 100%;
+    padding: 5px;
+    margin: 2px 0 0 0;
+    border-radius: 3px; 
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    font-size: 14px;
+}
+
+.SignUp-container label{
+    margin-bottom: 0px;
+}
+
+#lblTerm {
+    font-size: 14px;
+}
+
+.input-group-SignUp{
+    margin-bottom: 20px;
+}
+
+ul.list-article{
+    list-style-type: none;
+}
+ul.list-article li.article-item{
+    border-bottom: 1px solid #ccc;
+}
+
+ul.list-article li.article-item:last-child{
+    border-bottom: 0;
+}
+
+ul.list-article li.article-item .article{
+    padding: 25px 15px;
+}
+
+.list_post_page .article{
+    display: flex;
+    align-content: center;
+}
+
+.list-tags ul.tags .item{
+    margin-bottom: 10px;
+}
+
+.list_post_page .article .article-thumbnail{
+    width: 250px;
+}
+
+.list_post_page .article .article-content{
+    width: calc(100% - 250px);
+    padding: 0 30px;
+    
+}
+
+.list_post_page .article .article-thumbnail .thumbnail-image:before{
+    padding-top: 70%;
+}
+.list_post_page .article .thumbnail-image img{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.list_post_page .article .article-title .link{
+    font-size: 21px;
+    font-weight: 500;
+    display: block;
+}
+
+.premium-article{
+    position: absolute;
+    padding: 0 5px;
+    top: 10px;
+    left: 16px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+}

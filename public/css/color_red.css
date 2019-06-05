@@ -1,0 +1,42 @@
+
+.menu li:hover > a.link{
+  color: rgb(249,89,89);
+}
+.menu li > a.link.active{
+  color: rgb(249,89,89);
+}
+
+.slick-wrapper .slick-dots li.slick-active button:before{
+  background-color: rgb(249,89,89);
+}
+
+.article-header:before{
+  background-color: rgb(249,89,89);
+}
+
+footer .footer-widgets .widget-title:before{
+  background-color: rgb(249,89,89);
+}
+
+.article .article-thumbnail .category{
+  background-color: rgb(249,89,89);
+}
+
+#back-to-top{
+  background-color: rgb(249,89,89);
+}
+
+.search-box .search-bar:focus + .search-button{
+  color: rgb(249,89,89);
+}
+
+.menu-management .menu-management-item.active > a.link{
+  background-color: rgb(249,89,89);
+}
+.menu-management .menu-management-item > a.link:hover{
+  background-color: rgb(249,89,89);
+}
+
+.premium-article{
+  background-color: rgb(249,89,89);
+}

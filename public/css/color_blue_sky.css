@@ -1,0 +1,40 @@
+
+.menu li:hover > a.link{
+    color: rgb(93,198,255);
+  }
+  .menu li > a.link.active{
+    color: rgb(93,198,255);
+  }
+  
+  .slick-wrapper .slick-dots li.slick-active button:before{
+    background-color: rgb(93,198,255);
+  }
+  
+  .article-header:before{
+    background-color: rgb(93,198,255);
+  }
+  
+  footer .footer-widgets .widget-title:before{
+    background-color: rgb(93,198,255);
+  }
+  
+  .article .article-thumbnail .category{
+    background-color: rgb(93,198,255);
+  }
+
+  #back-to-top{
+    background-color: rgb(93,198,255);
+  }
+
+  .search-box .search-bar:focus + .search-button{
+    color: rgb(93,198,255);
+  }
+  .menu-management .menu-management-item.active > a.link{
+    background-color: rgb(93,198,255);
+  }
+  .menu-management .menu-management-item > a.link:hover{
+    background-color: rgb(93,198,255);
+  }
+  .premium-article{
+    background-color: rgb(93,198,255);
+  }
