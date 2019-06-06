@@ -20,10 +20,23 @@
 
     <link rel="stylesheet" data="color_custom" href="asset/css/color_red.css">
     <link rel="stylesheet" data="color_custom" href="asset/css/responsive.css">
+
+    <link rel="preload" href="asset/css/color_blue_sky.css" as="style">
+    <link rel="preload" href="asset/css/color_green.css" as="style">
+    <link rel="preload" href="asset/css/color_purple.css" as="style">
+
+    <link rel="preload" href="asset/images/logo/logo_blue_sky.png" as="image">
+    <link rel="preload" href="asset/images/logo/logo_green.png" as="image">
+    <link rel="preload" href="asset/images/logo/logo_purple.png" as="image">
+
+
+    {{{_sections.css}}}
+    
 </head>
 
 <body>
     <div id="top"></div>
+    
     <header id="header" class="shadow">
         <div class="top-header pt-2 pb-2">
             <div class="container">
@@ -143,7 +156,7 @@
                         </form>
 
                         <!-- khi đăng nhập rồi thì sẽ hiển thị phần này, ngược lại sẽ hiển thị nút đăng nhập -->
-                        <div class=" ml-2 dropdown open user-button">
+                        <!-- <div class=" ml-2 dropdown open user-button">
                             <button class="btn dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i> Hieu Do
@@ -151,7 +164,7 @@
                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                 <div class="dropdown-item user-info">
                                     <a class="image-wrapper" href="./user.html">
-                                        <img src="asset/images/logo/logo_blue_sky.png" alt="">
+                                        <img src="images/logo/logo_blue_sky.png" alt="">
                                     </a>
                                     <div class="info-wrapper">
                                         <p class="user-name"><a href="./user.html" class="link">Hieu Do</a></p>
@@ -165,12 +178,12 @@
                                 <a class="dropdown-item" href="#"><i class="fa fa-sign-out mr-2" aria-hidden="true"></i>
                                     Đăng xuất</a>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <!-- <button class="btn login-button ml-2" type="button" data-toggle="modal"
+                        <button class="btn login-button ml-2" type="button" data-toggle="modal"
                             data-target="#LogInModal" data-backdrop="static">
                             <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>
-                        </button> -->
+                        </button>
                     </div>
                 </div>
 
@@ -183,7 +196,7 @@
 
     {{!-- body --}}
 
-
+    {{{ body }}}
 
 
     <!-- footer -->
@@ -276,6 +289,8 @@
     <script src="asset/js/color_widget.js"></script>
 
     <script src="asset/js/main.js"></script>
+
+    {{{_sections.js}}}
 </body>
 
 </html>
