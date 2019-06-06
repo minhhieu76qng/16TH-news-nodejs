@@ -17,14 +17,8 @@ app.set('view engine', 'hbs');
 app.use('/asset', express.static('public'));
 
 
-app.get('/', (req, res) => {
-    res.locals.header = {
-        title : "Hello"
-    };
-    res.render('news/index');
-});
-
-// app.use('/', require('./routes/news/index.route'));
+app.use('/', require('./routes/news/index.route'));
+app.use('/writer', require('./routes/writer/writer.route.js'));
 
 app.listen(3000, () => {
     console.log('App is running at https://localhost:3000');

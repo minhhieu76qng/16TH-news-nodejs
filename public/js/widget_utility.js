@@ -1,10 +1,4 @@
-function ShowAlertMessage(message){
-    if ($('#ShowMessage')){
 
-        $('#ShowMessage .modal-body').html(message);
-        $('#ShowMessage').modal('show');
-    }
-}
 
 function Menu_Click(MenuItem, ContentItem){
     Array.from(MenuItem).forEach((el, idx) => {
