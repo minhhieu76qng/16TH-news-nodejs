@@ -8,7 +8,6 @@
     <title> {{ header.title }} </title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700" rel="stylesheet">
@@ -52,7 +51,11 @@
                         </div>
                     </div>
                     <div class="col-5 col-sm-4 col-lg-2 current-date">
-                        <span>Thứ 2, 08/04/2019</span>
+                        {{#if currentTime.isSunday}}
+                        <span>Chủ nhật, {{currentTime.DMY}}</span>
+                        {{else}}
+                        <span>Thứ {{currentTime.day}}, {{currentTime.DMY}}</span>
+                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -87,67 +90,27 @@
 
                     <ul class="menu navbar-nav">
                         <li>
-                            <a class="link active" href="index.html">
+                            <a class="link active" href="/">
                                 Trang chủ
                             </a>
                         </li>
-                        <li>
-                            <a class="link" href="list_post.html">Giáo dục</a>
 
+                        {{#each lcCategories}}
+                        <li>
+                            <a class="link" href="/categories/{{root.id}}/posts">{{ root.cat_name }}</a>
+
+                            {{#if childs}}
                             <ul class="sub-menu">
+
+                                {{#each childs}}
                                 <li>
-                                    <a class="link" href="list_post.html">Tin tuyển sinh</a>
+                                    <a class="link" href="/categories/{{id}}/posts">{{ cat_name }}</a>
                                 </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Khuyến học</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Du học</a>
-                                </li>
+                                {{/each}}
                             </ul>
+                            {{/if}}
                         </li>
-                        <li>
-                            <a class="link" href="list_post.html">Thể thao</a>
-                            <ul class="sub-menu navbar-nav">
-                                <li>
-                                    <a class="link" href="list_post.html">Thể thao trong nước</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Thể thao ngoài nước</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Bóng đá trong nước</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="link" href="list_post.html">Công nghệ</a>
-                        </li>
-                        <li>
-                            <a class="link" href="list_post.html">Giải trí</a>
-                            <ul class="sub-menu navbar-nav">
-                                <li>
-                                    <a class="link" href="list_post.html">Sao Việt</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Thời trang</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Xem - Ăn - Chơi</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="link" href="list_post.html">Sức khỏe</a>
-                            <ul class="sub-menu navbar-nav">
-                                <li>
-                                    <a class="link" href="list_post.html">Kiến thức giới tính</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Làm đẹp</a>
-                                </li>
-                            </ul>
-                        </li>
+                        {{/each}}
                     </ul>
 
                     <div class="login-search">
@@ -219,21 +182,11 @@
                         <div class="widget">
                             <h3 class="widget-title">Chuyên mục</h3>
                             <ul class="category widget-menu widget-content">
+                                {{#each lcCategories}}
                                 <li>
-                                    <a class="link" href="list_post.html">Giáo dục</a>
+                                    <a class="link" href="/categories/{{root.id}}/posts">{{root.cat_name}}</a>
                                 </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Thể thao</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Công nghệ</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Giải trí</a>
-                                </li>
-                                <li>
-                                    <a class="link" href="list_post.html">Sức khỏe</a>
-                                </li>
+                                {{/each}}
                             </ul>
                         </div>
                     </div>
