@@ -653,3 +653,16 @@ ul.list-article li.article-item .article{
     font-weight: 700;
     color: #fff;
 }
+
+
+.top-10-articles .post:nth-child(n + 3){
+    margin-top: 20px;
+}
+
+.slick-wrapper{
+    visibility: hidden;
+}
+
+.slick-wrapper.slick-initialized {
+    visibility: visible;
+}

@@ -1,11 +1,11 @@
 {{#section 'css'}}
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" href="asset/css/slick_custom.css">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="asset/css/slick_custom.css">
 {{/section}}
 
 {{#section 'js'}}
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
     $(document).ready(function () {
         $('.impressive-articles .slick-wrapper').slick({
             arrows: false,
@@ -60,590 +60,152 @@
 {{/section}}
 
 <div class="container">
-        <div class="impressive-articles row mt-4">
-            <div class="col-md-9 col-12">
-                <div class="slick-wrapper">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link"><span>Giáo dục</span></a>
-                            </div>
+    <div class="impressive-articles row mt-4">
+        <div class="col-md-9 col-12">
+            <div class="slick-wrapper">
+                {{#each mostViewInWeek4}}
+                <div class="article">
+                    <div class="article-thumbnail">
+                        <div class="thumbnail-image">
+                            <img src="{{cover_image}}" alt="">
                         </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                                <!-- 44 books on 44 presidents: Welcome, folks, to the Adams -->
-                            </div>
+                        <div class="category">
+                            <a href="/categories/{{id_category}}" class="link"><span>{{cat_name}}</span></a>
                         </div>
                     </div>
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link"><span>Giáo dục</span></a>
-                            </div>
+                    <div class="article-content">
+                        <div class="published-date">
+                            <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                            {{date_posted}}
                         </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                                <!-- 44 books on 44 presidents: Welcome, folks, to the Adams -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link"><span>Giáo dục</span></a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                                <!-- 44 books on 44 presidents: Welcome, folks, to the Adams -->
-                            </div>
+                        <div class="article-title">
+                            <a href="/posts/{{id}}" class="link">{{title}}</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="advertisement">
-                    <a href="https://www.zalora.sg/" target="_blank">
-                        <img src="asset/images/add/add1.jpg" alt="">
-                    </a>
-                </div>
+                {{/each}}
             </div>
         </div>
-        <div class="lasted-articles mt-4">
-            <h2 class="article-header">Tin mới nhất</h2>
-            <div class="slick-wrapper row pt-4">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                            <div class="premium-article" title="Bài viết premium">
-                                <i class="fa fa-star-o" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="article">
-                        <div class="article-thumbnail">
-                            <div class="thumbnail-image">
-                                <img src="images/post/10.jpg" alt="">
-                            </div>
-                            <div class="category">
-                                <a href="list_post.html" class="link">Giáo dục</a>
-                            </div>
-                        </div>
-                        <div class="article-content">
-                            <div class="published-date">
-                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                Nov 5, 2018
-                            </div>
-                            <div class="article-title">
-                                <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks, to
-                                    the Adams</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-3 col-12">
+            <div class="advertisement">
+                <a href="https://www.zalora.sg/" target="_blank">
+                    <img src="asset/images/add/add1.jpg" alt="">
+                </a>
             </div>
         </div>
+    </div>
+    <div class="lasted-articles mt-4">
+        <h2 class="article-header">Tin mới nhất</h2>
+        <div class="slick-wrapper row pt-4">
 
-        <div class="row mt-4">
-            <div class="col top-10-articles">
-                <div class="row">
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Tin tuyển sinh</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
+            {{#each newest10}}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="article">
+                    <div class="article-thumbnail">
+                        <div class="thumbnail-image">
+                            <img src="{{cover_image}}" alt="{{cover_image}}">
                         </div>
-                    </div>
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Khuyến học</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
+                        <div class="category">
+                            <a href="/categories/{{id_category}}" class="link">{{cat_name}}</a>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Du học</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
+                        {{#if type_post}}
+                        <div class="premium-article" title="Bài viết premium">
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
                         </div>
+                        {{/if}}
                     </div>
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Công nghệ</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
+                    <div class="article-content">
+                        <div class="published-date">
+                            <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                            {{date_posted}}
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Thể thao trong nước</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Thể thao ngoài nước</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Bóng đá trong nước</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Sao Việt</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Thời trang</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm">
-                        <h2 class="article-header">Ăn - Chơi - Xem</h2>
-                        <div class="article mt-4">
-                            <div class="article-thumbnail">
-                                <div class="thumbnail-image">
-                                    <img src="images/post/10.jpg" alt="">
-                                </div>
-                                <div class="category">
-                                    <a href="list_post.html" class="link">Giáo dục</a>
-                                </div>
-                            </div>
-                            <div class="article-content">
-                                <div class="published-date">
-                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                    Nov 5, 2018
-                                </div>
-                                <div class="article-title">
-                                    <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome, folks,
-                                        to the Adams</a>
-                                </div>
-                            </div>
+                        <div class="article-title">
+                            <a href="/posts/{{id}}" class="link">{{title}}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 widget-sidebar active_sidebar">
-                <div class="sidebar-wrapper">
-                    <div class="most-view">
-                        <h2 class="article-header">Tin xem nhiều nhất</h2>
-                        <ul class="list-article mt-4">
-                            <li class="article">
-                                <div class="article-thumbnail">
-                                    <div class="thumbnail-image">
-                                        <img src="images/post/10.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="article-content">
-                                    <div class="category">
-                                        <a href="list_post.html" class="link">Giáo dục</a>
-                                    </div>
-                                    <div class="published-date">
-                                        <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                        Nov 5, 2018
-                                    </div>
-                                    <div class="article-title">
-                                        <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome,
-                                            folks, to the Adams</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="article">
-                                <div class="article-thumbnail">
-                                    <div class="thumbnail-image">
-                                        <img src="images/post/10.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="article-content">
-                                    <div class="category">
-                                        <a href="list_post.html" class="link">Giáo dục</a>
-                                    </div>
-                                    <div class="published-date">
-                                        <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                        Nov 5, 2018
-                                    </div>
-                                    <div class="article-title">
-                                        <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome,
-                                            folks, to the Adams</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="article">
-                                <div class="article-thumbnail">
-                                    <div class="thumbnail-image">
-                                        <img src="images/post/10.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="article-content">
-                                    <div class="category">
-                                        <a href="list_post.html" class="link">Giáo dục</a>
-                                    </div>
-                                    <div class="published-date">
-                                        <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                        Nov 5, 2018
-                                    </div>
-                                    <div class="article-title">
-                                        <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome,
-                                            folks, to the Adams</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="article">
-                                <div class="article-thumbnail">
-                                    <div class="thumbnail-image">
-                                        <img src="images/post/10.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="article-content">
-                                    <div class="category">
-                                        <a href="list_post.html" class="link">Giáo dục</a>
-                                    </div>
-                                    <div class="published-date">
-                                        <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                        Nov 5, 2018
-                                    </div>
-                                    <div class="article-title">
-                                        <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome,
-                                            folks, to the Adams</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="article">
-                                <div class="article-thumbnail">
-                                    <div class="thumbnail-image">
-                                        <img src="images/post/10.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="article-content">
-                                    <div class="category">
-                                        <a href="list_post.html" class="link">Giáo dục</a>
-                                    </div>
-                                    <div class="published-date">
-                                        <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
-                                        Nov 5, 2018
-                                    </div>
-                                    <div class="article-title">
-                                        <a href="detail_post.html" class="link">44 books on 44 presidents: Welcome,
-                                            folks, to the Adams</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            {{/each}}
 
-                    <div class="list-tags">
-                        <h2 class="article-header">Các thẻ</h2>
-                        <ul class="tags">
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                            <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                        </ul>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col top-10-articles">
+            <div class="row">
+                {{#each catsWithPost}}
+                    <div class="col-12 col-sm-6 post">
+                    <h2 class="article-header">{{cat.cat_name}}</h2>
+                    <div class="article mt-4">
+                        <div class="article-thumbnail">
+                            <div class="thumbnail-image">
+                                <img src="{{post.cover_image}}" alt="{{post.cover_image}}">
+                            </div>
+                            <div class="category">
+                                <a href="/categories/{{cat.id}}/posts" class="link">{{cat.cat_name}}</a>
+                            </div>
+                        </div>
+                        <div class="article-content">
+                            <div class="published-date">
+                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                                {{post.date_posted}}
+                            </div>
+                            <div class="article-title">
+                                <a href="/posts/{{post.id}}" class="link">{{post.title}}</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
+        <div class="col-12 col-md-4 widget-sidebar active_sidebar">
+            <div class="sidebar-wrapper">
+                <div class="most-view">
+                    <h2 class="article-header">Tin xem nhiều nhất</h2>
+                    <ul class="list-article mt-4">
+                        {{#each mostView10}}
+                            <li class="article">
+                            <div class="article-thumbnail">
+                                <div class="thumbnail-image">
+                                    <img src="{{cover_image}}" alt="{{cover_image}}">
+                                </div>
+                            </div>
+                            <div class="article-content">
+                                <div class="category">
+                                    <a href="/categories/{{id_category}}/posts" class="link">{{cat_name}}</a>
+                                </div>
+                                <div class="published-date">
+                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                                    {{date_posted}}
+                                </div>
+                                <div class="article-title">
+                                    <a href="/posts/{{id}}" class="link">{{title}}</a>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                        
+                    </ul>
+                </div>
+
+                <div class="list-tags">
+                    <h2 class="article-header">Các thẻ</h2>
+                    <ul class="tags">
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                        <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>

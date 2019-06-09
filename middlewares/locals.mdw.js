@@ -31,8 +31,8 @@ module.exports = (req, res, next) => {
                 var current = new Date();
 
                 res.locals.currentTime = {
-                    isSunday : current.getDate() === 8 ? true : false,
-                    day : current.getDate(),
+                    isSunday : current.getDay() === 0 ? true : false,
+                    day : current.getDay(),
                     DMY : moment(current).format('DD/MM/YYYY')
                 }
                 next();

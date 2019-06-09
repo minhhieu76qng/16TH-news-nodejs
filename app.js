@@ -24,13 +24,13 @@ app.use(morgan('dev'));
 app.use(require('./middlewares/locals.mdw'));
 
 
-// app.use('/', require('./routes/news/index.route'));
+app.use('/', require('./routes/news/index.route'));
 // app.use('/writer', require('./routes/writer/writer.route.js'));
 
-app.get('/', (req, res) => {
-    console.log(res.locals.currentTime);
-    res.render('news/index');
-})
+// app.get('/', (req, res) => {
+//     console.log(res.locals.currentTime);
+//     res.render('news/index');
+// })
 
 app.use((req, res, next) => {
     res.render('404', {
