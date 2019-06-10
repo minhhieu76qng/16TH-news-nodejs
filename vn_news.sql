@@ -1,9 +1,9 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2019 at 09:50 AM
+-- Generation Time: Jun 10, 2019 at 03:18 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -32,30 +32,30 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `cat_name` varchar(50) NOT NULL,
   `parent_cat` int(11) DEFAULT NULL,
-  `status` int(11) NOT NULL COMMENT '1: hoạt động, 0: bị xóa'
+  `is_deleted` int(11) NOT NULL COMMENT '0: false : chưa xóa | 1:true đã xóa'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `cat_name`, `parent_cat`, `status`) VALUES
-(1, 'Giáo dục', NULL, 1),
-(2, 'Thể thao', NULL, 1),
-(3, 'Công nghệ', NULL, 1),
-(4, 'Giải trí', NULL, 1),
-(5, 'Sức khỏe', NULL, 1),
-(6, 'Tin tuyển sinh', 1, 1),
-(7, 'Khuyến học', 1, 1),
-(8, 'Du học', 1, 1),
-(9, 'Bóng đá', 2, 1),
-(10, 'Thể thao ngoài nước', 2, 1),
-(11, 'Thể thao trong nước', 2, 1),
-(12, 'Xem - Ăn - Chơi', 4, 1),
-(13, 'Thời trang', 4, 1),
-(14, 'Sao Việt', 4, 1),
-(15, 'Kiến thức giới tính', 5, 1),
-(16, 'Làm đẹp', 5, 1);
+INSERT INTO `category` (`id`, `cat_name`, `parent_cat`, `is_deleted`) VALUES
+(1, 'Giáo dục', NULL, 0),
+(2, 'Thể thao', NULL, 0),
+(3, 'Công nghệ', NULL, 0),
+(4, 'Giải trí', NULL, 0),
+(5, 'Sức khỏe', NULL, 0),
+(6, 'Tin tuyển sinh', 1, 0),
+(7, 'Khuyến học', 1, 0),
+(8, 'Du học', 1, 0),
+(9, 'Bóng đá', 2, 0),
+(10, 'Thể thao ngoài nước', 2, 0),
+(11, 'Thể thao trong nước', 2, 0),
+(12, 'Xem - Ăn - Chơi', 4, 0),
+(13, 'Thời trang', 4, 0),
+(14, 'Sao Việt', 4, 0),
+(15, 'Kiến thức giới tính', 5, 0),
+(16, 'Làm đẹp', 5, 0);
 
 -- --------------------------------------------------------
 
@@ -69,32 +69,8 @@ CREATE TABLE `comment` (
   `id_post` int(11) NOT NULL,
   `content` varchar(1000) NOT NULL,
   `date_submit` datetime NOT NULL,
-  `id_parent` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `permission`
---
-
-CREATE TABLE `permission` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL COMMENT 'admin, editor, writer, user'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `per_detail`
---
-
-CREATE TABLE `per_detail` (
-  `id` int(11) NOT NULL,
-  `id_per` int(11) NOT NULL,
-  `action_name` varchar(100) NOT NULL,
-  `check_action` int(11) NOT NULL,
-  `action_code` varchar(255) NOT NULL
+  `id_parent` int(11) DEFAULT NULL,
+  `is_deleted` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -239,17 +215,17 @@ INSERT INTO `post_tag` (`id`, `id_post`, `id_tag`) VALUES
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `tag_name` varchar(50) NOT NULL,
-  `status` int(11) NOT NULL COMMENT '1: hoạt động, 0: bị xóa'
+  `is_deleted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tags`
 --
 
-INSERT INTO `tags` (`id`, `tag_name`, `status`) VALUES
-(1, 'Tin nóng', 1),
-(2, 'Phốt', 1),
-(3, 'Tinh tế', 1);
+INSERT INTO `tags` (`id`, `tag_name`, `is_deleted`) VALUES
+(1, 'Tin nóng', 0),
+(2, 'Phốt', 0),
+(3, 'Tinh tế', 0);
 
 -- --------------------------------------------------------
 
@@ -263,7 +239,7 @@ CREATE TABLE `user` (
   `dob` date NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `status` int(11) NOT NULL COMMENT '1: hoạt động, 0: bị cấm',
+  `is_deleted` int(11) NOT NULL COMMENT '1: hoạt động, 0: bị cấm',
   `exp_date` date DEFAULT NULL,
   `pseudonym` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -272,8 +248,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `dob`, `email`, `password`, `status`, `exp_date`, `pseudonym`) VALUES
-(1, 'Đỗ Minh Hiếu', '1998-02-01', 'minhhieu76qng@gmail.com', 'dominhhieu', 1, NULL, NULL);
+INSERT INTO `user` (`id`, `name`, `dob`, `email`, `password`, `is_deleted`, `exp_date`, `pseudonym`) VALUES
+(1, 'Đỗ Minh Hiếu', '1998-02-01', 'minhhieu76qng@gmail.com', 'dominhhieu', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -285,19 +261,6 @@ CREATE TABLE `user_category` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_per`
---
-
-CREATE TABLE `user_per` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_per` int(11) NOT NULL,
-  `licensed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -319,19 +282,6 @@ ALTER TABLE `comment`
   ADD KEY `fk_foreign_key_id_idparent` (`id_parent`),
   ADD KEY `fk_foreign_id_id_post` (`id_post`),
   ADD KEY `fk_foreign_key_id_id_user` (`id_user`);
-
---
--- Indexes for table `permission`
---
-ALTER TABLE `permission`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `per_detail`
---
-ALTER TABLE `per_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_foreign_key_id_id_per` (`id_per`);
 
 --
 -- Indexes for table `post`
@@ -377,14 +327,6 @@ ALTER TABLE `user_category`
   ADD KEY `fk_foreign_key_id_user_user_category` (`id_user`);
 
 --
--- Indexes for table `user_per`
---
-ALTER TABLE `user_per`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_foreign_key_id_per_user_per` (`id_per`),
-  ADD KEY `fk_foreign_key_id_user_user_per` (`id_user`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -398,18 +340,6 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `permission`
---
-ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `per_detail`
---
-ALTER TABLE `per_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -449,12 +379,6 @@ ALTER TABLE `user_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user_per`
---
-ALTER TABLE `user_per`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Constraints for dumped tables
 --
 
@@ -471,12 +395,6 @@ ALTER TABLE `comment`
   ADD CONSTRAINT `fk_foreign_id_id_post` FOREIGN KEY (`id_post`) REFERENCES `post` (`id`),
   ADD CONSTRAINT `fk_foreign_key_id_id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `fk_foreign_key_id_idparent` FOREIGN KEY (`id_parent`) REFERENCES `comment` (`id`);
-
---
--- Constraints for table `per_detail`
---
-ALTER TABLE `per_detail`
-  ADD CONSTRAINT `fk_foreign_key_id_id_per` FOREIGN KEY (`id_per`) REFERENCES `permission` (`id`);
 
 --
 -- Constraints for table `post`
@@ -499,13 +417,6 @@ ALTER TABLE `post_tag`
 ALTER TABLE `user_category`
   ADD CONSTRAINT `fk_foreign_key_id_category_user_category` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `fk_foreign_key_id_user_user_category` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `user_per`
---
-ALTER TABLE `user_per`
-  ADD CONSTRAINT `fk_foreign_key_id_per_user_per` FOREIGN KEY (`id_per`) REFERENCES `permission` (`id`),
-  ADD CONSTRAINT `fk_foreign_key_id_user_user_per` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
