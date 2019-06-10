@@ -90,6 +90,7 @@
     right: 15px;
     left: 15px;
     /* overflow: hidden; */
+    visibility: hidden;
 }
 
 .impressive-articles .advertisement:before {
