@@ -6,6 +6,8 @@ var morgan = require('morgan');
 
 var app = express();
 
+
+
 app.engine("hbs", exphbs({
     defaultLayout: 'main.hbs',
     layoutsDir: 'views/_layouts',
@@ -19,6 +21,8 @@ app.use('/asset', express.static('public'));
 
 // morgan log
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
 
 // load danh muc
 app.use(require('./middlewares/locals.mdw'));
@@ -26,6 +30,8 @@ app.use(require('./middlewares/locals.mdw'));
 
 app.use('/', require('./routes/news/index.route'));
 // app.use('/writer', require('./routes/writer/writer.route.js'));
+//app.use('/admin', require('./routes/admin/category.route.js'));
+app.use('/admin', require('./routes/admin/category.route.js'));
 
 // app.get('/', (req, res) => {
 //     console.log(res.locals.currentTime);

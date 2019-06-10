@@ -1,0 +1,216 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+
+<link rel="stylesheet" href="asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+
+<script src="asset/js/widget_utility.js"></script>
+
+{{!-- <script src="asset/js/admin/admin.js"></script> --}}
+
+<script src="asset/js/admin/categories.js"></script>
+
+{{/section}}
+
+
+<section id="news-management" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <!-- bao gom menu
+                    * neu la admin:
+                        + Quản lý chuyên mục
+                        + Quản lý nhãn tag
+                        + Quản lý bài viết
+                            + Bài viết đã xuất bản
+                            + Bài viết đã được duyệt & chờ xuất bản
+                            + Bài viết chưa duyệt
+                        + Quản lý người dùng
+                            + Phóng viên
+                            + Biên tập viên
+                            + Độc giả
+                        -->
+                <div class="wrapper">
+                    <ul class="menu-management">
+                        <li class="menu-management-item active">
+                            <a class="link" href="/categories"><i class="icon fa fa-list-alt" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý chuyên mục</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link" href="/tags"><i class="icon fa fa-tags" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý nhãn tag</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href=""><i class="icon fa fa-th" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý bài viết</div>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/accepted-news">
+                                        <i class="icon fa fa-check-square-o" aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/not-accepted-news"><i class="icon fa fa-tasks"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài
+                                            viết chưa duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/published-news"><i class="icon fa fa-newspaper-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã xuất bản</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href=""><i class="icon fa fa-users" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý người dùng</div>
+                                <i class="fa fa-caret-down"></i>
+                                <!-- <i class="icon fa fa-chevron-right" aria-hidden="true"></i>    -->
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/writer-management"><i class="icon fa fa-pencil-square-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Phóng viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/editor-management"><i class="icon fa fa-user-plus"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Biên tập viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/subscriber-management"><i class="icon fa fa-address-book"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Độc giả</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wrapper wrapper-content">
+                    <div class="content-menu-item" id="category-management">
+                        <h3 class="mb-3 mt-3">Danh sách chuyên mục</h3>
+                        <div class="div-btn-control mb-3 mt-3">
+                            <button type="button" class="btn btn-primary" id="addCategory" data-toggle="modal"
+                                data-target="#CategoryModal" data-backdrop="static" onclick="openAddCategory()">Thêm
+                                mới</button>
+                            <button type="button" class="btn btn-primary" id="deleteCategory"
+                                onclick="openDeleteCategory()">Xóa</button>
+                        </div>
+                        <table class="can-be-edit table table-hover table-bordered mb-0" id="tableCategory">
+                            <col style="width:5%">
+                            <col style="width:35%">
+                            <col style="width:35%">
+                            <col style="width:25%">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="vertical-align: top;">#</th>
+                                    <th style="vertical-align: top;">Chuyên mục</th>
+                                    <th style="vertical-align: top;">Chuyên mục cha</th>
+                                    <th style="vertical-align: top;">Số lượng bài viết</th>
+                                    <th class="colDeleteCategory"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each this.categories}}
+                                <tr onclick="openEditCategory(this)">
+                                    <th scope="row" class="text-center">{{id}}</th>
+                                    <td>{{cat_name}}</td>
+                                    <td>{{parentCat}}</td>
+                                    <td>{{numPosts}}</td>
+                                    <td class="colDeleteCategory">
+                                        <a class="btn btn-danger" href="/admin/delete/{{id}}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <div class="pageNumber mt-4">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled"><button class="page-link">Trước</button></li>
+                                <li class="page-item active"><button class="page-link">1</button></li>
+                                <li class="page-item"><button class="page-link">2</button></li>
+                                <li class="page-item"><button class="page-link">3</button></li>
+                                <li class="page-item"><button class="page-link">4</button></li>
+                                <li class="page-item"><button class="page-link">Sau</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal add/update category-->
+<div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CategoryModalLabel">Thêm chuyên mục</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="divAdd">
+                    <form method="POST" action="/admin/add">
+                        <div class="AddCategory-container">
+                            <div class="form-group"  id="divID" style="display:none;">
+                                <label for="txtCatID">#</label>
+                                <input readonly type="text" class="form-control" id="txtCatID" name="id"
+                                    value="{{this.category.CatID}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="category"><b>Chuyên mục</b></label>
+                                <input class="form-control" id="txtCategory" name="cat_name" type="text"
+                                    placeholder="Nhập tên chuyên mục" name="category" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="post-category"><b>Chuyên mục cha</b></label>
+                                <div class="wrapper-control">
+                                    <select class="form-control" name="parent_cat" id="parent-category">
+                                        <option value="1">Giáo dục</option>
+                                        <option value="2">Thể thao</option>
+                                        <option value="3">Công nghệ</option>
+                                        <option value="4">Giải trí</option>
+                                        <option value="5">Sức khỏe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary btnAdd" id="btnAddCategory">Thêm</button>
+                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditCategory"
+                                    formaction="/admin/update">Chỉnh sửa</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
