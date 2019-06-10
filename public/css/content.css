@@ -667,3 +667,14 @@ ul.list-article li.article-item .article{
 .slick-wrapper.slick-initialized {
     visibility: visible;
 }
+
+ul.list_post_page{
+    margin-bottom: 0;
+}
+
+.page-tags .tags{
+    flex-grow: 1;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+}

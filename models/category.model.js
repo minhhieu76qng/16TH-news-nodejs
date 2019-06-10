@@ -2,23 +2,28 @@ var db = require('../utils/database');
 
 module.exports = {
     all: () => {
-        return db.load('select * from category where status = 1');
+        return db.load('select * from category where is_deleted = 0');
     },
 
     rootCat: () => {
-        return db.load('select * from category where status = 1 and parent_cat is null');
+        return db.load('select * from category where is_deleted = 0 and parent_cat is null');
     },
 
     exceptRootCat: () => {
-        return db.load('select * from category where status = 1 and parent_cat is not null');
+        return db.load('select * from category where is_deleted = 0 and parent_cat is not null');
     },
 
     exceptRootCatExistPost: () => {
-        return db.load('select DISTINCT c.id, c.cat_name, c.parent_cat, c.`status` from category c, post p where c.status = 1 and c.parent_cat is not null and c.id = p.id_category');
+        return db.load(`select DISTINCT c.id, c.cat_name, c.parent_cat, c.is_deleted from category c, post p 
+        where c.is_deleted = 0 and c.parent_cat is not null and c.id = p.id_category`);
     },
 
     subCategories: (CatId) => {
-        return db.load(`select * from category where status = 1 and parent_cat = ${CatId}`);
+        return db.load(`select * from category where is_deleted = 0 and parent_cat = ${CatId}`);
+    },
+
+    getCategoryById: (CatID) => {
+        return db.load(`select * from category where is_deleted = 0 and id = ${CatID}`);
     },
 
     getList: () => {
@@ -35,5 +40,5 @@ module.exports = {
 
     delete: id => {
         return db.delete('category', 'id', id);
-    },
+    }
 }

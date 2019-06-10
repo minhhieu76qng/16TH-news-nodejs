@@ -28,15 +28,14 @@ app.use(express.urlencoded());
 app.use(require('./middlewares/locals.mdw'));
 
 
+app.use('/categories', require('./routes/news/categories.route'));
+app.use('/posts', require('./routes/news/posts.route'));
 app.use('/', require('./routes/news/index.route'));
+
 // app.use('/writer', require('./routes/writer/writer.route.js'));
 //app.use('/admin', require('./routes/admin/category.route.js'));
 app.use('/admin', require('./routes/admin/category.route.js'));
 
-// app.get('/', (req, res) => {
-//     console.log(res.locals.currentTime);
-//     res.render('news/index');
-// })
 
 app.use((req, res, next) => {
     res.render('404', {
@@ -44,13 +43,13 @@ app.use((req, res, next) => {
     });
 })
 
-// app.use((error, req, res, next) => {
-//     res.render('/views/error.hbs', {
-//         layout: false,
-//         message: error.message,
-//         error
-//     })
-// })
+app.use((error, req, res, next) => {
+    res.render('error.hbs', {
+        layout: false,
+        message: error.message,
+        error
+    })
+})
 
 app.listen(3000, () => {
     console.log('App is running at https://localhost:3000');

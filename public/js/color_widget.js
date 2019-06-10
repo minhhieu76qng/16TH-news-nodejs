@@ -1,5 +1,5 @@
-var imageSrc = 'asset/images/logo/';
-var cssSrc = 'asset/css/';
+var imageSrc = '/asset/images/logo/';
+var cssSrc = '/asset/css/';
 
 var panelColor = document.getElementById('widget-custom-color');
 
@@ -28,7 +28,7 @@ Array.from(color_items).forEach((el, idx) => {
             element.setAttribute('src', imageSrc + 'logo_' + color_value +'.png');
         })
 
-        let linkCSSColor = document.querySelector('link[data="color_custom"]');
+        let linkCSSColor = document.querySelector('link[data-color="color_custom"]');
 
         linkCSSColor.setAttribute('href',cssSrc + 'color_' + color_value + '.css');
     })
@@ -56,7 +56,7 @@ window.addEventListener('load', function(){
         element.setAttribute('src', imageSrc + 'logo_' + color_value +'.png');
     })
 
-    let linkCSSColor = document.querySelector('link[data="color_custom"]');
+    let linkCSSColor = document.querySelector('link[data-color="color_custom"]');
 
     linkCSSColor.setAttribute('href',cssSrc + 'color_' + color_value + '.css');
 })

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> {{ header.title }} </title>
+    <title> {{ pageTitle }} </title>
+
+    {{!-- <base href="/"> --}}
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,21 +15,21 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700" rel="stylesheet">
 
     <!-- my css -->
-    <link rel="stylesheet" href="asset/css/body.css">
-    <link rel="stylesheet" href="asset/css/content.css">
+    <link rel="stylesheet" href="/asset/css/body.css">
+    <link rel="stylesheet" href="/asset/css/content.css">
 
-    <link rel="stylesheet" href="asset/css/color_widget.css">
+    <link rel="stylesheet" href="/asset/css/color_widget.css">
 
-    <link rel="stylesheet" data="color_custom" href="asset/css/color_red.css">
-    <link rel="stylesheet" data="color_custom" href="asset/css/responsive.css">
+    <link rel="stylesheet" data-color="color_custom" href="/asset/css/color_red.css">
+    <link rel="stylesheet" href="/asset/css/responsive.css">
 
-    <link rel="preload" href="asset/css/color_blue_sky.css" as="style">
-    <link rel="preload" href="asset/css/color_green.css" as="style">
-    <link rel="preload" href="asset/css/color_purple.css" as="style">
+    <link rel="preload" href="/asset/css/color_blue_sky.css" as="style">
+    <link rel="preload" href="/asset/css/color_green.css" as="style">
+    <link rel="preload" href="/asset/css/color_purple.css" as="style">
 
-    <link rel="preload" href="asset/images/logo/logo_blue_sky.png" as="image">
-    <link rel="preload" href="asset/images/logo/logo_green.png" as="image">
-    <link rel="preload" href="asset/images/logo/logo_purple.png" as="image">
+    <link rel="preload" href="/asset/images/logo/logo_blue_sky.png" as="image">
+    <link rel="preload" href="/asset/images/logo/logo_green.png" as="image">
+    <link rel="preload" href="/asset/images/logo/logo_purple.png" as="image">
 
 
     {{{_sections.css}}}
@@ -46,7 +48,7 @@
                     <div class="col">
                         <div class="main-logo">
                             <a href="index.html">
-                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                                <img class="logo icon_page" src="/asset/images/logo/logo_red.png" alt="Homepage">
                             </a>
                         </div>
                     </div>
@@ -67,7 +69,7 @@
                 <div class="sub-logo logo-mobile">
                     <div class="main-logo">
                         <a href="index.html">
-                            <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                            <img class="logo icon_page" src="/asset/images/logo/logo_red.png" alt="Homepage">
                         </a>
                     </div>
                 </div>
@@ -83,22 +85,31 @@
                     <div class="sub-logo logo-desktop">
                         <div class="main-logo">
                             <a href="index.html">
-                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Homepage">
+                                <img class="logo icon_page" src="/asset/images/logo/logo_red.png" alt="Homepage">
                             </a>
                         </div>
                     </div>
 
                     <ul class="menu navbar-nav">
                         <li>
+                            {{#if isHomepage}}
                             <a class="link active" href="/">
                                 Trang chủ
                             </a>
+                            {{else}}
+                            <a class="link" href="/">
+                                Trang chủ
+                            </a>
+                            {{/if}}
                         </li>
 
                         {{#each lcCategories}}
                         <li>
+                            {{#if root.isActive}}
+                            <a class="link active" href="/categories/{{root.id}}/posts">{{ root.cat_name }}</a>
+                            {{else}}
                             <a class="link" href="/categories/{{root.id}}/posts">{{ root.cat_name }}</a>
-
+                            {{/if}}
                             {{#if childs}}
                             <ul class="sub-menu">
 
@@ -157,13 +168,7 @@
         </nav>
     </header>
 
-
-
-
-    {{!-- body --}}
-
     {{{ body }}}
-
 
     <!-- footer -->
     <footer class="mt-5">
@@ -173,7 +178,7 @@
                     <div class="col-12 col-sm-2">
                         <div class="widget logo-page">
                             <a href="index.html">
-                                <img class="logo icon_page" src="asset/images/logo/logo_red.png" alt="Trang chủ"
+                                <img class="logo icon_page" src="/asset/images/logo/logo_red.png" alt="Trang chủ"
                                     title="Trang chủ">
                             </a>
                         </div>
@@ -242,9 +247,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- my js -->
-    <script src="asset/js/color_widget.js"></script>
+    <script src="/asset/js/color_widget.js"></script>
 
-    <script src="asset/js/main.js"></script>
+    <script src="/asset/js/main.js"></script>
 
     {{{_sections.js}}}
 </body>

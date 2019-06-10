@@ -9,11 +9,10 @@ var my_utils = require('../../utils/myUtils');
 var router = express.Router();
 
 // trang chu
-router.get('/', (req, res) => {
-
-    // lấy dữ liệu
-
+router.get('/', (req, res, next) => {
     var now = new Date();
+
+    res.locals.isHomepage = true;
 
     var last_week = new Date();
 
@@ -24,27 +23,28 @@ router.get('/', (req, res) => {
         end: my_utils.toSQLDateTimeString(now)
     };
 
+    res.locals.pageTitle = 'Trang chủ';
+
     Promise
         .all([
-            post_model.mostViewInTime_Thumbnail(4, time),
+            post_model.mostViewInTime_Thumbnail(time, 4),
             post_model.mostView_Thumbnail(10),
-            post_model.newest_Thumbnail(10)
+            post_model.newest_Thumbnail(10),
+            tag_model.getHotestTags(10)
         ])
         .then(values => {
             // lấy được array 3 ôbject
             // lấy tiếp 10 cat trong mỗi cat có 1 post mới nhất
-
             cat_model.exceptRootCatExistPost()
                 .then(categories => {
                     var categories_clone_10 = categories.slice(0, categories.length > 10 ? 10 : categories.length);
                     Promise
                         .all(
                             categories_clone_10.map((val, idx) => {
-                                return post_model.newestByCat_Thumbnail(1, val.id);
+                                return post_model.newestByCat_Thumbnail(val.id, 1);
                             })
                         )
                         .then(post_by_cats => {
-
                             var top10_posts = [];
 
                             for (let i = 0; i < categories_clone_10.length; i++) {
@@ -53,61 +53,36 @@ router.get('/', (req, res) => {
                                     post: null
                                 }
 
-                                if (post_by_cats[i] !== []){
+                                if (post_by_cats[i] !== []) {
                                     cat_with_post.post = post_by_cats[i][0];
                                 }
 
                                 top10_posts.push(cat_with_post);
                             }
-
-                            // lấy 10 thẻ có nhiều post trong db
-                            tag_model.getHotestTags(10)
-                                .then(hot_tags => {
-                                    res.render('news/index', {
-                                        mostViewInWeek4 : values[0].map((v, idx) => {
-                                            v.date_posted = my_utils.toDateString(v.date_posted);
-                                            return v;
-                                        }),
-                                        mostView10 : values[1].map((v, idx) => {
-                                            v.date_posted = my_utils.toDateString(v.date_posted);
-                                            return v;
-                                        }),
-                                        newest10 : values[2].map((v, idx) => {
-                                            v.date_posted = my_utils.toDateString(v.date_posted);
-                                            return v;
-                                        }),
-                                        catsWithPost : top10_posts.map((v, idx) => {
-                                            v.post.date_posted = my_utils.toDateString(v.post.date_posted);
-                                            return v;
-                                        }),
-                                        tags : hot_tags
-                                    });
-                                })
-                                .catch(err => {
-
-                                })
+                            res.render('news/index', {
+                                mostViewInWeek4: values[0].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                mostView10: values[1].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                newest10: values[2].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                catsWithPost: top10_posts.map((v, idx) => {
+                                    v.post.date_posted = my_utils.toDateString(v.post.date_posted);
+                                    return v;
+                                }),
+                                tags: values[3]
+                            });
                         })
-                        .catch(err => {
-
-                        })
-                })
-                .catch(err => {
-                    console.log(err);
+                        .catch(next);
                 })
         })
-        .catch(err => {
-
-        })
-})
-
-// trang hien thi cac bai viet trong danh muc
-router.get('/categories/:id/posts', (req, res) => {
-    res.end('category');
-})
-
-// trang chi tiet bai viet
-router.get('/posts/:id', (req, res) => {
-    res.end('post');
+        .catch(next);
 })
 
 module.exports = router;
