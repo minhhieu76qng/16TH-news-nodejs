@@ -41,8 +41,13 @@ router.post('/update', (req, res) => {
 })
 
 router.get('/delete/:id', (req, res) => {
-  var id = req.params.id;
-  categoryModel.delete(id).then(n => {
+  var catID = req.params.id;
+  var entity = {
+    id: catID,
+    status: 0
+  }
+  
+  categoryModel.update(entity).then(n => {
     //res.redirect('/admin/categories');
     res.redirect('/admin');
   }).catch(err => {
