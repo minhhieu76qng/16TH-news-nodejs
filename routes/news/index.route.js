@@ -2,6 +2,7 @@ var express = require('express');
 
 var post_model = require('../../models/post.model');
 var cat_model = require('../../models/category.model');
+var tag_model = require('../../models/tag.model');
 
 var my_utils = require('../../utils/myUtils');
 
@@ -56,16 +57,35 @@ router.get('/', (req, res) => {
                                     cat_with_post.post = post_by_cats[i][0];
                                 }
 
-                                // console.log(cat_with_post);
-
                                 top10_posts.push(cat_with_post);
                             }
-                            res.render('news/index', {
-                                mostViewInWeek4 : values[0],
-                                mostView10 : values[1],
-                                newest10 : values[2],
-                                catsWithPost : top10_posts
-                            });
+
+                            // lấy 10 thẻ có nhiều post trong db
+                            tag_model.getHotestTags(10)
+                                .then(hot_tags => {
+                                    res.render('news/index', {
+                                        mostViewInWeek4 : values[0].map((v, idx) => {
+                                            v.date_posted = my_utils.toDateString(v.date_posted);
+                                            return v;
+                                        }),
+                                        mostView10 : values[1].map((v, idx) => {
+                                            v.date_posted = my_utils.toDateString(v.date_posted);
+                                            return v;
+                                        }),
+                                        newest10 : values[2].map((v, idx) => {
+                                            v.date_posted = my_utils.toDateString(v.date_posted);
+                                            return v;
+                                        }),
+                                        catsWithPost : top10_posts.map((v, idx) => {
+                                            v.post.date_posted = my_utils.toDateString(v.post.date_posted);
+                                            return v;
+                                        }),
+                                        tags : hot_tags
+                                    });
+                                })
+                                .catch(err => {
+
+                                })
                         })
                         .catch(err => {
 
