@@ -60,11 +60,24 @@ router.get('/', (req, res) => {
 
                                 top10_posts.push(cat_with_post);
                             }
+
                             res.render('news/index', {
-                                mostViewInWeek4 : values[0],
-                                mostView10 : values[1],
-                                newest10 : values[2],
-                                catsWithPost : top10_posts
+                                mostViewInWeek4 : values[0].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                mostView10 : values[1].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                newest10 : values[2].map((v, idx) => {
+                                    v.date_posted = my_utils.toDateString(v.date_posted);
+                                    return v;
+                                }),
+                                catsWithPost : top10_posts.map((v, idx) => {
+                                    v.post.date_posted = my_utils.toDateString(v.post.date_posted);
+                                    return v;
+                                })
                             });
                         })
                         .catch(err => {
