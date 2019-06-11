@@ -71,6 +71,11 @@ router.get('/:id/posts', (req, res, next) => {
                                     return val;
                                 });
 
+                                posts = posts.map((val, idx) => {
+                                    val.date_posted = my_utils.toDateTimeString(val.date_posted);
+                                    return val;
+                                })
+
                                 // lấy tổng số post
                                 let totalPost = postCount[0].total;
 
@@ -89,16 +94,32 @@ router.get('/:id/posts', (req, res, next) => {
 
                                     arrPages.push(obj);
                                 }
-                                console.log(relatedTags);
-                                res.render('news/categories', {
-                                    isExistsCat: true,
-                                    isExistsData: true,
-                                    cat: category[0],
-                                    posts: posts,
-                                    mostViews: mostView,
-                                    tags: relatedTags,
-                                    arrPages : arrPages
-                                })
+
+                                // trong từng post. lấy ra id của nó và query lấy danh sách các tags
+
+                                Promise
+                                    .all(
+                                        posts.map((val, idx) => {
+                                            return tag_model.getTagsByPostId(val.id);
+                                        })
+                                    )
+                                    .then(values => {
+                                        for (let i = 0; i < posts.length; i++){
+                                            posts[i].tags = values[i];
+                                        }
+
+                                        res.render('news/categories', {
+                                            isExistsCat: true,
+                                            isExistsData: true,
+                                            cat: category[0],
+                                            posts: posts,
+                                            mostViews: mostView,
+                                            tags: relatedTags,
+                                            arrPages : arrPages
+                                        })
+                                    })
+
+                                
                             }
                         })
                         .catch(next)

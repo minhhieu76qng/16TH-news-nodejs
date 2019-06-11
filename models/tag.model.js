@@ -37,5 +37,10 @@ module.exports = {
             where tags.id = post_tag.id_tag and post.id = post_tag.id_post and post.id_category = category.id 
             and category.parent_cat = ${CatID} limit ${limit}`);
         }
+    },
+
+    getTagsByPostId : PostId => {
+        return db.load(`select tags.id, tags.tag_name from post_tag, tags 
+            where post_tag.id_tag = tags.id and post_tag.id_post=${PostId}`);
     }
 };

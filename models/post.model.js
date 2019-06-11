@@ -27,9 +27,13 @@ module.exports = {
 
     byCat: (CatId, limit, offset) => {
         if (limit <= 0) {
-            return db.load(`select * from post where is_deleted=0 and id_category = ${CatId}`);
+            return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
+                from post p, category c where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id  and p.id_category = ${CatId}`);
         } else {
-            return db.load(`select * from post where is_deleted=0 and id_category = ${CatId} 
+            return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
+                from post p, category c where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id  and p.id_category = ${CatId} 
                 limit ${limit} offset ${offset}`);
         }
     },
@@ -40,10 +44,13 @@ module.exports = {
 
     byRootCat : (CatId, limit, offset) => {
         if (limit <= 0) {
-            return db.load(`select p.* from post p, category c where c.parent_cat = ${CatId} and p.id_category = c.id`);
+            return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
+                from post p, category c where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id  and c.parent_cat = ${CatId}`);
         } else {
-            return db.load(`select p.* from post p, category c where c.parent_cat = ${CatId} 
-                and p.id_category = c.id limit ${limit} offset ${offset}`);
+            return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
+                from post p, category c where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id  and c.parent_cat = ${CatId} limit ${limit} offset ${offset}`);
         }
     },
 

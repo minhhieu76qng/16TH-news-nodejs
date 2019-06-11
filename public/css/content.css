@@ -8,7 +8,7 @@
     overflow: hidden;
 }
 
-.article .article-thumbnail{
+.article .article-thumbnail {
     position: relative;
 }
 
@@ -160,7 +160,7 @@
     margin-bottom: 5px;
 }
 
-.top-10-articles > .row + .row{
+.top-10-articles>.row+.row {
     margin-top: 15px;
 }
 
@@ -247,28 +247,21 @@
     border-bottom: 0;
 }
 
-.article-title>.link {
+.article .article-title>.link {
     font-size: 16px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* LIST TAGS */
-
-.top-10-articles+.widget-sidebar .list-tags {
-    flex-direction: column;
-}
 
 .widget-sidebar .list-tags .tags {
     border-radius: 5px;
     padding: 20px;
     background-color: #fff;
-}
-
-.widget-sidebar .list-tags .tags .item {
-    margin-bottom: 10px;
 }
 
 /* sidebar */
@@ -323,18 +316,6 @@
     color: #fff;
     background-color: rgba(0, 0, 0, .7);
     margin-bottom: 0;
-}
-
-.post .post-description .category a {
-    font-size: 20px;
-}
-
-.post .list-tags {
-    align-items: flex-start;
-}
-
-.post .list-tags .tags .item {
-    margin-bottom: 5px;
 }
 
 .post .media-content-wrapper {
@@ -472,10 +453,10 @@
     width: 100%;
 }
 
-#divSignIn .btn-Login{
+#divSignIn .btn-Login {
     padding: 0px;
     margin-bottom: 10px;
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 #divSignIn .omb_spanOr {
@@ -497,51 +478,51 @@
     margin-bottom: 0px !important;
 }
 
-#divSignIn .divLoginOr{
+#divSignIn .divLoginOr {
     width: 100%;
     position: relative;
 }
 
-#divSignIn .divRememberAndForgot{
+#divSignIn .divRememberAndForgot {
     display: block;
     width: 100%;
 }
 
-#divSignIn .divRememberPass{
+#divSignIn .divRememberPass {
     width: 50%;
     display: block;
     float: left;
 }
 
-#divSignIn .divForgotPass{
+#divSignIn .divForgotPass {
     text-align: right;
 }
 
-#divSignIn .divSocialButton{
+#divSignIn .divSocialButton {
     display: block;
     float: left;
-    
 }
 
-#divSignIn .omb_socialButtons{
+#divSignIn .omb_socialButtons {
     margin-top: 30px;
     display: flex;
     justify-content: center;
 }
 
-#divSignIn .divSocialButton .omb_btn-facebook{
+#divSignIn .divSocialButton .omb_btn-facebook {
     background: #3B5998;
     color: white;
     width: 150px;
     padding: 0px;
     margin-right: 50px;
 }
+
 #divSignIn .divSocialButton .omb_btn-facebook .fa {
     padding: 10px;
     font-size: 20px;
 }
 
-#divSignIn .divSocialButton .omb_btn-google{
+#divSignIn .divSocialButton .omb_btn-google {
     background: #dd4b39;
     color: white;
     width: 150px;
@@ -553,37 +534,38 @@
     font-size: 20px;
 }
 
-#divSignIn .modal-footer{
+#divSignIn .modal-footer {
     justify-content: flex-start;
 }
 
-#divSignIn .divRememberPass, .divForgotPass{
+#divSignIn .divRememberPass, .divForgotPass {
     font-size: 14px;
 }
 
-.help-block{
+.help-block {
     color: #ff1a1a;
     font-size: 14px;
     display: none;
 }
 
 /* ============================ Modal SignUp ============================ */
-#divSignUp, #divForgotPass{
+
+#divSignUp, #divForgotPass {
     display: none;
 }
-.SignUp-container #txtEmail,.SignUp-container #txtName, 
-.SignUp-container #txtPassword, .SignUp-container #txtRepeatPassword, #txtEmail-Forgot{
+
+.SignUp-container #txtEmail, .SignUp-container #txtName, .SignUp-container #txtPassword, .SignUp-container #txtRepeatPassword, #txtEmail-Forgot {
     width: 100%;
     padding: 5px;
     margin: 2px 0 0 0;
-    border-radius: 3px; 
+    border-radius: 3px;
     display: inline-block;
     border: none;
     background: #f1f1f1;
     font-size: 14px;
 }
 
-.SignUp-container label{
+.SignUp-container label {
     margin-bottom: 0px;
 }
 
@@ -591,76 +573,73 @@
     font-size: 14px;
 }
 
-.input-group-SignUp{
+.input-group-SignUp {
     margin-bottom: 20px;
 }
 
-ul.list-article{
+ul.list-article {
     list-style-type: none;
 }
-ul.list-article li.article-item{
+
+ul.list-article li.article-item {
     border-bottom: 1px solid #ccc;
 }
 
-ul.list-article li.article-item:last-child{
+ul.list-article li.article-item:last-child {
     border-bottom: 0;
 }
 
-ul.list-article li.article-item .article{
+ul.list-article li.article-item .article {
     padding: 25px 15px;
 }
 
-.list_post_page .article{
+.list_post_page .article {
     display: flex;
     align-content: center;
 }
 
-.list-tags ul.tags .item{
-    margin-bottom: 10px;
-}
-
-.list_post_page .article .article-thumbnail{
+.list_post_page .article .article-thumbnail {
     width: 250px;
 }
 
-.list_post_page .article .article-content{
+.list_post_page .article .article-content {
     width: calc(100% - 250px);
     padding: 0 30px;
-    
 }
 
-.list_post_page .article .article-thumbnail .thumbnail-image:before{
+.list_post_page .article .article-thumbnail .thumbnail-image:before {
     padding-top: 70%;
 }
-.list_post_page .article .thumbnail-image img{
-    top: 50%;
+
+.list_post_page .article .thumbnail-image img {
+    /* top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-
-.list_post_page .article .article-title .link{
+.list_post_page .article .article-title .link {
     font-size: 21px;
     font-weight: 500;
     display: block;
 }
 
-.premium-article{
+.premium-article {
     position: absolute;
     padding: 0 5px;
-    top: 10px;
-    left: 16px;
+    top: 0px;
+    left: 0px;
     font-size: 30px;
     font-weight: 700;
     color: #fff;
 }
 
-
-.top-10-articles .post:nth-child(n + 3){
+.top-10-articles .post:nth-child(n + 3) {
     margin-top: 20px;
 }
 
-.slick-wrapper{
+.slick-wrapper {
     visibility: hidden;
 }
 
@@ -668,13 +647,32 @@ ul.list-article li.article-item .article{
     visibility: visible;
 }
 
-ul.list_post_page{
+ul.list_post_page {
     margin-bottom: 0;
 }
 
-.page-tags .tags{
+.page-tags .tags {
     flex-grow: 1;
     border-radius: 5px;
     padding: 20px;
     background-color: #fff;
+}
+
+.list_post_page .article .article-thumbnail .category {
+    top: 15px;
+    right: 15px;
+}
+
+.article-abstract small {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.premium-article.small{
+    top: 0;
+    left: 0;
+    font-weight: 500;
+    font-size: 18px;
 }

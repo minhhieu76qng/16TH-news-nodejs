@@ -295,9 +295,9 @@ footer .footer-bottom {
 }
 
 /* TAGS */
-.list-tags {
+/* .list-tags {
   display: flex;
-}
+} */
 
 .list-tags ul.tags {
   display: block;
@@ -308,19 +308,14 @@ footer .footer-bottom {
 .list-tags ul.tags .item {
   display: inline-block;
   color: rgb(4, 85, 183);
-  margin-left: 5px;
+  margin-right: 10px;
 }
 
-.list-tags ul.tags .item .link {
-  border: 1px solid #6cb2e4;
-  font-size: 14px;
-  padding: 3px 10px;
-  border-radius: 3px;
+.list-tags ul.tags .item .link{
+  text-decoration: underline;
 }
-
-.list-tags .link:hover {
-  text-decoration: none;
-  color: inherit;
+.list-tags ul.tags .item:hover .link{
+  color: rgb(110, 110, 110);
 }
 
 /* widget menu */

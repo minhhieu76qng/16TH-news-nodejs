@@ -74,6 +74,11 @@
                         <div class="category">
                             <a href="/categories/{{id_category}}/posts" class="link"><span>{{cat_name}}</span></a>
                         </div>
+                        {{#if type_post}}
+                        <div class="premium-article" title="Bài viết premium">
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        {{/if}}
                     </div>
                     <div class="article-content">
                         <div class="published-date">
@@ -146,6 +151,11 @@
                             <div class="category">
                                 <a href="/categories/{{cat.id}}/posts" class="link">{{cat.cat_name}}</a>
                             </div>
+                            {{#if post.type_post}}
+                            <div class="premium-article" title="Bài viết premium">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            {{/if}}
                         </div>
                         <div class="article-content">
                             <div class="published-date">
@@ -173,6 +183,11 @@
                                 <div class="thumbnail-image">
                                     <img src="{{cover_image}}" alt="{{cover_image}}">
                                 </div>
+                                {{#if type_post}}
+                                <div class="premium-article small" title="Bài viết premium">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                {{/if}}
                             </div>
                             <div class="article-content">
                                 <div class="category">

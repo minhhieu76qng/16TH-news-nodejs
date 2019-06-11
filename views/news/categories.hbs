@@ -15,8 +15,13 @@
                             </a>
 
                             <div class="category">
-                                <a href="/categories/{{cat.id}}/posts" class="link">{{cat.cat_name}}</a>
+                                <a href="/categories/{{id_category}}/posts" class="link">{{cat_name}}</a>
                             </div>
+                            {{#if type_post}}
+                            <div class="premium-article" title="Bài viết premium">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            {{/if}}
                         </div>
                         <div class="article-content">
                             <div class="published-date">
@@ -26,15 +31,21 @@
                             <div class="article-title">
                                 <a href="/posts/{{id}}" class="link">{{title}}</a>
                             </div>
-                            <div class="list-tags mt-3">
-                                <span>Tags:</span> &nbsp;
+                            {{#if tags}}
+                            <div class="list-tags mt-2">
+                                {{!-- <span>Tags:</span> &nbsp; --}}
                                 <ul class="tags">
-                                    <li class="item"><a class="link" href="list_post.html">thời sự</a></li>
-                                    <li class="item"><a class="link" href="list_post.html">kinh doanh</a></li>
-                                    <li class="item"><a class="link" href="list_post.html">báo động</a></li>
+                                    {{#each tags}}
+
+                                    <li class="item">
+                                        <a class="link" href="/tags/{{id}}/posts">{{tag_name}}</a>
+                                    </li>
+
+                                    {{/each}}
                                 </ul>
                             </div>
-                            <div class="article-abstract mt-3">
+                            {{/if}}
+                            <div class="article-abstract mt-2">
                                 <small>{{abstract}}.</small>
                             </div>
                         </div>
@@ -77,6 +88,11 @@
                                 <div class="thumbnail-image">
                                     <img src="{{cover_image}}" alt="{{title}}">
                                 </div>
+                                {{#if type_post}}
+                                <div class="premium-article small" title="Bài viết premium">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                {{/if}}
                             </div>
                             <div class="article-content">
                                 <div class="category">
