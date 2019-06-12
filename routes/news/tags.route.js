@@ -13,56 +13,38 @@ router.get('/:id/posts', (req, res, next) => {
 
     let page = req.query.page || 1;
 
-    if (page < 1){
+    if (page < 1) {
         page = 1;
     }
 
     offset = limit * (page - 1);
 
-    // kiểm tra cat_id này có tồn tại hay không
+    // kiểm tra tag_id này có tồn tại hay không
+    let tag_id = +req.params.id;
 
-    let cat_id = +req.params.id;
-
-    if (isNaN(cat_id)) {
-        throw new Error('Category ID is not valid.');
+    if (isNaN(tag_id)) {
+        throw new Error('Tag ID is not valid.');
     } else {
-        category_model.getCategoryById(cat_id)
-            .then(category => {
+        tag_model
+            .getTagsById(tag_id)
+            .then(tag => {
 
-                if (category.length === 0) {
+                if (tag.length === 0) {
                     next();
                 } else {
                     // set title
-                    res.locals.pageTitle = category[0].cat_name;
+                    res.locals.pageTitle = tag[0].tag_name;
 
-                    // chỉnh sửa active menu hiện tại
-                    for (const c of res.locals.lcCategories){
-                        if (c.root.id === cat_id){
-                            c.root.isActive = true;
-                        }
-                    }
-
-                    // nếu parent_cat = null. thì phải tìm hết tất cả những bài viết.
                     Promise
-                        .all([
-                            category[0].parent_cat === null
-                                ? post_model.byRootCat(cat_id, limit, offset)
-                                : post_model.byCat(cat_id, limit, offset),
+                        .all([post_model.byTagId(tag_id, limit, offset),
                             post_model.mostView_Thumbnail(5),
-                            category[0].parent_cat === null
-                                ? tag_model.getRelatedTagsByCatID_Root(cat_id, 10)
-                                : tag_model.getRelatedTagsByCatID(cat_id, 10),
-                            category[0].parent_cat === null
-                                ? post_model.countByRootCat(cat_id)
-                                : post_model.countByCat(cat_id)
-                        ])
-                        .then(([posts, mostView, relatedTags, postCount]) => {
+                            post_model.countByTag(tag_id)])
+                        .then(([posts, mostView, postCount]) => {
                             if (posts.length === 0) {
-                                res.render('news/categories', {
-                                    cat: category[0],
+                                res.render('news/tags', {
+                                    tag: tag[0],
                                     isExistsData: false,
-                                    mostViews: mostView,
-                                    tags: relatedTags,
+                                    mostViews: mostView
                                 })
                             } else {
                                 // chỉnh sửa định dạng ngày
@@ -86,16 +68,15 @@ router.get('/:id/posts', (req, res, next) => {
 
                                 let arrPages = [];
 
-                                for (var i = 1; i <= totalPage; i++){
+                                for (var i = 1; i <= totalPage; i++) {
                                     var obj = {
-                                        page : i,
-                                        isActive : i === +page
+                                        page: i,
+                                        isActive: i === +page
                                     }
 
                                     arrPages.push(obj);
                                 }
 
-                                // trong từng post. lấy ra id của nó và query lấy danh sách các tags
                                 Promise
                                     .all(
                                         posts.map((val, idx) => {
@@ -103,27 +84,27 @@ router.get('/:id/posts', (req, res, next) => {
                                         })
                                     )
                                     .then(values => {
-                                        for (let i = 0; i < posts.length; i++){
+                                        for (let i = 0; i < posts.length; i++) {
                                             posts[i].tags = values[i];
                                         }
 
-                                        res.render('news/categories', {
+                                        res.render('news/tags', {
                                             isExistsCat: true,
                                             isExistsData: true,
-                                            cat: category[0],
+                                            tag: tag[0],
                                             posts: posts,
                                             mostViews: mostView,
-                                            tags: relatedTags,
-                                            arrPages : arrPages
+                                            arrPages: arrPages
                                         })
                                     })
                                     .catch(next);
                             }
                         })
-                        .catch(next)
+                        .catch(next);
                 }
+
             })
-            .catch(next)
+            .catch(next);
     }
 });
 

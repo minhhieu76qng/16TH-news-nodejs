@@ -29,11 +29,11 @@ module.exports = {
         if (limit <= 0) {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and c.is_deleted=0 
-                and p.id_category = c.id  and p.id_category = ${CatId}`);
+                and p.id_category = c.id and p.id_category = ${CatId}`);
         } else {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and c.is_deleted=0 
-                and p.id_category = c.id  and p.id_category = ${CatId} 
+                and p.id_category = c.id and p.id_category = ${CatId} 
                 limit ${limit} offset ${offset}`);
         }
     },
@@ -116,6 +116,24 @@ module.exports = {
                 from post p, category c where p.is_deleted=0 and c.is_deleted=0 and p.id_category = c.id and date_posted 
                 between '${time.start}' and '${time.end}' order by views desc limit ${limit}`);
         }
+    },
+
+    byTagId : (TagID, limit, offset) => {
+        if (limit <= 0){
+            return db.load(`select p.*, p.id_category, c.cat_name 
+                from post p, category c, post_tag pt where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID} order by p.date_posted desc`);
+        }else{
+            return db.load(`select p.*, p.id_category, c.cat_name 
+                from post p, category c, post_tag pt where p.is_deleted=0 and c.is_deleted=0 
+                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID} order by p.date_posted desc
+                limit ${limit} offset ${offset}`);
+        }
+    },
+
+    countByTag : TagID => {
+        return db.load(`select count(*) as total from post p, post_tag pt where p.id=pt.id_post and p.is_deleted=0 
+            and pt.id_tag=${TagID}`);
     }
 
 }
