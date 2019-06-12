@@ -1,0 +1,114 @@
+<div class="container categories_posts">
+    <div class="row mt-5">
+        <div class="col">
+            <h2 class="article-header">Thẻ: &nbsp;{{tag.tag_name}}</h2>
+            {{#if isExistsData}}
+            <ul class="list-article list_post_page">
+                {{#each posts}}
+                <li class="article-item">
+                    <div class="article">
+                        <div class="article-thumbnail">
+                            <a href="/posts/{{id}}">
+                                <div class="thumbnail-image">
+                                    <img src="{{cover_image}}" alt="{{cover_image}}">
+                                </div>
+                            </a>
+
+                            <div class="category">
+                                <a href="/categories/{{id_category}}/posts" class="link">{{cat_name}}</a>
+                            </div>
+                            {{#if type_post}}
+                            <div class="premium-article" title="Bài viết premium">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="article-content">
+                            <div class="published-date">
+                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                                {{date_posted}}
+                            </div>
+                            <div class="article-title">
+                                <a href="/posts/{{id}}" class="link">{{title}}</a>
+                            </div>
+                            {{#if tags}}
+                            <div class="list-tags mt-2">
+                                {{!-- <span>Tags:</span> &nbsp; --}}
+                                <ul class="tags">
+                                    {{#each tags}}
+                                    <li class="item">
+                                        <a class="link" href="/tags/{{id}}/posts">{{tag_name}}</a>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            {{/if}}
+                            <div class="article-abstract mt-2">
+                                <small>{{abstract}}.</small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+
+            <ul class="pagination mt-5" style="justify-content: center;">
+                {{#each this.arrPages}}
+                {{#if isActive}}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{page}}">{{page}}</a>
+                </li>
+                {{else}}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{page}}">{{page}}</a>
+                </li>
+                {{/if}}
+                {{/each}}
+            </ul>
+            {{else}}
+            <div style="background-color: #fff; padding: 30px 15px;" class="text-center">
+                <h3>Không tồn tại bài viết nào!</h3>
+                <a href="/" class="btn btn-primary">Về trang chủ</a>
+            </div>
+            {{/if}}
+
+        </div>
+
+        <div class="col-12 col-md-4 mt-lg-0 mt-4">
+            <div class="sidebar-wrapper">
+                <div class="most-view">
+                    <h2 class="article-header">Tin xem nhiều nhất</h2>
+                    <ul class="list-article mt-4">
+
+                        {{#each this.mostViews}}
+                        <li class="article">
+                            <div class="article-thumbnail">
+                                <div class="thumbnail-image">
+                                    <img src="{{cover_image}}" alt="{{title}}">
+                                </div>
+                                {{#if type_post}}
+                                <div class="premium-article small" title="Bài viết premium">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                {{/if}}
+                            </div>
+                            <div class="article-content">
+                                <div class="category">
+                                    <a href="/categories/{{id_category}}" class="link">{{cat_name}}</a>
+                                </div>
+                                <div class="published-date">
+                                    <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                                    {{date_posted}}
+                                </div>
+                                <div class="article-title">
+                                    <a href="/posts/{{id}}" class="link">{{title}}</a>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

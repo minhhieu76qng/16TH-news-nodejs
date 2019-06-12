@@ -42,5 +42,9 @@ module.exports = {
     getTagsByPostId : PostId => {
         return db.load(`select tags.id, tags.tag_name from post_tag, tags 
             where post_tag.id_tag = tags.id and post_tag.id_post=${PostId}`);
+    },
+
+    getTagsById : TagId => {
+        return db.load(`select * from tags where id=${TagId} and is_deleted=0`);
     }
 };
