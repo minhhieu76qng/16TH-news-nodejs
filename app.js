@@ -35,6 +35,7 @@ app.use('/', require('./routes/news/index.route'));
 // app.use('/writer', require('./routes/writer/writer.route.js'));
 //app.use('/admin', require('./routes/admin/category.route.js'));
 app.use('/admin', require('./routes/admin/category.route.js'));
+app.use('/editor', require('./routes/editor/editor.route'));
 
 
 app.use((req, res, next) => {

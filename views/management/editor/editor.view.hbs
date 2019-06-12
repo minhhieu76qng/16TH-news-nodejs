@@ -1,0 +1,58 @@
+{{#section 'css'}}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="asset/css/slick_custom.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+
+<script src="asset/js/widget_utility.js"></script>
+
+{{!-- <script src="asset/js/admin/admin.js"></script> --}}
+
+<script src="asset/js/editor.js"></script>
+
+{{/section}}
+
+<div class="card shadow">
+    <h3 class="card-header">
+        draf post
+    </h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">tiêu đề</th>
+                <th scope="col">ngày đăng</th>
+                <th scope="col">ảnh minh họa</th>
+                <th scope="col">tóm tắt</th>
+                <th scope="col">Nội dung</th>
+                <th scope="col">người viết</th>
+                <th scope="col">chuyên mục</th>
+                <th scope="col">kiểu</th>
+                <th scope="col">lượt xem</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.drafposts}}
+            <tr>
+                <th scope="row">{{id}}</th>
+                <th scope="col">{{title}}</th>
+                <th scope="col">{{date_posted}}</th>
+                <th scope="col">{{cover_image}}</th>
+                <th scope="col">{{abstract}}</th>
+                <th scope="col">{{content}}</th>
+                <th scope="col">{{id_writer}}</th>
+                <th scope="col">{{id_category}}</th>
+                <th scope="col">{{type_post}}</th>
+                <th scope="col">{{views}}</th>
+            </tr>
+            {{/each}}
+            
+            
+        </tbody>
+    </table>
+
+</div>
