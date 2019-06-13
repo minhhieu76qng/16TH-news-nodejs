@@ -24,7 +24,13 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
+    .sidebar-wrapper{
+        padding: 0 15px;
+    }
+    section.post .container{
+        padding: 0;
+    }
     .logo-desktop {
         display: none;
     }
