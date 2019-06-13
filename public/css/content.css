@@ -357,7 +357,7 @@
 }
 
 .post-comment .comment-wrapper {
-    padding: 20px;
+    padding: 10px 20px;
     background-color: #eff1f3;
     border-radius: 3px;
 }
@@ -412,7 +412,6 @@
 
 .replay {
     color: rgb(23, 96, 147);
-    padding: 5px 3px;
 }
 
 /* ============================ Modal Login ============================ */

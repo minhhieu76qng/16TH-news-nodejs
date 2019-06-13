@@ -134,6 +134,16 @@ module.exports = {
     countByTag : TagID => {
         return db.load(`select count(*) as total from post p, post_tag pt where p.id=pt.id_post and p.is_deleted=0 
             and pt.id_tag=${TagID}`);
-    }
+    },
+    
+    detailByPostId : PostID => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.is_deleted=0 and c.is_deleted=0 and p.id=${PostID} and p.id_category=c.id`);
+    },
 
+    getCommentsByPost : PostID => {
+        return db.load(`select c.id as comment_id, c.content, c.date_submit, c.id_parent, u.id as user_id, u.name from comment c, user u 
+            where c.id_user=u.id and c.id_post=${PostID} and c.is_deleted=0
+            order by c.date_submit desc`);
+    }
 }
