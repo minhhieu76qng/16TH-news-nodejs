@@ -68,8 +68,6 @@ router.get('/:id', (req, res, next) => {
 
                                 return val;
                             });
-                            console.log(new Date().toTimeString());
-                            console.log(comments);
                             res.render('news/posts', {
                                 post: post,
                                 tags: tags,
@@ -82,8 +80,28 @@ router.get('/:id', (req, res, next) => {
                 }
             })
             .catch(next);
-
     }
 });
+
+
+router.post('/:id/comment', (req, res, next) => {
+    
+    // get id của use hiện tại
+
+    // kiêm tra xem đã đăng nhập chưa. nếu chưa thì redirect về login
+
+    // get id của post hiện tại
+    let post_id = +req.params.id;
+
+    // get content 
+    let comment = req.body.comment;
+
+    // get date submit
+    let date_submit = new Date();
+
+
+
+    res.redirect(req.baseUrl + '/' + req.params.id);
+})
 
 module.exports = router;

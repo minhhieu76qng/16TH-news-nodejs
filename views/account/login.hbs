@@ -1,0 +1,74 @@
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script>
+    $(function () {
+        $('#loginForm').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password : {
+                    required: true,
+                    minlength : 6
+                }
+            },
+            messages: {
+                email: {
+                    required: 'Email không được rỗng.',
+                    email: 'Email không hợp lệ.'
+                },
+                password: {
+                    required: 'Mật khẩu không được rỗng.',
+                    minlength: 'Mật khẩu có ít nhất 6 kí tự.'
+                }
+            },
+            errorElement: 'em',
+            errorClass: 'mt-2 d-block text-danger text-left',
+            highlight: function (e) {
+                $(e).removeClass('is-valid').addClass('is-invalid');
+            },
+            unhighlight: function (e) {
+                $(e).removeClass('is-invalid').addClass('is-valid');
+            },
+        });
+    })
+</script>
+{{/section}}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+            <div class="card text-center card-sign-in shadow">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Đăng nhập</h4>
+                    <form novalidate action="/account/login" method="POST" autocomplete="off" id="loginForm">
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email" placeholder="Email" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Mật khẩu">
+                        </div>
+
+                        <button type="submit" name="" class="btn btn-primary btn-block text-uppercase">Đăng
+                            nhập</button>
+
+                        <div class="my-3 text-left">
+                            <a href="/account/forgot-password">Quên mật khẩu?</a>
+                        </div>
+                        <div class="my-3 text-left">
+                            <span>Chưa có tài khoản ?</span>&nbsp;<a href="/account/register">Đăng kí ngay</a>
+                        </div>
+                    </form>
+
+                    <hr class="my-4" />
+                    <div class="login-with-social">
+                        <a href="" class="btn btn-block text-uppercase btn-google">Đăng nhập với Google</a>
+                        <a href="" class="btn btn-block text-uppercase btn-facebook">Đăng nhập với Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
