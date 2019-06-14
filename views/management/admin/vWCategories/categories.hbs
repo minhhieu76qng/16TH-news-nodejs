@@ -16,6 +16,42 @@
 
 <script src="asset/js/admin/categories.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+    $(function () {
+
+        $('#CategoryForm').validate({
+            rules: {
+                cat_name: {
+                    required: true,
+                    remote: {
+                        url: '/admin/is-available',
+                        data: {
+                            'cat_name': function () { return $('#txtCategory').val(); },
+                            'id': function () { return $('#txtCatID').val(); }
+                        },
+                        dataType: 'json'
+                    }
+                }
+            },
+            messages: {
+                cat_name: {
+                    required: 'Bạn chưa nhập tên chuyên mục.',
+                    remote: 'Tên chuyên mục đã có. Hãy nhập tên khác.'
+                }
+            },
+            errorElement: 'small',
+            errorClass: 'help-block text-danger',
+            highlight: function (e) {
+                $(e).removeClass('is-valid').addClass('is-invalid');
+            },
+            unhighlight: function (e) {
+                $(e).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+    })
+</script>
+
 {{/section}}
 
 
@@ -39,7 +75,7 @@
                 <div class="wrapper">
                     <ul class="menu-management">
                         <li class="menu-management-item active">
-                            <a class="link" href="/categories"><i class="icon fa fa-list-alt" aria-hidden="true"></i>
+                            <a class="link" href="/admin"><i class="icon fa fa-list-alt" aria-hidden="true"></i>
                                 <div class="linkText">Quản lý chuyên mục</div>
                             </a>
                         </li>
@@ -49,7 +85,8 @@
                             </a>
                         </li>
                         <li class="menu-management-item">
-                            <a class="link dropdown" href=""><i class="icon fa fa-th" aria-hidden="true"></i>
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-th"
+                                    aria-hidden="true"></i>
                                 <div class="linkText">Quản lý bài viết</div>
                                 <i class="fa fa-caret-down"></i>
                             </a>
@@ -76,7 +113,8 @@
                             </ul>
                         </li>
                         <li class="menu-management-item">
-                            <a class="link dropdown" href=""><i class="icon fa fa-users" aria-hidden="true"></i>
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-users"
+                                    aria-hidden="true"></i>
                                 <div class="linkText">Quản lý người dùng</div>
                                 <i class="fa fa-caret-down"></i>
                                 <!-- <i class="icon fa fa-chevron-right" aria-hidden="true"></i>    -->
@@ -149,12 +187,18 @@
                         </table>
                         <div class="pageNumber mt-4">
                             <ul class="pagination justify-content-center">
-                                <li class="page-item disabled"><button class="page-link">Trước</button></li>
-                                <li class="page-item active"><button class="page-link">1</button></li>
-                                <li class="page-item"><button class="page-link">2</button></li>
-                                <li class="page-item"><button class="page-link">3</button></li>
-                                <li class="page-item"><button class="page-link">4</button></li>
-                                <li class="page-item"><button class="page-link">Sau</button></li>
+                                {{#each this.pages}}
+                                {{#if active}}
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="javascript:;">{{value}} <span
+                                            class="sr-only">(current)</span></a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
                             </ul>
                         </div>
                     </div>
@@ -176,12 +220,11 @@
             </div>
             <div class="modal-body">
                 <div id="divAdd">
-                    <form method="POST" action="/admin/add">
+                    <form id="CategoryForm" method="POST" action="/admin/add">
                         <div class="AddCategory-container">
-                            <div class="form-group"  id="divID" style="display:none;">
+                            <div class="form-group" id="divID" style="display:none;">
                                 <label for="txtCatID">#</label>
-                                <input readonly type="text" class="form-control" id="txtCatID" name="id"
-                                    value="{{this.category.CatID}}">
+                                <input readonly type="text" class="form-control" id="txtCatID" name="id">
                             </div>
                             <div class="form-group">
                                 <label for="category"><b>Chuyên mục</b></label>
@@ -192,19 +235,16 @@
                                 <label for="post-category"><b>Chuyên mục cha</b></label>
                                 <div class="wrapper-control">
                                     <select class="form-control" name="parent_cat" id="parent-category">
-                                        <option value="1">Giáo dục</option>
-                                        <option value="2">Thể thao</option>
-                                        <option value="3">Công nghệ</option>
-                                        <option value="4">Giải trí</option>
-                                        <option value="5">Sức khỏe</option>
+                                        {{#each this.rootCategories}}
+                                        <option value={{id}}>{{cat_name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
                             <hr>
                             <div class="clearfix">
                                 <button type="submit" class="btn btn-primary btnAdd" id="btnAddCategory">Thêm</button>
-                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditCategory"
-                                    formaction="/admin/update">Chỉnh sửa</button>
+                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditCategory">Chỉnh sửa</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                             </div>
                         </div>

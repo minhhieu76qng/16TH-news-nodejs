@@ -15,6 +15,7 @@ app.engine("hbs", exphbs({
         section: hbs_sections()
     }
 }));
+//app.engine('.hbs', hbs.engine); 
 app.set('view engine', 'hbs');
 
 app.use('/asset', express.static('public'));
@@ -22,7 +23,7 @@ app.use('/asset', express.static('public'));
 // morgan log
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 // load danh muc
 app.use(require('./middlewares/locals.mdw'));

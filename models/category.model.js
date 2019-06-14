@@ -27,7 +27,28 @@ module.exports = {
     },
 
     getList: () => {
-        return db.load('SELECT cat.id, cat.cat_name, cat2.cat_name as parentCat, count(post.id) as numPosts FROM category cat LEFT JOIN category cat2 on cat.parent_cat = cat2.id LEFT JOIN post on cat.id = post.id_category and post.is_deleted = 0 WHERE cat.status = 1 GROUP BY cat.id');
+        return db.load(`SELECT cat.id, cat.cat_name, cat2.cat_name as parentCat, count(post.id) as numPosts 
+        FROM category cat LEFT JOIN category cat2 on cat.parent_cat = cat2.id LEFT JOIN post on cat.id = post.id_category and post.is_deleted = 0 
+        WHERE cat.is_deleted = 0 GROUP BY cat.id`);
+    },
+
+    pageCat: (limit, offset) =>{
+        return db.load(`SELECT cat.id, cat.cat_name, cat2.cat_name as parentCat, count(post.id) as numPosts 
+        FROM category cat LEFT JOIN category cat2 on cat.parent_cat = cat2.id LEFT JOIN post on cat.id = post.id_category and post.is_deleted = 0 
+        WHERE cat.is_deleted = 0 GROUP BY cat.id limit ${limit} offset ${offset}`);
+    },
+
+    count:()=>{
+        return db.load(`select count(*) as total from category where is_deleted = 0`);
+    },
+
+    countPostRootCat:(CatID)=>{
+        return db.load(`Select COUNT(*) as nPosts from post, category cat 
+        where cat.parent_cat = ${CatID} and cat.id = post.id_category and post.is_deleted = 0 and cat.is_deleted = 0`);
+    },
+
+    singleByCatName:(cat_name, id)=>{
+        return db.load(`select * from category cat where cat.cat_name = N'${cat_name}' and cat.id != '${id}' and cat.is_deleted = 0`);
     },
 
     add: entity => {

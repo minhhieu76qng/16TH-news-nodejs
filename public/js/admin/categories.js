@@ -45,6 +45,8 @@ function openAddCategory() {
     document.getElementById('btnAddCategory').style.display = "inline-block";
     document.getElementById("parent-category").value = "1";
     document.getElementById("txtCategory").value = "";
+    document.getElementById("txtCatID").value = "";
+    document.getElementById('CategoryForm').action = "/admin/add";
 }
 
 function openEditCategory(r) {
@@ -64,6 +66,7 @@ function openEditCategory(r) {
     document.getElementById("txtCatID").value = table.rows[r.rowIndex].cells[0].innerHTML;
     category.value = table.rows[r.rowIndex].cells[1].innerHTML;
     parentCategory.value = ParentCategories[table.rows[r.rowIndex].cells[2].innerHTML];
+    document.getElementById('CategoryForm').action = "/admin/update";
     $('#CategoryModal').modal('show');
 }
 
