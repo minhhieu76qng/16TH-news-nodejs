@@ -10,7 +10,6 @@
   "author": "Hieu Do",
   "license": "ISC",
   "dependencies": {
-    "ember-truth-helpers": "^2.1.0",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-handlebars-sections": "^1.0.1",
