@@ -9,9 +9,9 @@
                     required: true,
                     email: true
                 },
-                password : {
+                password: {
                     required: true,
-                    minlength : 6
+                    minlength: 6
                 }
             },
             messages: {
@@ -43,6 +43,14 @@
             <div class="card text-center card-sign-in shadow">
                 <div class="card-body">
                     <h4 class="card-title mb-4">Đăng nhập</h4>
+                    {{#if err_message}}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{err_message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{/if}}
                     <form novalidate action="/account/login" method="POST" autocomplete="off" id="loginForm">
                         <div class="form-group">
                             <input type="email" class="form-control" name="email" placeholder="Email" autofocus>

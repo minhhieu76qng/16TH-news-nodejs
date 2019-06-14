@@ -1,31 +1,22 @@
 var express = require('express');
-var exphbs = require('express-handlebars');
-var hbs_sections = require('express-handlebars-sections');
 
 var morgan = require('morgan');
 
 var app = express();
 
-
-
-app.engine("hbs", exphbs({
-    defaultLayout: 'main.hbs',
-    layoutsDir: 'views/_layouts',
-    helpers: {
-        section: hbs_sections()
-    }
-}));
-//app.engine('.hbs', hbs.engine); 
-app.set('view engine', 'hbs');
-
-app.use('/asset', express.static('public'));
-
 // morgan log
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended : true}));
+
+app.use('/asset', express.static('public'));
+
+require('./middlewares/view-engine.mdw')(app);
+require('./middlewares/session')(app);
+require('./middlewares/passport')(app);
 
 // load danh muc
+app.use(require('./middlewares/auth-local.mdw'));
 app.use(require('./middlewares/locals.mdw'));
 
 app.use('/account', require('./routes/account/account.route'));
