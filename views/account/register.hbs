@@ -29,7 +29,16 @@
                 },
                 email: {
                     required: true,
-                    email: true
+                    email: true,
+                    remote : {
+                        url : '/account/is-available',
+                        type : 'post',
+                        data : {
+                            email : function(){
+                                return $('#txtEmail').val();
+                            }
+                        }
+                    }
                 },
                 password: {
                     required: true,
@@ -49,7 +58,8 @@
                 },
                 email: {
                     required: 'Email không được rỗng.',
-                    email: 'Email không hợp lệ.'
+                    email: 'Email không hợp lệ.',
+                    remote : 'Email này đã tồn tại.'
                 },
                 password: {
                     required: 'Mật khẩu không được rỗng.',
@@ -82,14 +92,14 @@
                     <form novalidate id="formRegister" action="/account/register" method="POST" autocomplete="off">
 
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Họ tên">
+                            <input type="text" class="form-control" name="name" placeholder="Họ tên" autofocus>
                         </div>
                         <div class="form-group">
                             <input id="dtpicker_dob" type="text" class="form-control" name="dob"
                                 placeholder="Ngày sinh">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <input id="txtEmail" type="email" class="form-control" name="email" placeholder="Email">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Mật khẩu">
