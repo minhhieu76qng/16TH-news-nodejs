@@ -389,3 +389,17 @@ footer .footer-bottom {
 #nav-search .main-nav .login-search{
   z-index: 1200;
 }
+
+.card-sign-in{
+  padding: 15px;
+}
+
+.btn-facebook{
+  color: #fff;
+  background-color: #3b5998;
+}
+
+.btn-google{
+  color: #fff;
+  background-color: #ea4335;
+}

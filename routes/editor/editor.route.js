@@ -4,8 +4,10 @@ var drafpostModel = require('../../models/drafpost.model');
 var router = exp.Router();
 
 router.get('/', (req, res) => {
-  drafpostModel.byCat(6)
+  res.locals.pageTitle = 'Kiểm duyệt bài viết';
+  drafpostModel.byCat(9)
       .then(rows => {
+        
         res.render('management/editor/editor.view.hbs', {
           drafposts: rows
         });

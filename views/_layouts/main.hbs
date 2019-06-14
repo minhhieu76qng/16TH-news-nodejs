@@ -133,7 +133,7 @@
                         </form>
 
                         <!-- khi đăng nhập rồi thì sẽ hiển thị phần này, ngược lại sẽ hiển thị nút đăng nhập -->
-                        <!-- <div class=" ml-2 dropdown open user-button">
+                        {{!-- <div class=" ml-2 dropdown open user-button">
                             <button class="btn dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i> Hieu Do
@@ -155,12 +155,11 @@
                                 <a class="dropdown-item" href="#"><i class="fa fa-sign-out mr-2" aria-hidden="true"></i>
                                     Đăng xuất</a>
                             </div>
-                        </div> -->
+                        </div> --}}
 
-                        <button class="btn login-button ml-2" type="button" data-toggle="modal"
-                            data-target="#LogInModal" data-backdrop="static">
-                            <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>
-                        </button>
+                        <a href="/account/login" class="btn login-button ml-2">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i><span class="ml-2">Đăng nhập</span>
+                        </a>
                     </div>
                 </div>
 
@@ -216,7 +215,8 @@
         </div>
 
         <div class="footer-bottom">
-            <p class="text-center mb-0">Copyright &copy; 2019 <a href="/" title="Trang chủ">VN-News</a>. All rights reserved</p>
+            <p class="text-center mb-0">Copyright &copy; 2019 <a href="/" title="Trang chủ">VN-News</a>. All rights
+                reserved</p>
         </div>
     </footer>
 
@@ -239,8 +239,6 @@
     <div id="back-to-top" class="hidden">
         <i class="fa fa-angle-up" aria-hidden="true"></i>
     </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

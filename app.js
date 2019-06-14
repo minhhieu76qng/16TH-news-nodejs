@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 // load danh muc
 app.use(require('./middlewares/locals.mdw'));
 
+app.use('/account', require('./routes/account/account.route'));
 
 app.use('/categories', require('./routes/news/categories.route'));
 app.use('/posts', require('./routes/news/posts.route'));

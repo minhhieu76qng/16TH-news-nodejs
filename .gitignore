@@ -90,3 +90,6 @@ typings/
 
 # remove file test.js
 test.js
+
+#remove .vs
+.vscode
