@@ -31,7 +31,6 @@ app.use('/', require('./routes/news/index.route'));
 app.use('/admin', require('./routes/admin/category.route.js'));
 app.use('/editor', require('./routes/editor/editor.route'));
 
-
 app.use((req, res, next) => {
     res.render('404', {
         layout: false
