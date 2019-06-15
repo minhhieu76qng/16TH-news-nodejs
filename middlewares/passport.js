@@ -25,8 +25,15 @@ module.exports = function (app) {
 
                     var ret = bcrypt.compareSync(password, user.password);
 
-                    if (ret)
-                        return done(null, user);
+                    if (ret){
+                        let secureUser = {
+                            id : user.id,
+                            name : user.name,
+                            type : user.type
+                        }
+                        return done(null, secureUser);
+
+                    }
 
                     return done(null, false, { message: 'Tài khoản hoặc mật khẩu bị sai.' })
                 })

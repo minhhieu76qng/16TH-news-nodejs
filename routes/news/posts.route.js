@@ -4,7 +4,7 @@ var moment = require('moment');
 var post_model = require('../../models/post.model');
 var tag_model = require('../../models/tag.model');
 var view_weeks_model = require('../../models/view_weeks.model');
-
+var user_model = require('../../models/user.model');
 var my_utils = require('../../utils/myUtils');
 
 var router = express.Router();
@@ -16,32 +16,61 @@ router.get('/:id', (req, res, next) => {
     if (isNaN(post_id)) {
         throw new Error('Post ID is not valid.');
     } else {
-        post_model
-            .detailByPostId(post_id)
-            .then(detail => {
-                if (detail.length === 0) {
-                    // khong ton tai du lieu
-                    // res.render()
-                } else {
 
+        let UserID = null;
+
+        if (req.user) {
+            UserID = req.user.id;
+        }
+
+        Promise
+            .all([
+                post_model.detailByPostId(post_id),
+                req.user ? user_model.detailUserByID(UserID) : Promise.resolve()
+            ])
+            .then(([detail, arrUser]) => {
+                if (detail.length === 0) {
+                    res.locals.pageTitle = 'Thông báo'
+                    return res.render('notify', {
+                        msg_title: 'Bài viết không tồn tại.',
+                        msg_detail: 'Bài viết này hiện đã không còn tồn tại trong máy chủ.'
+                    })
+                } else {
                     let post = detail[0];
 
-                    // nếu bài viết không phải free thì phải đăng nhập
-                    // redirect về trang đăng nhập và hiện thông báo
-                    if (post.type_post !== 0 && !req.user) {
-                        req.flash('msg_warning', 'Đăng nhập để có thể xem bài viết premium.');
+                    if (post.type_post !== 0) {
+                        if (!req.user || arrUser === 'undefined') {    // tức là bằng với Promise.resolve => undefined
+                            req.flash('msg_warning', 'Đăng nhập để có thể xem bài viết premium.');
 
-                        return res.redirect(`/account/login?retUrl=${req.originalUrl}`);
-                    }
+                            return res.redirect(`/account/login?retUrl=${req.originalUrl}`);
+                        }
 
-                    // nếu bài viết không phải free và cần quyền xem
-                    if (post.type_post !== 0 && req.user && req.user.type === 'NORMAL') {
-                        // redirect về trang đăng nhập và hiện thông báo
-                        res.locals.pageTitle = 'Thông báo'
-                        return res.render('notify', {
-                            msg_title: 'Bạn chưa có quyền để xem tin tức này.',
-                            msg_detail: 'Vui lòng liên hệ admin để gia hạn tài khoản.'
-                        })
+                        if (arrUser.length === 0) {
+                            // không tồn tại người dùng => có thể đã bị xóa sau khi người đó đăng nhập
+                            res.locals.pageTitle = 'Thông báo'
+                            return res.render('notify', {
+                                msg_title: 'Tài khoản của bạn bị lỗi.',
+                                msg_detail: 'Vui lòng liên hệ admin để khắc phục.'
+                            })
+
+                        }
+
+                        let user = arrUser[0];
+                        if (user.type === 'SUBCRIBER') {
+                            // kiểm tra ngày hết hạn
+                            const now = new Date();
+                            const exp_date = new Date(user.exp_date);
+
+                            if (user.exp_date === null || now > exp_date) {
+                                // tài khoản hết hạn
+                                res.locals.pageTitle = 'Thông báo'
+                                return res.render('notify', {
+                                    msg_title: 'Bạn chưa có quyền để xem tin tức này.',
+                                    msg_detail: 'Tài khoản của bạn dường như đã hết hạn. Vui lòng liên hệ admin để gia hạn tài khoản.'
+                                })
+                            }
+
+                        }
                     }
 
                     let id_category = post.id_category;
