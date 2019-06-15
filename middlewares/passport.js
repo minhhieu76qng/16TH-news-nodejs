@@ -15,20 +15,14 @@ module.exports = function (app) {
             passwordField: 'password'
         },
         function (email, password, done) {
-            user_model.singleByEmail(email)
+            user_model.detailUserByEmail(email)
                 .then(rows => {
-                    // hieudeptrai@gmail.com
                     if (rows.length === 0) {
-                        return done(null, false, { message: 'Tài khoản không tồn tại!' });
+                        return done(null, false, { message: 'Tài khoản hoặc mật khẩu bị sai.' });
                     }
 
                     var user = rows[0];
 
-                    console.log(password);
-                    console.log(user.password);
-
-                    // console.log(bcrypt.hashSync(password, 10));
-                    
                     var ret = bcrypt.compareSync(password, user.password);
 
                     if (ret)

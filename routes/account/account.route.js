@@ -15,7 +15,17 @@ var router = express.Router();
 
 router.get('/login', (req, res, next) => {
     res.locals.pageTitle = "Đăng nhập";
-    res.render('account/login');
+    var msg_warning = req.flash('msg_warning');
+    var msg_success = req.flash('msg_success');
+
+    return res.render('account/login', {
+        hasRetUrl : req.query.retUrl ? true : false,
+        retUrl : req.query.retUrl ? req.query.retUrl : '',
+        msg : {
+            msg_warning : msg_warning,
+            msg_success : msg_success
+        }
+    });
 })
 
 router.get('/register', (req, res, next) => {
@@ -36,12 +46,13 @@ router.post('/login', (req, res, next) => {
 
         if (!user) {
             return res.render('account/login', {
-                err_message: info.message
+                msg : {
+                    msg_warning : info.message
+                }
             });
         }
 
         var retUrl = req.query.retUrl || '/';
-
         req.logIn(user, (err) => {
             if (err) {
                 return next(err);
@@ -86,6 +97,7 @@ router.post('/register', (req, res, next) => {
 
                         user_account_type.addNewUserAccountType(userAccountType)
                             .then(id => {
+                                req.flash('msg_success', 'Đăng kí thành công. Bạn cần đăng nhập')
                                 res.redirect('/account/login');
                             })
                             .catch(next);

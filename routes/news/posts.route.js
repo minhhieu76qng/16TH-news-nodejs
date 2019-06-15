@@ -21,7 +21,26 @@ router.get('/:id', (req, res, next) => {
                     // khong ton tai du lieu
                     // res.render()
                 } else {
+
                     let post = detail[0];
+
+                    // nếu bài viết không phải free thì phải đăng nhập
+                    // redirect về trang đăng nhập và hiện thông báo
+                    if (post.type_post !==0 && !req.user){
+                        req.flash('msg_warning', 'Đăng nhập để có thể xem bài viết premium.');
+
+                        return res.redirect(`/account/login?retUrl=${req.originalUrl}`);
+                    }
+
+                    // nếu bài viết không phải free và cần quyền xem
+                    if (post.type_post !== 0 && req.user && req.user.type === 'NORMAL'){
+                        // redirect về trang đăng nhập và hiện thông báo
+                        res.locals.pageTitle = 'Thông báo'
+                        return res.render('notify', {
+                            msg_title : 'Bạn chưa có quyền để xem tin tức này.',
+                            msg_detail : 'Vui lòng liên hệ admin để gia hạn tài khoản.'
+                        })
+                    }
 
                     let id_category = post.id_category;
 

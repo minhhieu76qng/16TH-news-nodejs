@@ -1,6 +1,6 @@
 var express = require('express');
-
 var morgan = require('morgan');
+var flash = require('connect-flash');
 
 var app = express();
 
@@ -8,6 +8,7 @@ var app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
+app.use(flash());
 
 app.use('/asset', express.static('public'));
 
