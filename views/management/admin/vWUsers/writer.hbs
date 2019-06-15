@@ -1,6 +1,8 @@
 {{#section 'css'}}
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 
 <link rel="stylesheet" href="asset/css/news_management.css">
 {{/section}}
@@ -8,46 +10,80 @@
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
-
 <script src="asset/js/widget_utility.js"></script>
 
 {{!-- <script src="asset/js/admin/admin.js"></script> --}}
 
-<script src="asset/js/admin/categories.js"></script>
-
+<script src="asset/js/admin/writer.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
     $(function () {
-
-        $('#CategoryForm').validate({
+        $('#dtpicker_dob').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y',
+            mask: true
+        });
+        $('#formRegister').validate({
             rules: {
-                cat_name: {
+                name: {
+                    required: true
+                },
+                dob: {
+                    required: true
+                },
+                email: {
                     required: true,
+                    email: true,
                     remote: {
                         url: '/admin/is-available',
                         data: {
-                            'cat_name': function () { return $('#txtCategory').val(); },
-                            'id': function () { return $('#txtCatID').val(); }
+                            'email': function () {
+                                return $('#txtEmail').val();
+                            }
                         },
                         dataType: 'json'
                     }
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                confirmPw: {
+                    required: true,
+                    equalTo: $('[name="password"]')
                 }
             },
             messages: {
-                cat_name: {
-                    required: 'Bạn chưa nhập tên chuyên mục.',
-                    remote: 'Tên chuyên mục đã có. Hãy nhập tên khác.'
+                name: {
+                    required: 'Tên người dùng không được rỗng.'
+                },
+                dob: {
+                    required: 'Ngày sinh không được rỗng.'
+                },
+                email: {
+                    required: 'Email không được rỗng.',
+                    email: 'Email không hợp lệ.',
+                    remote: 'Email này đã tồn tại.'
+                },
+                password: {
+                    required: 'Mật khẩu không được rỗng.',
+                    minlength: 'Mật khẩu có ít nhất 6 kí tự.'
+                },
+                confirmPw: {
+                    required: 'Mật khẩu xác nhận không được rỗng.',
+                    equalTo: 'Mật khẩu xác nhận không trùng với mật khẩu.'
                 }
             },
-            errorElement: 'small',
-            errorClass: 'help-block text-danger',
+            errorElement: 'em',
+            errorClass: 'mt-2 d-block text-danger text-left',
             highlight: function (e) {
                 $(e).removeClass('is-valid').addClass('is-invalid');
             },
             unhighlight: function (e) {
                 $(e).removeClass('is-invalid').addClass('is-valid');
-            }
+            },
         });
     })
 </script>
@@ -74,7 +110,7 @@
                         -->
                 <div class="wrapper">
                     <ul class="menu-management">
-                        <li class="menu-management-item active">
+                        <li class="menu-management-item">
                             <a class="link" href="#category-management"><i class="icon fa fa-list-alt"
                                     aria-hidden="true"></i>
                                 <div class="linkText">Quản lý chuyên mục</div>
@@ -133,7 +169,7 @@
                                         <div class="linkText">Biên tập viên</div>
                                     </a>
                                 </li>
-                                <li class="menu-management-item">
+                                <li class="menu-management-item active">
                                     <a class="link" href="/subscriber-management"><i class="icon fa fa-address-book"
                                             aria-hidden="true"></i>
                                         <div class="linkText">Độc giả</div>
@@ -146,42 +182,37 @@
             </div>
             <div class="col">
                 <div class="wrapper wrapper-content">
-                    <div class="content-menu-item" id="category-management">
-                        <h3 class="mb-3 mt-3">Danh sách chuyên mục</h3>
+                    <div class="content-menu-item" id="writer-management">
+                        <h3 class="mb-3 mt-3">Danh sách phóng viên</h3>
                         <div class="div-btn-control mb-3 mt-3">
-                            <button type="button" class="btn btn-primary" id="addCategory" data-toggle="modal"
-                                data-target="#CategoryModal" data-backdrop="static" onclick="openAddCategory()">Thêm
-                                mới</button>
-                            <button type="button" class="btn btn-primary" id="deleteCategory"
-                                onclick="openDeleteCategory()">Xóa</button>
+                            <button type="button" class="btn btn-primary" id="createWriter" data-toggle="modal"
+                                data-target="#CreateAccountModal" data-backdrop="static">Tạo
+                                tài khoản</button>
                         </div>
-                        <table class="can-be-edit table table-hover table-bordered mb-0" id="tableCategory">
+                        <table class="can-be-edit table table-hover table-bordered mb-0" id="writer-management-table">
                             <col style="width:5%">
-                            <col style="width:35%">
-                            <col style="width:35%">
-                            <col style="width:25%">
+                            <col style="width:30%">
+                            <col style="width:20%">
+                            <col style="width:30%">
+                            <col style="width:12%">
 
                             <thead class="thead-dark">
                                 <tr>
                                     <th style="vertical-align: top;">#</th>
-                                    <th style="vertical-align: top;">Chuyên mục</th>
-                                    <th style="vertical-align: top;">Chuyên mục cha</th>
-                                    <th style="vertical-align: top;">Số lượng bài viết</th>
-                                    <th class="colDeleteCategory"></th>
+                                    <th style="vertical-align: top;">Họ tên</th>
+                                    <th style="vertical-align: top;">Bút danh</th>
+                                    <th style="vertical-align: top;">Email</th>
+                                    <th class="text-center" style="vertical-align: top;">Số bài viết</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each this.categories}}
-                                <tr onclick="openEditCategory(this,{{parentCatID}})">
+                                {{#each this.writers}}
+                                <tr onclick="openDetailAccountWriter(this, '{{dob}}')">
                                     <th scope="row" class="text-center">{{id}}</th>
-                                    <td>{{cat_name}}</td>
-                                    <td>{{parentCat}}</td>
-                                    <td>{{numPosts}}</td>
-                                    <td class="colDeleteCategory">
-                                        <a class="btn btn-danger" href="/admin/delete/{{id}}">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
+                                    <td>{{name}}</td>
+                                    <td>{{pseudonym}}</td>
+                                    <td>{{email}}</td>
+                                    <td class="text-center">{{numPosts}}</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -206,50 +237,91 @@
         </div>
     </div>
 </section>
-<!-- Modal add/update category-->
-<div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModalLabel"
+<!-- Modal: create account -->
+<div class="modal fade" id="CreateAccountModal" tabindex="-1" role="dialog" aria-labelledby="CreateAccountModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="CategoryModalLabel">Thêm chuyên mục</h5>
+                <h5 class="modal-title" id="CreateAccountModalLabel">Tạo tài khoản</h5>
+                <button id="closeCreateAccountModal" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form novalidate id="formRegister" action="/admin/register" method="POST" autocomplete="off">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Họ tên" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input id="txtPseudonym" type="text" class="form-control" name="pseudonym"
+                            placeholder="Bút danh">
+                    </div>
+                    <div class="form-group">
+                        <input id="dtpicker_dob" type="text" class="form-control" name="dob" placeholder="Ngày sinh">
+                    </div>
+                    <div class="form-group">
+                        <input id="txtEmail" type="email" class="form-control" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Mật khẩu">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="confirmPw" placeholder="Nhập lại mật khẩu">
+                    </div>
+                    <div class="clearfix mt-4">
+                        <button type="submit" name="" class="btn btn-primary">Đăng kí</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: detail account-->
+<div class="modal fade" id="DetailAccountModal" tabindex="-1" role="dialog" aria-labelledby="DetailAccountModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DetailAccountLabel">Thông tin tài khoản</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div id="divAdd">
-                    <form id="CategoryForm" method="POST" action="/admin/add">
-                        <div class="AddCategory-container">
-                            <div class="form-group" id="divID" style="display:none;">
-                                <label for="txtCatID">#</label>
-                                <input readonly type="text" class="form-control" id="txtCatID" name="id">
-                            </div>
-                            <div class="form-group">
-                                <label for="category"><b>Chuyên mục</b></label>
-                                <input class="form-control" id="txtCategory" name="cat_name" type="text"
-                                    placeholder="Nhập tên chuyên mục" name="category">
-                            </div>
-                            <div class="form-group">
-                                <label for="post-category"><b>Chuyên mục cha</b></label>
-                                <div class="wrapper-control">
-                                    <select class="form-control" name="parent_cat" id="parent-category">
-                                        {{#each this.rootCategories}}
-                                        <option value={{id}}>{{cat_name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="clearfix">
-                                <button type="submit" class="btn btn-primary btnAdd" id="btnAddCategory">Thêm</button>
-                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditCategory">Chỉnh
-                                    sửa</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <form novalidate class="user-info view-info">
+                    <div class="form-group">
+                        <label for=""><b>ID</b></label>
+                        <input disabled id="txtDetailID" name="id" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for=""><b>Họ tên</b></label>
+                        <input disabled id="txtDetailName" name="name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for=""><b>Bút danh</b></label>
+                        <input disabled id="txtDetailPseudonym" name="pseudonym" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for=""><b>Email</b></label>
+                        <input disabled id="txtDetailEmail" name="email" type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for=""><b>Ngày sinh</b></label>
+                        <input disabled id="txtDetailDOB" name="dob" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for=""><b>Số lượng bài viết</b></label>
+                        <input disabled id="txtDetailNumPost" name="numPosts" type="text" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center" id="DetailAccountModal-footer">
+                <a class="btn btn-danger" id="btnBan" href="">Cấm</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>

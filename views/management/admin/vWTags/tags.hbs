@@ -14,30 +14,30 @@
 
 {{!-- <script src="asset/js/admin/admin.js"></script> --}}
 
-<script src="asset/js/admin/categories.js"></script>
+<script src="asset/js/admin/tags.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
     $(function () {
 
-        $('#CategoryForm').validate({
+        $('#TagForm').validate({
             rules: {
-                cat_name: {
+                tag_name: {
                     required: true,
                     remote: {
                         url: '/admin/is-available',
                         data: {
-                            'cat_name': function () { return $('#txtCategory').val(); },
-                            'id': function () { return $('#txtCatID').val(); }
+                            'tag_name': function () { return $('#txtTag').val(); },
+                            'id': function () { return $('#txtTagID').val(); }
                         },
                         dataType: 'json'
                     }
                 }
             },
             messages: {
-                cat_name: {
-                    required: 'Bạn chưa nhập tên chuyên mục.',
-                    remote: 'Tên chuyên mục đã có. Hãy nhập tên khác.'
+                tag_name: {
+                    required: 'Bạn chưa nhập tên tag.',
+                    remote: 'Tag đã có. Hãy nhập tên khác.'
                 }
             },
             errorElement: 'small',
@@ -74,13 +74,13 @@
                         -->
                 <div class="wrapper">
                     <ul class="menu-management">
-                        <li class="menu-management-item active">
+                        <li class="menu-management-item">
                             <a class="link" href="#category-management"><i class="icon fa fa-list-alt"
                                     aria-hidden="true"></i>
                                 <div class="linkText">Quản lý chuyên mục</div>
                             </a>
                         </li>
-                        <li class="menu-management-item">
+                        <li class="menu-management-item active">
                             <a class="link" href="/tags"><i class="icon fa fa-tags" aria-hidden="true"></i>
                                 <div class="linkText">Quản lý nhãn tag</div>
                             </a>
@@ -146,38 +146,35 @@
             </div>
             <div class="col">
                 <div class="wrapper wrapper-content">
-                    <div class="content-menu-item" id="category-management">
-                        <h3 class="mb-3 mt-3">Danh sách chuyên mục</h3>
+                    <div class="content-menu-item" id="tag-management">
+                        <h3 class="mb-3 mt-3">Danh sách nhãn tag</h3>
                         <div class="div-btn-control mb-3 mt-3">
-                            <button type="button" class="btn btn-primary" id="addCategory" data-toggle="modal"
-                                data-target="#CategoryModal" data-backdrop="static" onclick="openAddCategory()">Thêm
+                            <button type="button" class="btn btn-primary" id="addTag" data-toggle="modal"
+                                data-target="#TagModal" data-backdrop="static" onclick="openAddTag()">Thêm
                                 mới</button>
-                            <button type="button" class="btn btn-primary" id="deleteCategory"
-                                onclick="openDeleteCategory()">Xóa</button>
+                            <button type="button" class="btn btn-primary" id="deleteTag"
+                                onclick="openDeleteTag()">Xóa</button>
                         </div>
-                        <table class="can-be-edit table table-hover table-bordered mb-0" id="tableCategory">
+                        <table class="can-be-edit table table-hover table-bordered mb-0" id="tableTag">
                             <col style="width:5%">
+                            <col style="width:60%">
                             <col style="width:35%">
-                            <col style="width:35%">
-                            <col style="width:25%">
 
                             <thead class="thead-dark">
                                 <tr>
                                     <th style="vertical-align: top;">#</th>
-                                    <th style="vertical-align: top;">Chuyên mục</th>
-                                    <th style="vertical-align: top;">Chuyên mục cha</th>
+                                    <th style="vertical-align: top;">Tên nhãn</th>
                                     <th style="vertical-align: top;">Số lượng bài viết</th>
-                                    <th class="colDeleteCategory"></th>
+                                    <th class="colDeleteTag"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each this.categories}}
-                                <tr onclick="openEditCategory(this,{{parentCatID}})">
+                                {{#each this.tags}}
+                                <tr onclick="openEditTag(this)">
                                     <th scope="row" class="text-center">{{id}}</th>
-                                    <td>{{cat_name}}</td>
-                                    <td>{{parentCat}}</td>
+                                    <td>{{tag_name}}</td>
                                     <td>{{numPosts}}</td>
-                                    <td class="colDeleteCategory">
+                                    <td class="colDeleteTag">
                                         <a class="btn btn-danger" href="/admin/delete/{{id}}">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
@@ -200,51 +197,40 @@
                             {{/if}}
                             {{/each}}
                         </ul>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Modal add/update category-->
-<div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="CategoryModalLabel"
-    aria-hidden="true">
+<!-- Modal add/update tag-->
+<div class="modal fade" id="TagModal" tabindex="-1" role="dialog" aria-labelledby="TagModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="CategoryModalLabel">Thêm chuyên mục</h5>
+                <h5 class="modal-title" id="TagModalLabel">Thêm nhãn tag</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div id="divAdd">
-                    <form id="CategoryForm" method="POST" action="/admin/add">
-                        <div class="AddCategory-container">
-                            <div class="form-group" id="divID" style="display:none;">
+                    <form id="TagForm" method="POST" action="/admin/add">
+                        <div class="AddTag-container">
+                            <div class="form-group" id="divIDTag" style="display:none;">
                                 <label for="txtCatID">#</label>
-                                <input readonly type="text" class="form-control" id="txtCatID" name="id">
+                                <input readonly type="text" class="form-control" id="txtTagID" name="id">
                             </div>
                             <div class="form-group">
-                                <label for="category"><b>Chuyên mục</b></label>
-                                <input class="form-control" id="txtCategory" name="cat_name" type="text"
-                                    placeholder="Nhập tên chuyên mục" name="category">
-                            </div>
-                            <div class="form-group">
-                                <label for="post-category"><b>Chuyên mục cha</b></label>
-                                <div class="wrapper-control">
-                                    <select class="form-control" name="parent_cat" id="parent-category">
-                                        {{#each this.rootCategories}}
-                                        <option value={{id}}>{{cat_name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
+                                <label for="tag"><b>Tên nhãn</b></label>
+                                <input class="form-control" id="txtTag" type="text" placeholder="Nhập tên nhãn tag"
+                                    name="tag_name">
                             </div>
                             <hr>
                             <div class="clearfix">
-                                <button type="submit" class="btn btn-primary btnAdd" id="btnAddCategory">Thêm</button>
-                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditCategory">Chỉnh
-                                    sửa</button>
+                                <button type="submit" class="btn btn-primary btnAdd" id="btnAddTag">Thêm</button>
+                                <button type="submit" class="btn btn-primary btnEdit" id="btnEditTag">Chỉnh sửa</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                             </div>
                         </div>

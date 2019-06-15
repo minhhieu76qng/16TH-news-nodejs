@@ -46,5 +46,31 @@ module.exports = {
 
     getTagsById : TagId => {
         return db.load(`select * from tags where id=${TagId} and is_deleted=0`);
+    },
+
+    pageTag: (limit, offset) =>{
+        return db.load(`SELECT tags.id, tags.tag_name, COUNT(post_tag.id) as numPosts 
+        from tags LEFT JOIN post_tag on tags.id = post_tag.id_tag LEFT JOIN post on post_tag.id_post = post.id and post.is_deleted = 0 
+        where tags.is_deleted = 0 GROUP BY tags.id LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    count:()=>{
+        return db.load(`select count(*) as total from tags where is_deleted = 0`);
+    },
+
+    singleByTagName:(tag_name, id)=>{
+        return db.load(`select * from tags where tags.tag_name = N'${tag_name}' and tags.id != '${id}' and tags.is_deleted = 0`);
+    },
+
+    add: entity => {
+        return db.add('tags', entity);
+    },
+
+    update: entity => {
+        return db.update('tags', 'id', entity);
+    },
+
+    delete: id => {
+        return db.delete('tags', 'id', id);
     }
 };

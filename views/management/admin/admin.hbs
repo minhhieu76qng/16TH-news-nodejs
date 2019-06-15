@@ -1,0 +1,118 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js'}}
+
+<script src="asset/js/widget_utility.js"></script>
+
+<script src="asset/js/admin/admin.js"></script>
+
+{{/section}}
+
+
+<section id="news-management" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <!-- bao gom menu
+                    * neu la admin:
+                        + Quản lý chuyên mục
+                        + Quản lý nhãn tag
+                        + Quản lý bài viết
+                            + Bài viết đã xuất bản
+                            + Bài viết đã được duyệt & chờ xuất bản
+                            + Bài viết chưa duyệt
+                        + Quản lý người dùng
+                            + Phóng viên
+                            + Biên tập viên
+                            + Độc giả
+                        -->
+                <div class="wrapper">
+                    <ul class="menu-management">
+                        <li class="menu-management-item active">
+                            <a class="link" href="/categories"><i class="icon fa fa-list-alt"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý chuyên mục</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link" href="/admin/tags"><i class="icon fa fa-tags" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý nhãn tag</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-th"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý bài viết</div>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/accepted-news">
+                                        <i class="icon fa fa-check-square-o" aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/not-accepted-news"><i class="icon fa fa-tasks"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài
+                                            viết chưa duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/published-news"><i class="icon fa fa-newspaper-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã xuất bản</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-users"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý người dùng</div>
+                                <i class="fa fa-caret-down"></i>
+                                <!-- <i class="icon fa fa-chevron-right" aria-hidden="true"></i>    -->
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/writer-management"><i class="icon fa fa-pencil-square-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Phóng viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/editor-management"><i class="icon fa fa-user-plus"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Biên tập viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/subscriber-management"><i class="icon fa fa-address-book"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Độc giả</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wrapper wrapper-content" id="management-item">
+                    <script>
+                        $.ajax({
+                            url: '/tags',
+                            type: 'get',
+                            success: function (view) {
+                                $('#management-item').html(view);
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

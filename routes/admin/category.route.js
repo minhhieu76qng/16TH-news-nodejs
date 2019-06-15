@@ -50,8 +50,7 @@ router.get('/', (req, res, next) => {
 router.get('/is-available', (req, res, next) => {
   var cat_name = req.query.cat_name;
   var id = req.query.id;
-  console.log(id);
-  console.log(cat_name);
+  
   Promise.all(
   [categoryModel.singleByCatName(cat_name, id)]).then(([rows]) => {
     if (rows.length > 0) {
@@ -60,25 +59,6 @@ router.get('/is-available', (req, res, next) => {
     return res.json(true);
   }).catch(next);
 })
-
-// router.get('/', (req, res) => {
-//   categoryModel.getList()
-//     .then(rows => {
-//       categoryModel.rootCat()
-//         .then(rootCat => {
-//           res.render('management/admin/vWCategories/categories.hbs', {
-//             categories: rows,
-//             rootCategories: rootCat
-//           });
-//         }).catch(err => {
-//           console.log(err);
-//           res.end('error occured.')
-//         });
-//     }).catch(err => {
-//       console.log(err);
-//       res.end('error occured.')
-//     });
-// })
 
 router.post('/add', (req, res) => {
   categoryModel.add(req.body).then(id => {
