@@ -13,7 +13,10 @@
     $('#dtpicker_dob').datetimepicker({
         timepicker : false,
         format : 'd/m/Y',
-        mask : true
+        mask : true,
+        maxDate : new Date()
+    }).on('change', function() {
+        $(this).valid();
     });
 </script>
 

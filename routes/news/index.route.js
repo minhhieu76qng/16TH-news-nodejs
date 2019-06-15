@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 
 var post_model = require('../../models/post.model');
 var cat_model = require('../../models/category.model');
@@ -14,20 +15,13 @@ router.get('/', (req, res, next) => {
 
     res.locals.isHomepage = true;
 
-    var last_week = new Date();
-
-    last_week.setDate(now.getDate() - 7);
-
-    var time = {
-        start: my_utils.toSQLDateTimeString(last_week),
-        end: my_utils.toSQLDateTimeString(now)
-    };
-
     res.locals.pageTitle = 'Trang chủ';
+
+    let beginOfWeek = moment(my_utils.getBeginOfWeek()).format('YYYY/MM/DD');
 
     Promise
         .all([
-            post_model.mostViewInTime_Thumbnail(time, 4),
+            post_model.impressedPost(beginOfWeek, 4),
             post_model.mostView_Thumbnail(10),
             post_model.newest_Thumbnail(10),
             tag_model.getHotestTags(10)

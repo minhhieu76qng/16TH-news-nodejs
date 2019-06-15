@@ -153,9 +153,16 @@ body {
   outline: 0;
 }
 
+
+
 .user-button .btn.dropdown-toggle:after{
   content: '';
   display: none;
+}
+
+.user-button .btn,
+.login-button.btn{
+  box-shadow: 0 0 0 0 transparent;
 }
 
 .user-button .dropdown-menu{
@@ -212,10 +219,6 @@ body {
 .user-button .dropdown-item{
   padding-bottom: 5px;
   padding-top: 5px;
-}
-
-.user-button .dropdown-item:hover, .user-button .dropdown-item:focus{
-  background-color: transparent;
 }
 
 /* ======================= FOOTER ===================== */
