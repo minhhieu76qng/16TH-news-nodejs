@@ -1,6 +1,6 @@
 var exp = require('express');
 var user_model = require('../../models/user.model');
-var account_type = require('../../models/user_type');
+var account_type = require('../../models/user_type.model');
 var user_account_type = require('../../models/user_account_type.model');
 var my_utils = require('../../utils/myUtils');
 var moment = require('moment');
