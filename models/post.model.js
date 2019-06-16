@@ -29,11 +29,13 @@ module.exports = {
         if (limit <= 0) {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
-                and p.id_category = c.id and p.id_category = ${CatId}`);
+                and p.id_category = c.id and p.id_category = ${CatId}
+                order by p.type_post desc, p.date_posted desc`);
         } else {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
                 and p.id_category = c.id and p.id_category = ${CatId} 
+                order by p.type_post desc, p.date_posted desc
                 limit ${limit} offset ${offset}`);
         }
     },
@@ -46,11 +48,14 @@ module.exports = {
         if (limit <= 0) {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
-                and p.id_category = c.id  and c.parent_cat = ${CatId}`);
+                and p.id_category = c.id  and c.parent_cat = ${CatId}
+                order by p.type_post desc, p.date_posted desc`);
         } else {
             return db.load(`select p.id, p.title, p.abstract, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
                 from post p, category c where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
-                and p.id_category = c.id  and c.parent_cat = ${CatId} limit ${limit} offset ${offset}`);
+                and p.id_category = c.id  and c.parent_cat = ${CatId} 
+                order by p.type_post desc, p.date_posted desc
+                limit ${limit} offset ${offset}`);
         }
     },
 
@@ -107,18 +112,6 @@ module.exports = {
         }
     },
 
-    // mostViewInTime_Thumbnail: (time, limit) => {
-    //     if (limit <= 0) {
-    //         return db.load(`select p.id, p.title, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
-    //             from post p, category c where p.is_deleted=0 and c.is_deleted=0 and p.id_category = c.id and date_posted 
-    //             between '${time.start}' and '${time.end}' order by views desc`);
-    //     } else {
-    //         return db.load(`select p.id, p.title, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
-    //             from post p, category c where p.is_deleted=0 and c.is_deleted=0 and p.id_category = c.id and date_posted 
-    //             between '${time.start}' and '${time.end}' order by views desc limit ${limit}`);
-    //     }
-    // },
-
     impressedPost : (week, limit) => {
         return db.load(`select p.id, p.title, p.date_posted, p.cover_image, p.type_post, p.id_category, c.cat_name 
             from post p, category c, view_weeks vw 
@@ -130,11 +123,13 @@ module.exports = {
         if (limit <= 0){
             return db.load(`select p.*, p.id_category, c.cat_name 
                 from post p, category c, post_tag pt where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
-                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID} order by p.date_posted desc`);
+                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID}
+                order by p.type_post desc, p.date_posted desc`);
         }else{
             return db.load(`select p.*, p.id_category, c.cat_name 
                 from post p, category c, post_tag pt where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 
-                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID} order by p.date_posted desc
+                and p.id_category = c.id and p.id=pt.id_post and pt.id_tag=${TagID}
+                order by p.type_post desc, p.date_posted desc
                 limit ${limit} offset ${offset}`);
         }
     },
@@ -157,5 +152,25 @@ module.exports = {
 
     increaseViews : (entity) => {
         return db.update('post', 'id', entity);
+    },
+
+
+    // ---------------- full text search
+    searchWithTitle : title => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 and p.id_category=c.id
+            and match(title) against('${title}') order by p.type_post desc, p.date_posted desc`);
+    },
+
+    searchWithAbstract : abstract => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 and p.id_category=c.id
+            and match(abstract) against('${abstract}') order by p.type_post desc, p.date_posted desc`);
+    },
+    
+    searchWithContent : content => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 and p.id_category=c.id 
+            and match(content) against('${content}') order by p.type_post desc, p.date_posted desc`);
     }
 }

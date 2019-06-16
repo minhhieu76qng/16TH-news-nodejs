@@ -125,15 +125,16 @@
                     </ul>
 
                     <div class="login-search">
-                        <form class="form-inline search-box" action="search.html">
-                            <input class="search-bar form-control" placeholder="Tìm kiếm..." aria-label="Search">
+                        <form id="frm-search" class="form-inline search-box" action="/search" method="POST"
+                            autocomplete="off">
+                            <input name="search_text" class="search-bar form-control" placeholder="Tìm kiếm..."
+                                aria-label="Search">
                             <button class="search-button btn" type="submit">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </form>
 
                         <!-- khi đăng nhập rồi thì sẽ hiển thị phần này, ngược lại sẽ hiển thị nút đăng nhập -->
-
 
                         {{#if isAuthenticated}}
                         <form action="/account/logout" method="POST" id="frmSignOut"></form>
@@ -149,9 +150,9 @@
                                 </a>
                                 <a class="dropdown-item" href="./news_management_phongvien.html">
                                     <i class="fa fa-cog mr-2" aria-hidden="true"></i> Quản lí
-                                <a class="dropdown-item" href="javascript:$('#frmSignOut').submit();">
-                                    <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Đăng xuất
-                                </a>
+                                    <a class="dropdown-item" href="javascript:$('#frmSignOut').submit();">
+                                        <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Đăng xuất
+                                    </a>
                             </div>
                         </div>
                         {{else}}
@@ -248,7 +249,23 @@
 
     <script src="/asset/js/main.js"></script>
 
+    <script>
+        // validate form search
+        $('#frm-search').submit(function () {
+            const val = $('#frm-search input[name="search_text"').val();
+
+            if (val.length < 4 || val === null || val === 'undefined') {
+                alert('Nội dung tìm kiếm không được dưới 4 kí tự.');
+                return false;
+            }
+            return true;
+        })
+    </script>
+
     {{{_sections.js}}}
+
+
+
 </body>
 
 </html>

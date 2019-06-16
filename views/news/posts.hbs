@@ -20,7 +20,7 @@
         }, 2000)
     });
 
-    $('#view-more-comment').click(function() {
+    $('#view-more-comment').click(function () {
         let viewMore = $(this);
         let commentPage = viewMore.attr('data-commentpage');
         const postId = viewMore.attr('data-post-id');
@@ -29,7 +29,7 @@
 
         $.getJSON(`/posts/${postId}/comment?commentPage=${commentPage}`, data => {
 
-            if (data.status === false){
+            if (data.status === false) {
                 return;
             }
 
@@ -48,7 +48,7 @@
 
             viewMore.attr('data-commentpage', ++commentPage);
 
-            if (data.nextPage === false){
+            if (data.nextPage === false) {
                 // xóa nút hiển thị thêm
                 viewMore.parent().remove();
             }
@@ -130,13 +130,15 @@
                         </ul>
 
                         {{#if this.comments.isViewMoreComment}}
+                        <hr />
+
                         <div class="text-center mb-4">
-                            <a id="view-more-comment" data-post-id="{{this.post.id}}" data-commentPage="{{this.comments.commentPage}}" 
-                                href="javascript:;">Hiển thị thêm bình luận</a>
+                            <a id="view-more-comment" data-post-id="{{this.post.id}}"
+                                data-commentPage="{{this.comments.commentPage}}" href="javascript:;">Hiển thị thêm bình
+                                luận</a>
                         </div>
                         {{/if}}
 
-                        <hr />
 
                         {{/if}}
 
@@ -169,10 +171,15 @@
                                 </div>
                             </form>
                         </div>
+
+                        {{#if isAuthenticated}}
+
+                        {{else}}
                         <div class="remind-login">
-                            <label for="LoginControl" }=""><a href="login/" class="concealed element"><small>(Bạn
-                                        phải đăng nhập hay đăng ký tài khoản để đăng bài ở đây)</small></a></label>
+                            <a href="/account/login" class="concealed element"><small>(Bạn
+                                    phải đăng nhập hay đăng ký tài khoản để đăng bài ở đây)</small></a>
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>

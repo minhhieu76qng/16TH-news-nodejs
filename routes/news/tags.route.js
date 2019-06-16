@@ -9,7 +9,7 @@ var router = express.Router();
 
 router.get('/:id/posts', (req, res, next) => {
 
-    let limit = 3, offset = 0;
+    let limit = 7, offset = 0;
 
     let page = req.query.page || 1;
 

@@ -47,7 +47,7 @@ router.get('/:id', (req, res, next) => {
                     let post = detail[0];
 
                     if (post.type_post !== 0) {
-                        if (!req.user || arrUser === 'undefined') {    // tức là bằng với Promise.resolve => undefined
+                        if (!req.user || typeof arrUser === 'undefined') {    // tức là bằng với Promise.resolve => undefined
                             // req.flash('msg_warning', 'Đăng nhập để có thể xem bài viết premium.');
                             req.flash('msg_type', 'warning');
                             req.flash('msg', 'Đăng nhập để có thể xem bài viết premium.');
@@ -156,7 +156,6 @@ router.get('/:id', (req, res, next) => {
                                     msg_type: msg_type,
                                     msg: msg
                                 },
-
                             });
                         })
                         .catch(next)

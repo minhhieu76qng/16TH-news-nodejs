@@ -1,0 +1,201 @@
+{{#section 'js'}}
+<script>
+    $(function () {
+        const checkboxs = $('#frm-advanced-search input[type="checkbox"][value*="search_"]');
+        
+        checkboxs.each((idx, el) => {
+            let cb = $(el);
+            $(cb).prop('checked', false);
+            $(`input[name="${$(cb).attr('value')}"]`).attr('disabled', !$(cb).prop('checked'));
+        })
+
+        //let checkbox_title = checkboxs.get(0);
+        //$(checkbox_title).prop('checked', true);
+        //$(`input[name="${$(checkbox_title).attr('value')}"]`).attr('disabled', !$(checkbox_title).prop('checked'));
+
+
+        checkboxs.click(function () {
+            const inputName = $(this).attr('value');
+
+            $(`input[name="${inputName}"]`).attr('disabled', !$(this).prop('checked'));
+        })
+    })
+
+
+    $(function () {
+        $('#frm-advanced-search').submit(function () {
+
+            const checkboxs = $('#frm-advanced-search input[type="checkbox"][value*="search_"]');
+
+            let isChecked = false;
+            let hasInputValue = false;
+
+            checkboxs.each((idx, el) => {
+                if ($(el).prop('checked')) {
+                    isChecked = true;
+                    const inputTag = $(`input[name="${$(el).attr('value')}"]`);
+
+                    if (inputTag.val().length >= 4) {
+                        hasInputValue = true;
+                    }
+                }
+            })
+
+            if (isChecked === false) {
+                alert('Phải tìm kiếm theo ít nhất 1 tiêu chí.');
+                return false;
+            }
+
+            if (hasInputValue === false) {
+                alert('Dữ liệu tìm kiếm phải ít nhất 4 kí tự.');
+                return false;
+            }
+        })
+    })
+</script>
+{{/section}}
+{{!-- hiển thị search nâng cao --}}
+<section id="advanced-search" class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-xs navbar-light bg-light">
+                            <h4 class="card-title">Tìm kiếm nâng cao</h4>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbar-advanced-search" aria-controls="navbar-advanced-search"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                {{!-- <span class="navbar-toggler-icon"></span> --}}
+                                <i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="collapse navbar-collapse show" id="navbar-advanced-search">
+                                <form id="frm-advanced-search" action="/search/advanced" method="POST">
+                                    <div class="search-wrapper">
+                                        <div class="left_box custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cb_search_title"
+                                                value="search_title">
+                                            <label class="custom-control-label" for="cb_search_title"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="search_title">Tìm kiếm theo tiêu đề:</label>
+                                            <input type="text" class="form-control" name="search_title"
+                                                id="search_title" placeholder="Tìm kiếm theo tiêu đề..." disabled
+                                                value="{{this.search_values.search_title}}">
+                                        </div>
+                                    </div>
+                                    <div class="search-wrapper">
+                                        <div class="left_box custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cb_search_abstract"
+                                                value="search_abstract">
+                                            <label class="custom-control-label" for="cb_search_abstract"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="search_abstract">Tìm kiếm theo mô tả:</label>
+                                            <input type="text" class="form-control" name="search_abstract"
+                                                id="search_abstract" placeholder="Tìm kiếm theo mô tả..." disabled
+                                                value="{{this.search_values.search_abstract}}">
+                                        </div>
+                                    </div>
+                                    <div class="search-wrapper">
+                                        <div class="left_box custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="cb_search_content"
+                                                value="search_content">
+                                            <label class="custom-control-label" for="cb_search_content"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="search_content">Tìm kiếm theo nội dung:</label>
+                                            <input type="text" class="form-control" name="search_content"
+                                                id="search_content" placeholder="Tìm kiếm theo nội dung..." disabled
+                                                value="{{this.search_values.search_content}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button class="btn btn-primary">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                            <span>Tìm kiếm</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="search_result" class="mt-5">
+    <div class="container">
+        <!-- <h3>Kết quả tìm kiếm: <strong><em>phúc xo</em></strong> </h3> -->
+
+        <h3 class="article-header">Kết quả tìm kiếm: &nbsp;
+            {{#if isAdvancedSearch}}
+            {{else}}
+            <strong style="text-transform: initial;"><em>{{this.search_text}}</em></strong>
+            {{/if}}
+        </h3>
+
+        <div class="shadow">
+            {{#if this.posts}}
+            <ul class="list-article list_post_page">
+                {{#each this.posts}}
+                <li class="article-item">
+                    <div class="article">
+                        <div class="article-thumbnail">
+                            <a href="/posts/{{id}}">
+                                <div class="thumbnail-image">
+                                    <img src="{{cover_image}}" alt="{{title}}">
+                                </div>
+                            </a>
+
+                            <div class="category">
+                                <a href="/categories/{{id_category}}/posts" class="link">{{cat_name}}</a>
+                            </div>
+
+                            {{#if type_post}}
+                            <div class="premium-article" title="Bài viết premium">
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="article-content">
+                            <div class="published-date">
+                                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>
+                                {{date_posted}}
+                            </div>
+                            <div class="article-title">
+                                <a href="/posts/{{id}}" class="link">{{title}}</a>
+                            </div>
+                            {{#if tags}}
+                            <div class="list-tags mt-3">
+                                <ul class="tags">
+                                    {{#each tags}}
+                                    <li class="item">
+                                        <a class="link" href="/tags/{{id}}/posts">{{tag_name}}</a>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            {{/if}}
+                            <div class="article-abstract mt-3">
+                                <small>{{abstract}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <div class="text-center p-4" style="background-color: #fff;">
+                <h4>Không tồn tại bài viết</h4>
+                <a href="/" class="btn btn-primary"><i class="fa fa-home mr-2" aria-hidden="true"></i> Về trang chủ</a>
+            </div>
+            {{/if}}
+
+        </div>
+    </div>
+</section>
