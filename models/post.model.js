@@ -172,5 +172,16 @@ module.exports = {
         return db.load(`select p.*, c.cat_name from post p, category c 
             where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 and p.id_category=c.id 
             and match(content) against('${content}') order by p.type_post desc, p.date_posted desc`);
+    },
+
+    // quản lý bài viết admin
+    getListByStatus: (id_status, limit, offset) =>{
+        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = ${id_status} ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countByStatus: (id_status)=>{
+        return db.load(`SELECT COUNT(*) as total FROM post WHERE post.is_deleted = 0 and post.id_status = ${id_status}`);
     }
 }

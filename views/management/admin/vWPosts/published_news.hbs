@@ -1,0 +1,174 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<link rel="stylesheet" href="asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="asset/js/widget_utility.js"></script>
+
+{{!-- <script src="asset/js/admin/admin.js"></script> --}}
+
+{{!-- <script src="asset/js/admin/post.js"></script> --}}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+
+{{/section}}
+
+
+<section id="news-management" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <!-- bao gom menu
+                    * neu la admin:
+                        + Quản lý chuyên mục
+                        + Quản lý nhãn tag
+                        + Quản lý bài viết
+                            + Bài viết đã xuất bản
+                            + Bài viết đã được duyệt & chờ xuất bản
+                            + Bài viết chưa duyệt
+                        + Quản lý người dùng
+                            + Phóng viên
+                            + Biên tập viên
+                            + Độc giả
+                        -->
+                <div class="wrapper">
+                    <ul class="menu-management">
+                        <li class="menu-management-item">
+                            <a class="link" href="#category-management"><i class="icon fa fa-list-alt"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý chuyên mục</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link" href="/tags"><i class="icon fa fa-tags" aria-hidden="true"></i>
+                                <div class="linkText">Quản lý nhãn tag</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-th"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý bài viết</div>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/accepted-news">
+                                        <i class="icon fa fa-check-square-o" aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/not-accepted-news"><i class="icon fa fa-tasks"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài
+                                            viết chưa duyệt</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/published-news"><i class="icon fa fa-newspaper-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Bài viết đã xuất bản</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-users"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Quản lý người dùng</div>
+                                <i class="fa fa-caret-down"></i>
+                                <!-- <i class="icon fa fa-chevron-right" aria-hidden="true"></i>    -->
+                            </a>
+                            <ul class="menu-management">
+                                <li class="menu-management-item">
+                                    <a class="link" href="/writer-management"><i class="icon fa fa-pencil-square-o"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Phóng viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item">
+                                    <a class="link" href="/editor-management"><i class="icon fa fa-user-plus"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Biên tập viên</div>
+                                    </a>
+                                </li>
+                                <li class="menu-management-item active">
+                                    <a class="link" href="/subscriber-management"><i class="icon fa fa-address-book"
+                                            aria-hidden="true"></i>
+                                        <div class="linkText">Độc giả</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wrapper wrapper-content">
+                    <div class="content-menu-item" id="published-news">
+                        <h3 class="mb-3 mt-3">Bài viết đã xuất bản</h3>
+
+                        <table class="can-be-edit table table-hover table-bordered mb-0" id="published-news-table">
+                            <col style="width:5%">
+                            <col style="width:15%">
+                            <col style="width:45%">
+                            <col style="width:15%">
+                            <col style="width:15%">
+                            <col style="width:5%">
+
+                            <thead class="thead-dark">
+                                <tr class="text-center">
+                                    <th style="vertical-align: top;">#</th>
+                                    <th style="vertical-align: top;">Chuyên mục</th>
+                                    <th style="vertical-align: top;">Tiêu đề bài viết</th>
+                                    <th style="vertical-align: top;">Tác giả</th>
+                                    <th style="vertical-align: top;">Ngày xuất bản</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each this.posts}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{cat_name}}</td>
+                                    <td>{{title}}</td>
+                                    <td>{{author}}</td>
+                                    <td class="text-center">{{date_posted}}
+                                    <td class="text-right">
+                                        <a class="btn btn-success btn-sm" href="/admin/detail/{{id}}" role="button">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <ul class="pagination justify-content-center mt-4">
+                            {{#each this.pages}}
+                            {{#if active}}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">{{value}} <span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+                            {{else}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                            </li>
+                            {{/if}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
