@@ -25,6 +25,7 @@ app.use('/account', require('./routes/account/account.route'));
 app.use('/categories', require('./routes/news/categories.route'));
 app.use('/posts', require('./routes/news/posts.route'));
 app.use('/tags', require('./routes/news/tags.route'));
+app.use('/search', require('./routes/news/search.route'));
 app.use('/', require('./routes/news/index.route'));
 
 // app.use('/writer', require('./routes/writer/writer.route.js'));
