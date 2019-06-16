@@ -110,7 +110,7 @@
 }
 
 #pseudonymDetailAccountModal-container, #sizePostDetailAccountModal-container,
-#nOfDayPreDetailAccountModal-container, #categoryDetailAccountModal-container,
+#nOfDayPreDetailAccountModal-container,
 #btnAssignEditor, #btnRenewSubscriber, #AssignEditor-container, #RenewSubscriber-container
 {
     display: none;

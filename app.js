@@ -30,8 +30,9 @@ app.use('/', require('./routes/news/index.route'));
 // app.use('/writer', require('./routes/writer/writer.route.js'));
 //app.use('/admin', require('./routes/admin/category.route.js'));
 //app.use('/admin', require('./routes/admin/tag.route.js'));
-app.use('/admin', require('./routes/admin/subscriber.route.js'));
+//app.use('/admin', require('./routes/admin/subscriber.route.js'));
 //app.use('/admin', require('./routes/admin/writer.route.js'));
+app.use('/admin', require('./routes/admin/editor.route.js'));
 //app.use('/admin', require('./routes/admin/admin.route'));
 app.use('/editor', require('./routes/editor/editor.route'));
 

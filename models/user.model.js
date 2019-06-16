@@ -36,6 +36,13 @@ module.exports = {
         GROUP BY user.id LIMIT ${limit} OFFSET ${offset}`);
     },
 
+    pageEditor: (limit, offset) =>{
+        return db.load(`SELECT user.id, user.name, user.dob, user.email 
+        from user, user_account_type, account_type where user.id = user_account_type.id_user 
+        and user_account_type.id_account_type = account_type.id and account_type.type = 'EDITOR' 
+        and user_account_type.is_deleted = 0 and user.is_deleted = 0 LIMIT ${limit} OFFSET ${offset}`);
+    },
+
     countOfType:(type)=>{
         return db.load(`SELECT count(*) as total from user, user_account_type, account_type 
         where user.id = user_account_type.id_user and user_account_type.id_account_type = account_type.id 

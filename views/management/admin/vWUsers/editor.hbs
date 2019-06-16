@@ -216,9 +216,9 @@
                         <table class="can-be-edit table table-hover table-bordered mb-0" id="editor-management-table">
                             <col style="width:5%">
                             <col style="width:25%">
-                            <col style="width:20%">
+                            <col style="width:30%">
                             <col style="width:15%">
-                            <col style="width:35%">
+                            <col style="width:25%">
 
                             <thead class="thead-dark">
                                 <tr>
@@ -231,12 +231,12 @@
                             </thead>
                             <tbody>
                                 {{#each this.editors}}
-                                <tr onclick="openDetailAccountSubcriber(this)">
+                                <tr onclick="openDetailAccountEditor(this, '{{strCatID}}','{{catManagementHTML}}')">
                                     <th scope="row" class="text-center">{{id}}</th>
                                     <td>{{name}}</td>
                                     <td>{{email}}</td>
                                     <td>{{dob}}</td>
-                                    <td>{{{catManagementHTML}}}</td>
+                                    <td>{{strCatManagement}}</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -290,6 +290,20 @@
                     <div class="form-group">
                         <input type="password" class="form-control" name="confirmPw" placeholder="Nhập lại mật khẩu">
                     </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="" style="color:#737373;">Chọn chuyên mục phân công</label>
+                        <select class="selectpicker form-control" multiple data-live-search="true"
+                            name="catManagement[]">
+                            {{#each this.rootCategories}}
+                            <optgroup label='{{cat_name}}'>
+                                {{#each childCategories}}
+                                <option value={{id}}>{{cat_name}}</option>
+                                {{/each}}
+                            </optgroup>
+                            {{/each}}
+                        </select>
+                    </div>
                     <div class="clearfix mt-4">
                         <button type="submit" name="" class="btn btn-primary">Đăng kí</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -329,31 +343,40 @@
                         <label for=""><b>Ngày sinh</b></label>
                         <input disabled id="txtDetailDOB" name="dob" type="text" class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for=""><b>Ngày hết hạn</b></label>
-                        <input disabled id="txtDetailExpDate" name="exp_date" type="text" class="form-control">
+                    <div class="form-group" id="categoryDetailAccountModal-container">
+                        <label for=""><b>Chuyên mục quản lý:</b></label>
+                        <ul id="category-editor">
+                        </ul>
                     </div>
                 </form>
-                <!-- Gia hạn độc giả -->
-                <div class="pt-3" id="RenewSubscriber-container">
-                    <form novalidate id="RenewForm" method="POST" action="">
+                <!-- Phân công cho biên tập viên-->
+                <div class="pt-3" id="AssignEditor-container">
+                    <form novalidate id="AssignForm" method="POST" action="">
                         <div class="form-group">
-                            <label for="nOfDayRenew">
-                                <h5>Nhập số ngày gia hạn</h5>
+                            <label for="">
+                                <h5>Chọn chuyên mục phân công</h5>
                             </label>
-                            <input name="nDayRenew" type="text" class="form-control" id="nOfDayRenew">
+                            <select class="selectpicker form-control" multiple data-live-search="true"
+                                name="catManagement[]" id="selectCatManagement">
+                                {{#each this.rootCategories}}
+                                <optgroup label='{{cat_name}}'>
+                                    {{#each childCategories}}
+                                    <option value={{id}}>{{cat_name}}</option>
+                                    {{/each}}
+                                </optgroup>
+                                {{/each}}
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Hoàn
-                            tất</button>
+                        <button type="submit" class="btn btn-primary">Hoàn tất</button>
                         <button type="button" class="btn btn-secondary"
-                            onclick="BackMainDetailAccount('RenewSubscriber-container')">Trở
+                            onclick="BackMainDetailAccount('AssignEditor-container')">Trở
                             về</button>
                     </form>
                 </div>
             </div>
             <div class="modal-footer justify-content-center" id="DetailAccountModal-footer">
-                <button type="button" class="btn btn-info" id="btnRenewSubscriber"
-                    onclick="openContainerActionDetailAccount('RenewSubscriber-container')">Gia hạn</button>
+                <button type="button" class="btn btn-primary" id="btnAssignEditor"
+                    onclick="openContainerActionDetailAccount('AssignEditor-container')">Phân công</button>
                 <a class="btn btn-danger" id="btnBan" href="">Cấm</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
