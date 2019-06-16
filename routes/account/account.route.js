@@ -15,15 +15,16 @@ var router = express.Router();
 
 router.get('/login', (req, res, next) => {
     res.locals.pageTitle = "Đăng nhập";
-    var msg_warning = req.flash('msg_warning');
-    var msg_success = req.flash('msg_success');
+    // lấy thông báo
+    const msg_type = req.flash('msg_type');
+    const msg = req.flash('msg');
 
     return res.render('account/login', {
-        hasRetUrl : req.query.retUrl ? true : false,
-        retUrl : req.query.retUrl ? req.query.retUrl : '',
-        msg : {
-            msg_warning : msg_warning,
-            msg_success : msg_success
+        hasRetUrl: req.query.retUrl ? true : false,
+        retUrl: req.query.retUrl ? req.query.retUrl : '',
+        message: {
+            msg_type: msg_type,
+            msg: msg
         }
     });
 })
@@ -46,8 +47,9 @@ router.post('/login', (req, res, next) => {
 
         if (!user) {
             return res.render('account/login', {
-                msg : {
-                    msg_warning : info.message
+                message: {
+                    msg_type : 'warning',
+                    msg : info.message
                 }
             });
         }
@@ -85,25 +87,33 @@ router.post('/register', (req, res, next) => {
     user_model.addNewUser(user)
         .then(userID => {
 
-            account_type.accountTypeByType('NORMAL')
-                .then(rows => {
-                    if (rows.length === 0) {
-                        throw new Event('Not exists user type!');
-                    } else {
-                        var userAccountType = {
-                            id_user: userID,
-                            id_account_type: rows[0].id
-                        };
+            if (Number.isInteger(userID)) {
+                account_type.accountTypeByType('SUBSCRIBER')
+                    .then(rows => {
+                        if (rows.length === 0) {
+                            throw new Event('Not exists user type!');
+                        } else {
+                            var userAccountType = {
+                                id_user: userID,
+                                id_account_type: rows[0].id
+                            };
 
-                        user_account_type.addNewUserAccountType(userAccountType)
-                            .then(id => {
-                                req.flash('msg_success', 'Đăng kí thành công. Bạn cần đăng nhập')
-                                res.redirect('/account/login');
-                            })
-                            .catch(next);
-                    }
-                })
-                .catch(next);
+                            user_account_type.addNewUserAccountType(userAccountType)
+                                .then(id => {
+                                    // req.flash('msg_success', 'Đăng kí thành công. Bạn cần đăng nhập')
+                                    req.flash('msg_type', 'success');
+                                    req.flash('msg', 'Đăng kí thành công. Bạn cần đăng nhập.');
+                                    res.redirect('/account/login');
+                                })
+                                .catch(next);
+                        }
+                    })
+                    .catch(next);
+            } else {
+                req.flash('msg_type', 'danger');
+                req.flash('msg', 'Đăng kí không thành công.');
+                res.redirect('/account/register');
+            }
         })
         .catch(next);
 })
@@ -114,7 +124,7 @@ router.post('/forgot-password', (req, res, next) => {
 router.post('/is-available', (req, res) => {
     var email = req.body.email;
 
-    user_model.singleByEmail(email).then(rows => {
+    user_model.isExistsEmail(email).then(rows => {
         if (rows.length > 0) {
             return res.json(false);
         }

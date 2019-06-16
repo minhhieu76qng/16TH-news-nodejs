@@ -12,7 +12,48 @@
             alert('Nội dung bình luận không được để trống.');
             return false;
         }
-        console.log(data);
+    });
+
+    $(function () {
+        setTimeout(function () {
+            $('.floating-alert').alert('close');
+        }, 2000)
+    });
+
+    $('#view-more-comment').click(function() {
+        let viewMore = $(this);
+        let commentPage = viewMore.attr('data-commentpage');
+        const postId = viewMore.attr('data-post-id');
+
+        console.log(commentPage);
+
+        $.getJSON(`/posts/${postId}/comment?commentPage=${commentPage}`, data => {
+
+            if (data.status === false){
+                return;
+            }
+
+            const commentItem = $('.post-comment .list-comment .comment-item:last-child');
+
+            data.comments.map((val, idx) => {
+                let item = $(commentItem).clone();
+
+                $(item).attr('data-comment_id', val.comment_id);
+                $(item).find('.user .name a').html(val.name);
+                $(item).find('.user .comment-date').html(val.date_submit);
+                $(item).find('.comment-content').html(val.content);
+
+                $('.post-comment .list-comment').append(item);
+            })
+
+            viewMore.attr('data-commentpage', ++commentPage);
+
+            if (data.nextPage === false){
+                // xóa nút hiển thị thêm
+                viewMore.parent().remove();
+            }
+
+        })
     })
 
 </script>
@@ -71,8 +112,8 @@
                     <div class="post-comment mt-3">
                         {{#if this.comments}}
                         <ul class="list-comment mb-4">
-                            {{#each this.comments}}
-                            <li class="comment-item">
+                            {{#each this.comments.listComment}}
+                            <li class="comment-item" data-comment_id="{{comment_id}}">
                                 <div class="comment-wrapper">
                                     <div class="user">
                                         <div class="name">
@@ -81,51 +122,33 @@
                                         <div class="comment-date">{{date_submit}}</div>
                                     </div>
                                     <div class="comment-content mt-2">
-                                        {{content}}
-                                    </div>
-                                    <div class="text-right">
-                                        <a class="reply mt-1" href="javascript:;" data-id="{{comment_id}}">
-                                            <small>Trả lời</small>
-                                        </a>
+                                        {{{content}}}
                                     </div>
                                 </div>
-
-                                {{#if child_comments}}
-                                <ul class="list-comment">
-                                    {{#each child_comments}}
-                                    <li class="comment-item">
-                                        <div class="comment-wrapper">
-                                            <div class="user">
-                                                <div class="name">
-                                                    <a href="" class="link">{{name}}</a>
-                                                </div>
-                                                <div class="comment-date">{{date_submit}}</div>
-                                            </div>
-                                            <div class="comment-content mt-2">
-                                                {{content}}
-                                            </div>
-                                            <div class="text-right">
-                                                <a class="reply mt-1" href="javascript:;" data-id="{{comment_id}}"
-                                                    data-parent_id="{{id_parent}}">
-                                                    <small>Trả lời</small>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    {{/each}}
-                                </ul>
-                                {{/if}}
                             </li>
                             {{/each}}
                         </ul>
 
+                        {{#if this.comments.isViewMoreComment}}
                         <div class="text-center mb-4">
-                            <a href="">Hiển thị thêm bình luận</a>
+                            <a id="view-more-comment" data-post-id="{{this.post.id}}" data-commentPage="{{this.comments.commentPage}}" 
+                                href="javascript:;">Hiển thị thêm bình luận</a>
                         </div>
+                        {{/if}}
+
                         <hr />
 
                         {{/if}}
 
+                        {{#if this.msgToView.msg_type}}
+                        <div class="floating-alert alert alert-{{this.msgToView.msg_type}} alert-dismissible fade show"
+                            role="alert">
+                            {{this.msgToView.msg}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {{/if}}
 
                         <div class="add-new-comment">
                             <h5 class="mb-4 mt-4">Đăng bình luận mới</h5>

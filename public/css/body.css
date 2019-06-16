@@ -406,3 +406,7 @@ footer .footer-bottom {
   color: #fff;
   background-color: #ea4335;
 }
+
+.post-comment .comment-content p {
+  margin-bottom: 0 !important;
+}

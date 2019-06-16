@@ -149,11 +149,11 @@ module.exports = {
             where p.is_deleted=0 and p.id_status=2 and c.is_deleted=0 and p.id=${PostID} and p.id_category=c.id`);
     },
 
-    getCommentsByPost: PostID => {
-        return db.load(`select c.id as comment_id, c.content, c.date_submit, c.id_parent, u.id as user_id, u.name from comment c, user u 
-            where c.id_user=u.id and c.id_post=${PostID} and c.is_deleted=0
-            order by c.date_submit desc`);
-    },
+    // getCommentsByPost: PostID => {
+    //     return db.load(`select c.id as comment_id, c.content, c.date_submit, u.id as user_id, u.name from comment c, user u 
+    //         where c.id_user=u.id and c.id_post=${PostID} and c.is_deleted=0
+    //         order by c.date_submit desc`);
+    // },
 
     increaseViews : (entity) => {
         return db.update('post', 'id', entity);
