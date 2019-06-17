@@ -1,5 +1,106 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
 {{#section 'js'}}
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 <script src="/asset/js/widget_utility.js"></script>
+
+<script>
+    $('#dtpicker_dob').datetimepicker({
+        timepicker: false,
+        format: 'd/m/Y',
+        mask: false,
+        maxDate: new Date()
+    }).on('change', function () {
+        $(this).valid();
+    });
+
+    // jquery form validate
+    $('#frm_UpdateProfile').validate({
+        rules: {
+            name: {
+                required: true
+            },
+            pseudonym: {
+                required: true
+            },
+            dob: {
+                required: true
+            }
+        },
+        messages: {
+            name: {
+                required: 'Tên người dùng không được rỗng.'
+            },
+            pseudonym: {
+                required: 'Bút danh không được rỗng.'
+            },
+            dob: {
+                required: 'Ngày sinh không được rỗng.'
+            },
+        },
+        errorElement: 'em',
+        errorClass: 'mt-2 d-block text-danger text-left',
+        highlight: function (e) {
+            $(e).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (e) {
+            $(e).removeClass('is-invalid').addClass('is-valid');
+        },
+    })
+
+    $('#frm_ChangePw').validate({
+        rules: {
+            oldPw: {
+                required: true,
+                minlength: 6
+            },
+            newPw: {
+                required: true,
+                minlength: 6
+            },
+            confirmPw: {
+                required: true,
+                equalTo: $('[name="newPw"]')
+            }
+        },
+        messages: {
+            oldPw: {
+                required: 'Mật khẩu không được rỗng.',
+                minlength: 'Mật khẩu có độ dài ít nhất 6 kí tự.'
+            },
+            newPw: {
+                required: 'Mật khẩu không được rỗng.',
+                minlength: 'Mật khẩu có độ dài ít nhất 6 kí tự.'
+            },
+            confirmPw: {
+                required: 'Mật khẩu không được rỗng.',
+                equalTo: 'Mật khẩu xác nhận phải trùng mật khẩu mới.'
+            },
+        },
+        errorElement: 'em',
+        errorClass: 'mt-2 d-block text-danger text-left',
+        highlight: function (e) {
+            $(e).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (e) {
+            $(e).removeClass('is-invalid').addClass('is-valid');
+        },
+    })
+
+    $(function () {
+        setTimeout(function () {
+            $('.floating-alert').alert('close');
+        }, 2000)
+    });
+</script>
 {{/section}}
 
 <section id="user-content" class="mt-4">
@@ -31,6 +132,15 @@
 
             <div class="col">
                 <div class="wrapper">
+                    {{#if this.msgToView.msg_type}}
+                    <div class="floating-alert alert alert-{{this.msgToView.msg_type}} alert-dismissible fade show"
+                        role="alert">
+                        {{this.msgToView.msg}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{/if}}
                     <div class="content-menu-item" id="view-personal-info">
                         <h3 class="mb-3 mt-3">Xem thông tin cá nhân</h3>
                         <div class="user-info view-info">
@@ -78,12 +188,12 @@
                     </div>
                     <div style="display : none;" class="content-menu-item" id="update-personal-info">
                         <h3 class="mb-3 mt-3">Cập nhật thông tin cá nhân</h3>
-                        <form id="frm_UpdateProfile" class="user-info update-info" action="/account/profile/edit"
-                            method="POST">
+                        <form novalidate id="frm_UpdateProfile" class="user-info update-info"
+                            action="/account/profile/update-info" method="POST">
                             <div class="form-group">
                                 <label for="">Họ tên</label>
                                 <input name="name" type="text" class="form-control" placeholder="Họ tên"
-                                    value="{{this.User.name}}">
+                                    value="{{this.User.name}}" autofocus>
                             </div>
                             {{#if this.isWriter}}
                             <div class="form-group">
@@ -93,17 +203,16 @@
                             </div>
                             {{/if}}
 
-                            {{#if this.User.dob}}
                             <div class="form-group">
                                 <label for="">Ngày sinh</label>
-                                <input name="dob" type='date' class="form-control" value="{{this.dateDob}}" />
+                                {{#if this.User.dob}}
+                                <input id="dtpicker_dob" name="dob" type='text' class="form-control"
+                                    value="{{this.User.dob}}" placeholder="Ngày sinh" />
+                                {{else}}
+                                <input id="dtpicker_dob" name="dob" type='text' class="form-control"
+                                    placeholder="Ngày sinh" />
+                                {{/if}}
                             </div>
-                            {{else}}
-                            <div class="form-group">
-                                <label for="">Ngày sinh</label>
-                                <input name="dob" type='date' class="form-control" />
-                            </div>
-                            {{/if}}
 
                             <div class="buttons text-center">
                                 <button class="btn btn-primary" type="submit">Cập nhật</button>
@@ -112,12 +221,13 @@
                     </div>
                     <div style="display : none;" class="content-menu-item" id="change-password">
                         <h3 class="mb-3 mt-3">Đổi mật khẩu</h3>
-                        <form id="frm_ChangePw" action="/account/profile/change-password" method="POST"
+                        <form novalidate id="frm_ChangePw" action="/account/profile/change-password" method="POST"
                             class="user-info change-pw">
 
                             <div class="form-group">
                                 <label for="">Mật khẩu cũ</label>
-                                <input type="password" class="form-control" name="oldPw" placeholder="Mật khẩu cũ">
+                                <input type="password" class="form-control" name="oldPw" placeholder="Mật khẩu cũ"
+                                    autofocus>
                             </div>
 
                             <div class="form-group">
@@ -126,7 +236,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Nhập lại mật khẩu mới</label>
-                                <input type="password" class="form-control" name="retypenewPw"
+                                <input type="password" class="form-control" name="confirmPw"
                                     placeholder="Nhập lại mật khẩu mới">
                             </div>
 

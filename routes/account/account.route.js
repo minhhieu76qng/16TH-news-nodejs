@@ -48,7 +48,7 @@ router.post('/login', (req, res, next) => {
         if (!user) {
             return res.render('account/login', {
                 message: {
-                    msg_type: 'warning',
+                    msg_type: 'danger',
                     msg: info.message
                 }
             });
@@ -133,6 +133,10 @@ router.post('/is-available', (req, res) => {
 })
 
 router.get('/profile', auth, (req, res, next) => {
+    res.locals.pageTitle = "Tài khoản";
+
+    const msg_type = req.flash('msg_type');
+    const msg = req.flash('msg');
 
     // lấy thông tin cá nhân của user từ req.user
     const UserID = req.user.id;
@@ -140,31 +144,130 @@ router.get('/profile', auth, (req, res, next) => {
     user_model.detailUserByID(UserID)
         .then(rows => {
             if (rows.length === 0) {
-                return res.render('');
-            } else {
-                let User = rows[0];
-
-                console.log(User);
-
-                let dateDob = "";
-
-                if (User.dob !== null){
-                    dateDob = moment(User.dob).format('YYYY-MM-DD');
-                    User.dob = moment(User.dob).format('DD/MM/YYYY');
-                }
-
-                if (User.exp_date !== null){
-                    User.exp_date = moment(User.exp_date).format('DD/MM/YYYY');
-                }
-
-                return res.render('account/profile', {
-                    User : User,
-                    isWriter : User.type === 'WRITER' ? true : false,
-                    dateDob : dateDob
+                return res.render('notify', {
+                    msg_title: 'Không tồn tại người dùng.',
+                    msg_detail: 'Vui lòng liên hệ admin để giải quyết.'
                 });
             }
+
+            let User = rows[0];
+
+            // let dateDob = "";
+
+            if (User.dob !== null) {
+                // dateDob = moment(User.dob).format('YYYY-MM-DD');
+                User.dob = moment(User.dob).format('DD/MM/YYYY');
+            }
+
+            if (User.exp_date !== null) {
+                User.exp_date = moment(User.exp_date).format('DD/MM/YYYY');
+            }
+
+            return res.render('account/profile', {
+                User: User,
+                isWriter: User.type === 'WRITER' ? true : false,
+                msgToView: {
+                    msg_type: msg_type,
+                    msg: msg
+                },
+                // dateDob : dateDob
+            });
         })
         .catch(next);
+})
+
+router.post('/profile/update-info', auth, (req, res, next) => {
+    let { name, pseudonym, dob } = req.body;
+    const user_id = req.user.id;
+
+    user_model.detailUserByID(user_id)
+        .then(rows => {
+            if (rows.length === 0) {
+                return res.render('notify', {
+                    msg_title: 'Không tồn tại người dùng.',
+                    msg_detail: 'Vui lòng liên hệ admin để giải quyết.'
+                });
+            }
+
+            let User = rows[0];
+
+            let entity = {
+                id: user_id,
+                name: name,
+                dob: moment(dob, 'DD/MM/YYYY').format('YYYY/MM/DD')
+            }
+
+            if (User.type === 'WRITER' && typeof pseudonym !== 'undefined') {
+                entity.pseudonym = pseudonym;
+            }
+
+            user_model.update(entity)
+                .then(rowsChange => {
+                    if (rowsChange >= 1) {
+                        // update thành công
+                        req.flash('msg_type', 'success');
+                        req.flash('msg', 'Sửa thông tin thành công.');
+                        return res.redirect('/account/profile');
+                    } else {
+                        req.flash('msg_type', 'danger');
+                        req.flash('msg', 'Sửa thông tin không thành công.');
+                        return res.redirect('/account/profile');
+                    }
+                })
+        })
+        .catch(next)
+})
+
+router.post('/profile/change-password', auth, (req, res, next) => {
+    let { oldPw, newPw, confirmPw } = req.body;
+    
+    const user_id = req.user.id;
+
+    user_model.detailUserByID(user_id)
+        .then(rows => {
+            if (rows.length === 0) {
+                return res.render('notify', {
+                    msg_title: 'Không tồn tại người dùng.',
+                    msg_detail: 'Vui lòng liên hệ admin để giải quyết.'
+                });
+            }
+
+            const User = rows[0];
+
+            const saltRounds = 10;
+
+            const isSame = bcrypt.compareSync(oldPw, User.password);
+
+            if (isSame === false){
+                // password cũ không đúng
+                req.flash('msg_type', 'danger');
+                req.flash('msg', 'Mật khẩu cũ không đúng.');
+                return res.redirect('/account/profile');
+            }
+
+            // nếu đúng: hash pw mới
+            const newPwHash = bcrypt.hashSync(newPw, saltRounds);
+
+            let entity = {
+                id : user_id,
+                password : newPwHash
+            }
+
+            user_model.update(entity)
+                .then(successRows => {
+                    if (successRows >= 1){
+                        req.flash('msg_type', 'success');
+                        req.flash('msg', 'Đổi mật khẩu thành công!');
+                        return res.redirect('/account/profile');
+                    }
+
+                    req.flash('msg_type', 'danger');
+                    req.flash('msg', 'Đổi mật khẩu không thành công!');
+                    return res.redirect('/account/profile');
+                })
+                .catch(next)
+        })
+        .catch(next)
 })
 
 module.exports = router;
