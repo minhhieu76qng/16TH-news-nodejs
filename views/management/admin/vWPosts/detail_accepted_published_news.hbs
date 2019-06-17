@@ -1,0 +1,91 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<link rel="stylesheet" href="asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js1'}}
+<script src="//cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
+
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="asset/js/widget_utility.js"></script>
+
+{{!-- <script src="asset/js/admin/admin.js"></script> --}}
+
+<script src="asset/js/admin/editor.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+{{/section}}
+
+<section class="post mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="post-container">
+                    <div class="cover-image-container">
+                        <div class="cover-image">
+                            <img src="{{this.post.cover_image}}" alt="cover photo">
+                        </div>
+                        <p class="post-title">{{this.post.title}}</p>
+
+                        {{#if this.post.type_post}}
+                        <div class="premium-article" title="Bài viết premium">
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="post-description mt-3">
+                        <div class="category">Chuyên mục: &nbsp; <a
+                                href="/categories/{{this.post.id_category}}/posts">{{this.post.cat_name}}</a></div>
+                        <div class="posted-date mt-2">Ngày đăng: <span>{{this.post.date_posted}}</span></div>
+                        {{#if this.tags}}
+                        <div class="list-tags mt-2">
+                            <span>Thẻ:</span> &nbsp;
+                            <ul class="tags" style="display: inline-block;">
+                                {{#each this.tags}}
+                                <li class="item">
+                                    <a class="link" href="/tags/{{id}}/posts">{{tag_name}}</a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="container-post mt-3">
+                        {{{this.post.content}}}
+                    </div>
+
+                    <hr />
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="sidebar-wrapper mt-4 mt-lg-0">
+                    <div class="most-view related-news">
+                        <h2 class="article-header">Chức năng</h2>
+                        <ul class="list-article mt-4">
+                            <a class="btn btn-danger" href="/admin/detail/delete/{{this.post.id}}">Gỡ bỏ</a>
+                            {{#if this.is_premium}}
+                            <a href="/admin/detail/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
+                                Premium</a>
+                            {{else}}
+                            <a href="/admin/detail/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
+                                Premium</a>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

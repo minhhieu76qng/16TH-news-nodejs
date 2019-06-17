@@ -175,13 +175,62 @@ module.exports = {
     },
 
     // quản lý bài viết admin
+
+    //hàm này chỉ hoạt động với bài viết chưa duyệt hoặc bị từ chối
     getListByStatus: (id_status, limit, offset) =>{
         return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
         FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
         and post.is_deleted = 0 and post.id_status = ${id_status} ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
     },
 
+    //hàm này chỉ hoạt động với bài viết chưa duyệt hoặc bị từ chối
     countByStatus: (id_status)=>{
         return db.load(`SELECT COUNT(*) as total FROM post WHERE post.is_deleted = 0 and post.id_status = ${id_status}`);
+    },
+
+    getAcceptPost: (currentDate, limit, offset)=>
+    {
+        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}' 
+        ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countAcceptPost: (currentDate)=>
+    {
+        return db.load(`SELECT COUNT(*) as total FROM post 
+        WHERE post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}'`);
+    },
+
+    getPublishedPost: (currentDate, limit, offset)=>
+    {
+        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}' 
+        ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countPublishedPost: (currentDate)=>
+    {
+        return db.load(`SELECT COUNT(*) as total FROM post 
+        WHERE post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}'`);
+    },
+
+
+    getDetailByID : PostID => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.is_deleted=0 and c.is_deleted=0 and p.id=${PostID} and p.id_category=c.id`);
+    },
+
+    add: entity => {
+        return db.add('post', entity);
+    },
+
+    update: entity => {
+        return db.update('post', 'id', entity);
+    },
+
+    delete: id => {
+        return db.delete('post', 'id', id);
     }
 }

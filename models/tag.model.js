@@ -54,6 +54,10 @@ module.exports = {
         where tags.is_deleted = 0 GROUP BY tags.id LIMIT ${limit} OFFSET ${offset}`);
     },
 
+    getList:(limit, offset)=>{
+        return db.load(`SELECT tags.id, tags.tag_name FROM tags WHERE tags.is_deleted = 0 LIMIT ${limit} OFFSET ${offset}`);
+    },
+
     count:()=>{
         return db.load(`select count(*) as total from tags where is_deleted = 0`);
     },
