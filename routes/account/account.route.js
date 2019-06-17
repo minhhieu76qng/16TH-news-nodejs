@@ -48,8 +48,8 @@ router.post('/login', (req, res, next) => {
         if (!user) {
             return res.render('account/login', {
                 message: {
-                    msg_type : 'warning',
-                    msg : info.message
+                    msg_type: 'warning',
+                    msg: info.message
                 }
             });
         }
@@ -133,7 +133,38 @@ router.post('/is-available', (req, res) => {
 })
 
 router.get('/profile', auth, (req, res, next) => {
-    res.end('profile');
+
+    // lấy thông tin cá nhân của user từ req.user
+    const UserID = req.user.id;
+
+    user_model.detailUserByID(UserID)
+        .then(rows => {
+            if (rows.length === 0) {
+                return res.render('');
+            } else {
+                let User = rows[0];
+
+                console.log(User);
+
+                let dateDob = "";
+
+                if (User.dob !== null){
+                    dateDob = moment(User.dob).format('YYYY-MM-DD');
+                    User.dob = moment(User.dob).format('DD/MM/YYYY');
+                }
+
+                if (User.exp_date !== null){
+                    User.exp_date = moment(User.exp_date).format('DD/MM/YYYY');
+                }
+
+                return res.render('account/profile', {
+                    User : User,
+                    isWriter : User.type === 'WRITER' ? true : false,
+                    dateDob : dateDob
+                });
+            }
+        })
+        .catch(next);
 })
 
 module.exports = router;

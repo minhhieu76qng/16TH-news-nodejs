@@ -1,0 +1,142 @@
+{{#section 'js'}}
+<script src="/asset/js/widget_utility.js"></script>
+{{/section}}
+
+<section id="user-content" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="wrapper">
+                    <ul class="menu-management">
+                        <li class="menu-management-item active">
+                            <a class="link" href="#view-personal-info"><i class="icon fa fa-pencil-square-o"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Xem thông tin</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link" href="#update-personal-info"><i class="icon fa fa-check-square-o"
+                                    aria-hidden="true"></i>
+                                <div class="linkText">Cập nhật thông tin</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item">
+                            <a class="link" href="#change-password"><i class="icon fa fa-tasks" aria-hidden="true"></i>
+                                <div class="linkText">Đổi mật khẩu</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="wrapper">
+                    <div class="content-menu-item" id="view-personal-info">
+                        <h3 class="mb-3 mt-3">Xem thông tin cá nhân</h3>
+                        <div class="user-info view-info">
+                            <div class="form-group">
+                                <label for="">Họ tên</label>
+                                <input disabled type="text" class="form-control" value="{{this.User.name}}">
+                            </div>
+                            {{#if this.isWriter}}
+                            <div class="form-group">
+                                <label for="">Bút danh</label>
+                                <input disabled type="text" class="form-control" value="{{this.User.pseudonym}}">
+                            </div>
+                            {{/if}}
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input disabled type="email" class="form-control" value="{{this.User.email}}">
+                            </div>
+                            {{#if this.User.dob}}
+                            <div class="form-group">
+                                <label for="">Ngày sinh</label>
+                                <input disabled type="text" class="form-control" value="{{this.User.dob}}">
+                            </div>
+                            {{else}}
+                            <div class="form-group">
+                                <label for="">Ngày sinh</label>
+                                <input disabled type="text" class="form-control" value="__/__/____">
+                            </div>
+                            {{/if}}
+                            <div class="form-group">
+                                <label for="">Loại tài khoản</label>
+                                <input disabled type="text" class="form-control" value="{{this.User.display_name}}">
+                            </div>
+                            {{#if this.User.exp_date}}
+                            <div class="form-group">
+                                <label for="">Ngày hết hạn tài khoản</label>
+                                <input disabled type="text" class="form-control" value="{{this.User.exp_date}}">
+                            </div>
+                            {{else}}
+                            <div class="form-group">
+                                <label for="">Ngày hết hạn tài khoản</label>
+                                <input disabled type="text" class="form-control" value="__/__/____">
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <div style="display : none;" class="content-menu-item" id="update-personal-info">
+                        <h3 class="mb-3 mt-3">Cập nhật thông tin cá nhân</h3>
+                        <form id="frm_UpdateProfile" class="user-info update-info" action="/account/profile/edit"
+                            method="POST">
+                            <div class="form-group">
+                                <label for="">Họ tên</label>
+                                <input name="name" type="text" class="form-control" placeholder="Họ tên"
+                                    value="{{this.User.name}}">
+                            </div>
+                            {{#if this.isWriter}}
+                            <div class="form-group">
+                                <label for="">Bút danh</label>
+                                <input name="pseudonym" type="text" class="form-control" placeholder="Bút danh"
+                                    value="{{this.User.pseudonym}}">
+                            </div>
+                            {{/if}}
+
+                            {{#if this.User.dob}}
+                            <div class="form-group">
+                                <label for="">Ngày sinh</label>
+                                <input name="dob" type='date' class="form-control" value="{{this.dateDob}}" />
+                            </div>
+                            {{else}}
+                            <div class="form-group">
+                                <label for="">Ngày sinh</label>
+                                <input name="dob" type='date' class="form-control" />
+                            </div>
+                            {{/if}}
+
+                            <div class="buttons text-center">
+                                <button class="btn btn-primary" type="submit">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="display : none;" class="content-menu-item" id="change-password">
+                        <h3 class="mb-3 mt-3">Đổi mật khẩu</h3>
+                        <form id="frm_ChangePw" action="/account/profile/change-password" method="POST"
+                            class="user-info change-pw">
+
+                            <div class="form-group">
+                                <label for="">Mật khẩu cũ</label>
+                                <input type="password" class="form-control" name="oldPw" placeholder="Mật khẩu cũ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Mật khẩu mới</label>
+                                <input type="password" class="form-control" name="newPw" placeholder="Mật khẩu mới">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nhập lại mật khẩu mới</label>
+                                <input type="password" class="form-control" name="retypenewPw"
+                                    placeholder="Nhập lại mật khẩu mới">
+                            </div>
+
+                            <div class="buttons text-center">
+                                <button class="btn btn-primary">Đổi mật khẩu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
