@@ -28,7 +28,7 @@ app.use('/tags', require('./routes/news/tags.route'));
 app.use('/search', require('./routes/news/search.route'));
 app.use('/', require('./routes/news/index.route'));
 
-// app.use('/writer', require('./routes/writer/writer.route.js'));
+app.use('/writer', require('./routes/writer/writer.route.js'));
 //app.use('/admin', require('./routes/admin/category.route.js'));
 //app.use('/admin', require('./routes/admin/tag.route.js'));
 //app.use('/admin', require('./routes/admin/subscriber.route.js'));
