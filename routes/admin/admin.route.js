@@ -667,34 +667,31 @@ router.post('/not-accepted-news/detail/accept/:id', (req, res, next) => {
                 post_tagModel.deleteByID(post_id)
                     .then(value => {
                         //gán lại các tag cho bài viết
-                        //dễ gặp bug đa luồng
-                        var pos = 0;
+                        //dễ gặp bug đa luồng này là hết, sửa rồi push lên cho t đc k
+                        // cái này nữa à? 3 cái mới đánh dấu chủ yếu là tính năng duyệt bài với phân công chuyên mục
+                        // là sửa cái này nữa thôi đúng không? nãy  giờ tao ko để ý
+
+                        let arrObj = [];
+
                         for (i = 0; i < post_tags.length; i++) {
                             var obj = {
                                 id_post: post_id,
                                 id_tag: post_tags[i]
                             };
-                            pos++;
-                            if (pos === post_tags.length) {
-                                post_tagModel.add(obj)
-                                    .then(id => {
-                                        res.redirect('/admin/not-accepted-news/detail/' + post_id);
-                                    })
-                                    .catch(next);
-                            }
-                            else {
-                                post_tagModel.add(obj)
-                                    .then(id => {
-                                    })
-                                    .catch(next);
-                            }
+                            arrObj.push(obj);
                         }
+
+                        Promise.all(
+                            arrObj.map(val => post_tagModel.add(val))
+                        )
+                        .then(rows => {
+                            return res.redirect('/admin/not-accepted-news/detail/' + post_id);
+                        })
+                        .catch(next)
                     }).catch(next);
             }).catch(next);
         })
         .catch(next);
-
-
 })
 
 router.post('/not-accepted-news/detail/deny/:id', (req, res, next) => {
@@ -1540,28 +1537,24 @@ router.post('/denied-news/detail/accept/:id', (req, res, next) => {
                 post_tagModel.deleteByID(post_id)
                     .then(value => {
                         //gán lại các tag cho bài viết
-                        //dễ gặp bug đa luồng
-                        var pos = 0;
+                        //dễ gặp bug đa luồng típ
+
+                        let arrObj = [];
                         for (i = 0; i < post_tags.length; i++) {
                             var obj = {
                                 id_post: post_id,
                                 id_tag: post_tags[i]
                             };
-                            pos++;
-                            if (pos === post_tags.length) {
-                                post_tagModel.add(obj)
-                                    .then(id => {
-                                        res.redirect('/admin/denied-news');
-                                    })
-                                    .catch(next);
-                            }
-                            else {
-                                post_tagModel.add(obj)
-                                    .then(id => {
-                                    })
-                                    .catch(next);
-                            }
+                            arrObj.push(obj);
                         }
+
+                        Promise.all(
+                            arrObj.map(val => post_tagModel.add(val))
+                        )
+                        .then(rows => {
+                            return res.redirect('/admin/denied-news');
+                        })
+                        .catch(next)
                     }).catch(next);
             }).catch(next);
 
@@ -1779,71 +1772,75 @@ router.get('/editor', (req, res, next) => {
                 categoryModel.exceptRootCat()
             ]).then(([rows, count_rows, rootCat, childCat]) => {
                 var editors = [];
-                for (i = 0; i < rows.length; i++) {
-                    Promise.all([user_cat.getCatManagenment(rows[i].id), i])
-                        .then(([values, pos]) => {
+                Promise.all(
+                    rows.map(val => user_cat.getCatManagenment(val.id))
+                )
+                    .then(data => {
+                        
+                        for (i = 0; i < data.length; i++) {
                             var strCatManagement = ""
-                            if (values.length > 0) {
-                                strCatManagement = values[0].cat_name;
+                            if (data[i].length > 0) {
+                                strCatManagement = data[i][0].cat_name;
                             }
 
-                            if (values.length > 1) {
+                            if (data[i].length > 1) {
                                 strCatManagement += " ...";
                             }
 
                             var catManagementHTML = "";
                             // chuỗi có dạng "id1 id2 id3 "
                             var strCatID = "";
-                            for (i = 0; i < values.length; i++) {
-                                strCatID += values[i].id.toString() + " ";
-                                catManagementHTML += '<li>' + values[i].cat_name + '</li>';
+                            for (j = 0; j < data[i].length; j++) {
+                                strCatID += data[i][j].id.toString() + " ";
+                                catManagementHTML += '<li>' + data[i][j].cat_name + '</li>';
                             }
 
                             var obj = {
-                                id: rows[pos].id,
-                                name: rows[pos].name,
-                                dob: my_utils.toDateString(rows[pos].dob),
-                                email: rows[pos].email,
-                                catManagement: values,
+                                id: rows[i].id,
+                                name: rows[i].name,
+                                dob: my_utils.toDateString(rows[i].dob),
+                                email: rows[i].email,
+                                catManagement: data[i],
                                 strCatManagement: strCatManagement,
                                 strCatID: strCatID,
                                 catManagementHTML: catManagementHTML
                             };
                             editors.push(obj);
-                        }).catch(next);
-                }
-
-                var total = count_rows[0].total;
-                var nPages = Math.floor(total / limit);
-                if (total % limit > 0) nPages++;
-                var pages = [];
-                for (i = 1; i <= nPages; i++) {
-                    var obj = { value: i, active: i === +page };
-                    pages.push(obj);
-                }
-
-                //Phân level chuyên mục
-                var rootCategories = [];
-                for (i = 0; i < rootCat.length; i++) {
-                    var childCategories = [];
-                    for (j = 0; j < childCat.length; j++) {
-                        if (rootCat[i].id === childCat[j].parent_cat) {
-                            childCategories.push(childCat[j]);
                         }
-                    }
-                    var obj = {
-                        id: rootCat[i].id,
-                        cat_name: rootCat[i].cat_name,
-                        childCategories: childCategories
-                    };
-                    rootCategories.push(obj);
-                }
 
-                res.render('management/admin/vWUsers/editor.hbs', {
-                    editors,
-                    pages,
-                    rootCategories
-                });
+                        var total = count_rows[0].total;
+                        var nPages = Math.floor(total / limit);
+                        if (total % limit > 0) nPages++;
+                        var pages = [];
+                        for (i = 1; i <= nPages; i++) {
+                            var obj = { value: i, active: i === +page };
+                            pages.push(obj);
+                        }
+
+                        //Phân level chuyên mục
+                        var rootCategories = [];
+                        for (i = 0; i < rootCat.length; i++) {
+                            var childCategories = [];
+                            for (j = 0; j < childCat.length; j++) {
+                                if (rootCat[i].id === childCat[j].parent_cat) {
+                                    childCategories.push(childCat[j]);
+                                }
+                            }
+                            var obj = {
+                                id: rootCat[i].id,
+                                cat_name: rootCat[i].cat_name,
+                                childCategories: childCategories
+                            };
+                            rootCategories.push(obj);
+                        }
+
+                        res.render('management/admin/vWUsers/editor.hbs', {
+                            editors,
+                            pages,
+                            rootCategories
+                        });
+                    })
+                    .catch(next)
             }).catch(next);
 
         })
@@ -1911,29 +1908,21 @@ router.post('/editor/register', (req, res, next) => {
 
                                 user_account_type.addNewUserAccountType(userAccountType)
                                     .then(id => {
-                                        //phân công chuyên mục cho editor 
-                                        //dễ gặp bug đa luồng
-                                        var pos = 0;
+                                        let arrObj = [];
                                         for (i = 0; i < catManagement.length; i++) {
                                             var obj = {
                                                 id_user: userID,
                                                 id_category: catManagement[i]
                                             };
-                                            pos++;
-                                            if (pos === catManagement.length) {
-                                                user_cat.add(obj)
-                                                    .then(id => {
-                                                        res.redirect('/admin/editor');
-                                                    })
-                                                    .catch(next);
-                                            }
-                                            else {
-                                                user_cat.add(obj)
-                                                    .then(id => {
-                                                    })
-                                                    .catch(next);
-                                            }
+                                            arrObj.push(obj);
                                         }
+
+                                        Promise.all(
+                                            arrObj.map(val => user_cat.add(val))
+                                        )
+                                        .then(rows => {
+                                            return res.redirect('/admin/editor');
+                                        }).catch(next);
 
                                     })
                                     .catch(next);
@@ -1972,28 +1961,30 @@ router.post('/editor/assign/:id', (req, res, next) => {
             user_cat.deleteByID(userID)
                 .then(value => {
                     //phân công chuyên mục cho editor 
-                    //dễ gặp bug đa luồng
-                    var pos = 0;
+                    //dễ gặp bug đa luồng tiếp
+                    // 3 cái
+                    // m coi tao sửa rồi chỉnh nè.ok
+                    // var pos = 0;
+
+                    // dduowcjcaisok test cái phân công
+
+                    let arrObj = [];
                     for (i = 0; i < catManagement.length; i++) {
                         var obj = {
                             id_user: userID,
                             id_category: catManagement[i]
                         };
-                        pos++;
-                        if (pos === catManagement.length) {
-                            user_cat.add(obj)
-                                .then(id => {
-                                    res.redirect('/admin/editor');
-                                })
-                                .catch(next);
-                        }
-                        else {
-                            user_cat.add(obj)
-                                .then(id => {
-                                })
-                                .catch(next);
-                        }
+
+                        arrObj.push(obj);
                     }
+
+                    Promise.all(
+                        arrObj.map(val => user_cat.add(val))
+                    )
+                    .then(rows => {
+                        return res.redirect('/admin/editor');
+                    })
+                    .catch(next)
                 }).catch(next);
 
         })
@@ -2190,7 +2181,7 @@ router.post('/subscriber/register', (req, res, next) => {
 
 })
 
-router.post('/subscriber/renew/:id', (req, res,next) => {
+router.post('/subscriber/renew/:id', (req, res, next) => {
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -2248,7 +2239,7 @@ router.post('/subscriber/renew/:id', (req, res,next) => {
 
 })
 
-router.get('/subscriber/ban/:id', (req, res,next) => {
+router.get('/subscriber/ban/:id', (req, res, next) => {
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2019 at 05:39 PM
+-- Generation Time: Jun 18, 2019 at 06:48 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -196,6 +196,17 @@ CREATE TABLE `user` (
   `is_deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `dob`, `email`, `password`, `exp_date`, `pseudonym`, `is_deleted`) VALUES
+(14, 'admin', '2019-06-18', 'admin@admin.com', '$2b$10$TJRRDju2cXwXACWT1m17r.Mbzxc3qyhZWfnyh8ueH1GoqZBCnh1vS', NULL, NULL, 0),
+(15, 'writer', '2019-06-18', 'writer@writer.com', '$2b$10$NsX3uLp4/dfGhtBaeP1gG.r9KfwJNkG93sVVOhjrdGIDBoeoscVyq', NULL, NULL, 0),
+(16, 'editor', '2019-06-18', 'editor@editor.com', '$2b$10$lF2w8klm2M.Z.izryjz90u9jnl9rZTpd3xUfTb0jnSMJAgy0ONOzu', NULL, NULL, 0),
+(17, 'editor2', '2006-06-22', 'editor2@editor.com', '$2b$10$YExJD979gErLGbEpu2sHEObk9zfmQGVOkntOkzh91RxpRQiWiYDxi', NULL, NULL, 0),
+(18, 'editor3', '2019-06-13', 'editor3@editor.com', '$2b$10$X9KVFUv88FSm/AtOeGnwNuD1uTUL5D6kxe.lvK3HnjUDE/gT4SkFK', NULL, NULL, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -209,6 +220,17 @@ CREATE TABLE `user_account_type` (
   `is_deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `user_account_type`
+--
+
+INSERT INTO `user_account_type` (`id`, `id_user`, `id_account_type`, `is_deleted`) VALUES
+(13, 14, 1, 0),
+(14, 15, 3, 0),
+(15, 16, 2, 0),
+(16, 17, 2, 0),
+(17, 18, 2, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -220,6 +242,24 @@ CREATE TABLE `user_category` (
   `id_user` int(11) NOT NULL,
   `id_category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_category`
+--
+
+INSERT INTO `user_category` (`id`, `id_user`, `id_category`) VALUES
+(1, 16, 9),
+(2, 16, 16),
+(3, 16, 14),
+(9, 17, 9),
+(10, 17, 10),
+(11, 17, 11),
+(18, 18, 6),
+(19, 18, 7),
+(20, 18, 18),
+(21, 18, 9),
+(22, 18, 17),
+(23, 18, 8);
 
 -- --------------------------------------------------------
 
@@ -379,19 +419,19 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `user_account_type`
 --
 ALTER TABLE `user_account_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user_category`
 --
 ALTER TABLE `user_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `view_weeks`
