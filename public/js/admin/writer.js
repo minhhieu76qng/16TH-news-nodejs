@@ -1,20 +1,3 @@
-//#region
-//-------------
-var dropdown = document.getElementsByClassName("dropdown");
-var i;
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
-}
-//#endregion
-
 //Quản lý người dùng-----------------------------------------------------------------------------------
 //#region
 
@@ -31,7 +14,7 @@ function openDetailAccountWriter(r, dob) {//tiếp tục
     document.getElementById("txtDetailNumPost").value = table.rows[r.rowIndex].cells[4].innerHTML;
     document.getElementById("txtDetailDOB").value = dob;
 
-    document.getElementById('btnBan').href = '/admin/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
+    document.getElementById('btnBan').href = '/admin/writer/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
 }
 
 //#endregion

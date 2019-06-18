@@ -1,21 +1,3 @@
-//#region
-//-------------
-var dropdown = document.getElementsByClassName("dropdown");
-var i;
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
-}
-//#endregion
-
-
 // Nhãn tag -------------------------------------------------------------------------------------------
 //#region
 var isDeletingTag = 0;
@@ -27,7 +9,7 @@ function openAddTag() {
     document.getElementById('btnAddTag').style.display = "inline-block";
     document.getElementById("txtTag").value = "";
     document.getElementById("txtTagID").value = "";
-    document.getElementById('TagForm').action = "/admin/add";
+    document.getElementById('TagForm').action = "/admin/tag/add";
 }
 
 function openEditTag(r) {
@@ -43,7 +25,7 @@ function openEditTag(r) {
     //Set giá trị tương ứng với row được click
     document.getElementById("txtTagID").value = table.rows[r.rowIndex].cells[0].innerHTML;
     tag.value = table.rows[r.rowIndex].cells[1].innerHTML;
-    document.getElementById('TagForm').action = "/admin/update";
+    document.getElementById('TagForm').action = "/admin/tag/update";
     $('#TagModal').modal('show');
 }
 

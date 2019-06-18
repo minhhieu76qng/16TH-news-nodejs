@@ -12,7 +12,7 @@ module.exports = {
     exceptRootCat: () => {
         return db.load('select * from category where is_deleted = 0 and parent_cat is not null');
     },
-
+    //and p.id_status=2
     exceptRootCatExistPost: () => {
         return db.load(`select DISTINCT c.id, c.cat_name, c.parent_cat, c.is_deleted from category c, post p 
         where c.is_deleted = 0 and c.parent_cat is not null and c.id = p.id_category`);

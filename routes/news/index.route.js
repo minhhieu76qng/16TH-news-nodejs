@@ -29,6 +29,8 @@ router.get('/', (req, res, next) => {
         .then(values => {
             // lấy được array 3 ôbject
             // lấy tiếp 10 cat trong mỗi cat có 1 post mới nhất
+            // cái này nó lấy các cate có tồn tại pót mà ta
+            // để xem lại coi chỗ nào còn lỗi thì sửa tiếp. ăn cái uk
             cat_model.exceptRootCatExistPost()
                 .then(categories => {
                     var categories_clone_10 = categories.slice(0, categories.length > 10 ? 10 : categories.length);

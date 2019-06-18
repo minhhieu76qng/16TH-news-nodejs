@@ -1,20 +1,3 @@
-//#region
-//-------------
-var dropdown = document.getElementsByClassName("dropdown");
-var i;
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
-}
-//#endregion
-
 //Quản lý người dùng-----------------------------------------------------------------------------------
 //#region
 
@@ -32,8 +15,8 @@ function openDetailAccountEditor(r, strCatID, catManagementHTML) {//tiếp tục
     document.getElementById("txtDetailDOB").value = table.rows[r.rowIndex].cells[3].innerHTML;
     document.getElementById("category-editor").innerHTML = catManagementHTML;
 
-    document.getElementById('AssignForm').action = '/admin/assign/' + table.rows[r.rowIndex].cells[0].innerHTML;
-    document.getElementById('btnBan').href = '/admin/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
+    document.getElementById('AssignForm').action = '/admin/editor/assign/' + table.rows[r.rowIndex].cells[0].innerHTML;
+    document.getElementById('btnBan').href = '/admin/editor/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
     //set giá trị cho selection
     $.each($("#selectCatManagement option:selected"), function() {
         $(this).prop('selected', false);

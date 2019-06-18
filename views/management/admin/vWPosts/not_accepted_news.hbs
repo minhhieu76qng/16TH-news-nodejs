@@ -4,17 +4,14 @@
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 
-<link rel="stylesheet" href="asset/css/news_management.css">
+<link rel="stylesheet" href="/asset/css/news_management.css">
 {{/section}}
 
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
 
-<script src="asset/js/widget_utility.js"></script>
+<script src="/asset/js/widget_utility.js"></script>
 
-{{!-- <script src="asset/js/admin/admin.js"></script> --}}
-
-{{!-- <script src="asset/js/admin/post.js"></script> --}}
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -40,76 +37,78 @@
                             + Biên tập viên
                             + Độc giả
                         -->
-                <div class="wrapper">
-                    <ul class="menu-management">
-                        <li class="menu-management-item">
-                            <a class="link" href="#category-management"><i class="icon fa fa-list-alt"
-                                    aria-hidden="true"></i>
-                                <div class="linkText">Quản lý chuyên mục</div>
+                <div id="accordion">
+                    <div>
+                        <div>
+                            <a class="list-group-item list-group-item-action" href="/admin">
+                                Quản lý chuyên mục
                             </a>
-                        </li>
-                        <li class="menu-management-item">
-                            <a class="link" href="/tags"><i class="icon fa fa-tags" aria-hidden="true"></i>
-                                <div class="linkText">Quản lý nhãn tag</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <a class="list-group-item list-group-item-action" href="/admin/tag">
+                                Quản lý nhãn tag
                             </a>
-                        </li>
-                        <li class="menu-management-item">
-                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-th"
-                                    aria-hidden="true"></i>
-                                <div class="linkText">Quản lý bài viết</div>
-                                <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="headingTwo">
+                            <a class="list-group-item list-group-item-action collapsed dropdown-toggle"
+                                href="#collapseTwo" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                Quản lý bài viết
                             </a>
-                            <ul class="menu-management">
-                                <li class="menu-management-item">
-                                    <a class="link" href="/accepted-news">
-                                        <i class="icon fa fa-check-square-o" aria-hidden="true"></i>
-                                        <div class="linkText">Bài viết đã duyệt</div>
-                                    </a>
-                                </li>
-                                <li class="menu-management-item">
-                                    <a class="link" href="/not-accepted-news"><i class="icon fa fa-tasks"
-                                            aria-hidden="true"></i>
-                                        <div class="linkText">Bài
-                                            viết chưa duyệt</div>
-                                    </a>
-                                </li>
-                                <li class="menu-management-item">
-                                    <a class="link" href="/published-news"><i class="icon fa fa-newspaper-o"
-                                            aria-hidden="true"></i>
-                                        <div class="linkText">Bài viết đã xuất bản</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-management-item">
-                            <a class="link dropdown" href="javascript:;"><i class="icon fa fa-users"
-                                    aria-hidden="true"></i>
-                                <div class="linkText">Quản lý người dùng</div>
-                                <i class="fa fa-caret-down"></i>
-                                <!-- <i class="icon fa fa-chevron-right" aria-hidden="true"></i>    -->
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div>
+                                <a class="list-group-item list-group-item-action active" href="/admin/not-accepted-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết chưa duyệt</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/accepted-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết chờ xuất bản</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/published-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết đã xuất bản</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/denied-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết bị từ chối</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="headingThree">
+                            <a class="list-group-item list-group-item-action collapsed dropdown-toggle"
+                                href="#collapseThree" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                Quản lý người dùng
                             </a>
-                            <ul class="menu-management">
-                                <li class="menu-management-item">
-                                    <a class="link" href="/writer-management"><i class="icon fa fa-pencil-square-o"
-                                            aria-hidden="true"></i>
-                                        <div class="linkText">Phóng viên</div>
-                                    </a>
-                                </li>
-                                <li class="menu-management-item">
-                                    <a class="link" href="/editor-management"><i class="icon fa fa-user-plus"
-                                            aria-hidden="true"></i>
-                                        <div class="linkText">Biên tập viên</div>
-                                    </a>
-                                </li>
-                                <li class="menu-management-item active">
-                                    <a class="link" href="/subscriber-management"><i class="icon fa fa-address-book"
-                                            aria-hidden="true"></i>
-                                        <div class="linkText">Độc giả</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/writer">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Phóng viên</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/editor">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Biên tập viên</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/subscriber">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Độc giả</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col">
@@ -141,7 +140,7 @@
                                     <td>{{title}}</td>
                                     <td>{{author}}</td>
                                     <td class="text-right">
-                                        <a class="btn btn-success btn-sm" href="/admin/detail/{{id}}" role="button">
+                                        <a class="btn btn-success btn-sm" href="/admin/not-accepted-news/detail/{{id}}" role="button" target="_blank">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -158,7 +157,7 @@
                             </li>
                             {{else}}
                             <li class="page-item">
-                                <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                <a class="page-link" href="not-accepted-news/?page={{value}}">{{value}}</a>
                             </li>
                             {{/if}}
                             {{/each}}

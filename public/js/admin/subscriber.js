@@ -1,20 +1,3 @@
-//#region
-//-------------
-var dropdown = document.getElementsByClassName("dropdown");
-var i;
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
-        }
-    });
-}
-//#endregion
-
 //Quản lý người dùng-----------------------------------------------------------------------------------
 //#region
 
@@ -32,8 +15,8 @@ function openDetailAccountSubcriber(r, exp_date) {//tiếp tục
     document.getElementById("txtDetailDOB").value = table.rows[r.rowIndex].cells[3].innerHTML;
     document.getElementById("txtDetailExpDate").value = exp_date;
 
-    document.getElementById('RenewForm').action = '/admin/renew/' + table.rows[r.rowIndex].cells[0].innerHTML;
-    document.getElementById('btnBan').href = '/admin/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
+    document.getElementById('RenewForm').action = '/admin/subscriber/renew/' + table.rows[r.rowIndex].cells[0].innerHTML;
+    document.getElementById('btnBan').href = '/admin/subscriber/ban/' + table.rows[r.rowIndex].cells[0].innerHTML;
 }
 
 function BackMainDetailAccount(id_container)

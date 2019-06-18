@@ -29,16 +29,7 @@ app.use('/search', require('./routes/news/search.route'));
 app.use('/', require('./routes/news/index.route'));
 
 app.use('/writer', require('./routes/writer/writer.route.js'));
-//app.use('/admin', require('./routes/admin/category.route.js'));
-//app.use('/admin', require('./routes/admin/tag.route.js'));
-//app.use('/admin', require('./routes/admin/subscriber.route.js'));
-//app.use('/admin', require('./routes/admin/writer.route.js'));
-//app.use('/admin', require('./routes/admin/editor.route.js'));
-//app.use('/admin', require('./routes/admin/not_accepted_news.route.js'));
-app.use('/admin', require('./routes/admin/published_news.route.js'));
-//app.use('/admin', require('./routes/admin/accepted_news.route.js'));
-//app.use('/admin', require('./routes/admin/denied_news.route.js'));
-//app.use('/admin', require('./routes/admin/admin.route'));
+app.use('/admin', require('./routes/admin/admin.route'));
 app.use('/editor', require('./routes/editor/editor.route'));
 
 app.use((req, res, next) => {

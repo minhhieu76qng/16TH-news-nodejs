@@ -4,7 +4,7 @@
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 
-<link rel="stylesheet" href="asset/css/news_management.css">
+<link rel="stylesheet" href="/asset/css/news_management.css">
 {{/section}}
 
 {{#section 'js1'}}
@@ -15,11 +15,11 @@
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
 
-<script src="asset/js/widget_utility.js"></script>
+<script src="/asset/js/widget_utility.js"></script>
 
 {{!-- <script src="asset/js/admin/admin.js"></script> --}}
 
-<script src="asset/js/admin/editor.js"></script>
+<script src="/asset/js/admin/editor.js"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -106,10 +106,10 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#AcceptPostModal" data-backdrop="static">Duyệt bài</button>
                             {{#if this.is_premium}}
-                            <a href="/admin/detail/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
+                            <a href="/admin/denied-news/detail/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
                                 Premium</a>
                             {{else}}
-                            <a href="/admin/detail/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
+                            <a href="/admin/denied-news/detail/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
                                 Premium</a>
                             {{/if}}
                         </ul>
@@ -134,7 +134,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form novalidate id="AcceptedForm" method="POST" action="/admin/detail/accept/{{this.post.id}}">
+                <form novalidate id="AcceptedForm" method="POST" action="/admin/denied-news/detail/accept/{{this.post.id}}">
                     <div class="form-group">
                         <label for="date_posted">Chọn ngày xuất bản</label>
                         <input id="dtpicker_date_posted" type="text" class="form-control" name="date_posted">
