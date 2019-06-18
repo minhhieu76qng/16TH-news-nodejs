@@ -93,3 +93,6 @@ test.js
 
 #remove .vs
 .vscode
+
+#remove uploaded folder
+uploaded

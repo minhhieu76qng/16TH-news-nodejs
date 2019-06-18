@@ -675,3 +675,15 @@ ul.list_post_page {
     font-weight: 500;
     font-size: 18px;
 }
+
+img.width-fluid{
+    max-width: 100%;
+}
+
+iframe.width-fluid{
+    max-width: 100%;
+}
+
+.container-post img, .container-post iframe{
+    max-width: 100% !important;
+}
