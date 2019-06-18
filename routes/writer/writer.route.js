@@ -101,7 +101,6 @@ router.post('/add-new-post', uploadText.none(), (req, res, next) => {
                 })
             }
 
-
             let entity_post = {
                 title: form_fields.post_title,
                 date_created: moment(new Date()).format('YYYY/MM/DD HH:mm'),
@@ -113,7 +112,7 @@ router.post('/add-new-post', uploadText.none(), (req, res, next) => {
                 id_category : form_fields.post_category,
                 type_post : form_fields.post_type === 'normal' ? 0 : 1,
                 views : 0,
-                download_link : form_fields.file_uploaded,
+                download_link : form_fields.file_uploaded !== "" ? form_fields.file_uploaded : null,
             }
 
             if (form_fields.post_type === 'normal') {
@@ -180,21 +179,5 @@ router.post('/upload-file', (req, res, next) => {
         })
     })
 })
-
-router.post('/upload-cover-image', (req, res, next) => {
-    upload.single('cover_image')(req, res, err => {
-        if (err) {
-            return res.json({
-                error: err
-            })
-        }
-
-        return res.json({
-            fileName: req.file.filename,
-            destination: req.file.destination
-        })
-    })
-})
-
 
 module.exports = router;
