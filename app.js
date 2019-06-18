@@ -32,7 +32,7 @@ app.use('/', require('./routes/news/index.route'));
 
 app.use('/writer', auth , require('./routes/writer/writer.route.js'));
 app.use('/admin', auth , require('./routes/admin/admin.route'));
-app.use('/editor', auth , require('./routes/editor/editor.route'));
+app.use('/editor', require('./routes/editor/editor.route'));
 
 app.use((req, res, next) => {
     res.render('404', {
