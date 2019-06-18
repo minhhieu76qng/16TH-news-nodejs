@@ -1,0 +1,170 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<link rel="stylesheet" href="/asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="/asset/js/widget_utility.js"></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+
+{{/section}}
+
+
+<section id="news-management" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <!-- bao gom menu
+                    * neu la admin:
+                        + Quản lý chuyên mục
+                        + Quản lý nhãn tag
+                        + Quản lý bài viết
+                            + Bài viết đã xuất bản
+                            + Bài viết đã được duyệt & chờ xuất bản
+                            + Bài viết chưa duyệt
+                        + Quản lý người dùng
+                            + Phóng viên
+                            + Biên tập viên
+                            + Độc giả
+                        -->
+                <div id="accordion">
+                    <div>
+                        <div>
+                            <a class="list-group-item list-group-item-action" href="/admin">
+                                Quản lý chuyên mục
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <a class="list-group-item list-group-item-action" href="/admin/tag">
+                                Quản lý nhãn tag
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="headingTwo">
+                            <a class="list-group-item list-group-item-action collapsed dropdown-toggle"
+                                href="#collapseTwo" data-toggle="collapse" aria-expanded="true"
+                                aria-controls="collapseTwo">
+                                Quản lý bài viết
+                            </a>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/not-accepted-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết chưa duyệt</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/accepted-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết chờ xuất bản</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/published-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết đã xuất bản</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action active" href="/admin/denied-news">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Bài viết bị từ chối</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="headingThree">
+                            <a class="list-group-item list-group-item-action collapsed dropdown-toggle"
+                                href="#collapseThree" data-toggle="collapse" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                Quản lý người dùng
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/writer">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Phóng viên</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/editor">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Biên tập viên</div>
+                                </a>
+                            </div>
+                            <div>
+                                <a class="list-group-item list-group-item-action" href="/admin/subscriber">
+                                    <div class="ml-2"><i class="fa fa-caret-right mr-2"></i>Độc giả</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="wrapper wrapper-content">
+                    <div class="content-menu-item" id="denied-news">
+                        <h3 class="mb-3 mt-3">Bài viết bị từ chối</h3>
+
+                        <table class="can-be-edit table table-hover table-bordered mb-0" id="denied-news-table">
+                            <col style="width:5%">
+                            <col style="width:15%">
+                            <col style="width:55%">
+                            <col style="width:20%">
+                            <col style="width:5%">
+
+                            <thead class="thead-dark">
+                                <tr class="text-center">
+                                    <th style="vertical-align: top;">#</th>
+                                    <th style="vertical-align: top;">Chuyên mục</th>
+                                    <th style="vertical-align: top;">Tiêu đề bài viết</th>
+                                    <th style="vertical-align: top;">Tác giả</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each this.posts}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{cat_name}}</td>
+                                    <td>{{title}}</td>
+                                    <td>{{author}}</td>
+                                    <td class="text-right">
+                                        <a class="btn btn-success btn-sm" href="/admin/denied-news/detail/{{id}}" role="button" target="_blank">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <ul class="pagination justify-content-center mt-4">
+                            {{#each this.pages}}
+                            {{#if active}}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="javascript:;">{{value}} <span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+                            {{else}}
+                            <li class="page-item">
+                                <a class="page-link" href="denied-news/?page={{value}}">{{value}}</a>
+                            </li>
+                            {{/if}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

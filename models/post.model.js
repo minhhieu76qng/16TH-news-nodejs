@@ -261,37 +261,53 @@ module.exports = {
     //hàm này chỉ hoạt động với bài viết chưa duyệt hoặc bị từ chối
     getListByStatus: (id_status, limit, offset) => {
         return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
-        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id and category.is_deleted = 0 
         and post.is_deleted = 0 and post.id_status = ${id_status} ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
     },
 
     //hàm này chỉ hoạt động với bài viết chưa duyệt hoặc bị từ chối
     countByStatus: (id_status) => {
-        return db.load(`SELECT COUNT(*) as total FROM post WHERE post.is_deleted = 0 and post.id_status = ${id_status}`);
+        return db.load(`SELECT COUNT(*) as total FROM post, category WHERE category.is_deleted = 0 
+        and category.id = post.id_category and post.is_deleted = 0 and post.id_status = ${id_status}`);
     },
 
     getAcceptPost: (currentDate, limit, offset) => {
         return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
-        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id and category.is_deleted = 0 
         and post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}' 
         ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
     },
 
     countAcceptPost: (currentDate) => {
-        return db.load(`SELECT COUNT(*) as total FROM post 
-        WHERE post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}'`);
+        return db.load(`SELECT COUNT(*) as total FROM post, category WHERE category.is_deleted = 0 
+        and category.id = post.id_category and post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}'`);
+    },
+
+    //lấy danh sách bài viết chưa duyệt trong chuyên mục quản lý của editor
+    getListNotAcceptedEditor: (id_user, id_status, limit, offset) => {
+        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, user_category u_cat, category WHERE post.id_writer = user.id 
+        and post.id_category = category.id and post.is_deleted = 0 and post.id_status = ${id_status} 
+        and u_cat.id_user = ${id_user} and u_cat.id_category = post.id_category and category.is_deleted = 0 
+        ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countListNotAcceptedEditor: (id_user, id_status) => {
+        return db.load(`SELECT COUNT(*) as total FROM post, user_category u_cat, category 
+        WHERE post.is_deleted = 0 and post.id_status = ${id_status} and u_cat.id_user = ${id_user} 
+        and u_cat.id_category = post.id_category and u_cat.id_category = category.id and category.is_deleted = 0`);
     },
 
     getPublishedPost: (currentDate, limit, offset) => {
         return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
         FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
-        and post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}' 
-        ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+        and category.is_deleted = 0 and post.is_deleted = 0 and post.id_status = '1' 
+        and post.date_posted < '${currentDate}' ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
     },
 
     countPublishedPost: (currentDate) => {
-        return db.load(`SELECT COUNT(*) as total FROM post 
-        WHERE post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}'`);
+        return db.load(`SELECT COUNT(*) as total FROM post, category WHERE category.is_deleted = 0 
+        and category.id = post.id_category and post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}'`);
     },
 
 

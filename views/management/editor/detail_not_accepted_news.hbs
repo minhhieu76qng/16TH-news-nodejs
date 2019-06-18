@@ -1,0 +1,222 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+<link rel="stylesheet" href="/asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js1'}}
+<script src="//cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
+
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="/asset/js/widget_utility.js"></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script>
+    $(function () {
+        $('#dtpicker_date_posted').datetimepicker({
+            format: 'd/m/Y H:i',
+            mask: true,
+            minDateTime: new Date()
+        });
+        $('#AcceptedForm').validate({
+            rules: {
+                date_posted: {
+                    required: true
+                },
+            },
+            messages: {
+                date_posted: {
+                    required: 'Chưa nhập ngày xuất bản.'
+                },
+            },
+            errorElement: 'em',
+            errorClass: 'mt-2 d-block text-danger text-left',
+            highlight: function (e) {
+                $(e).removeClass('is-valid').addClass('is-invalid');
+            },
+            unhighlight: function (e) {
+                $(e).removeClass('is-invalid').addClass('is-valid');
+            },
+        });
+        $('#DenyForm').validate({
+            rules: {
+                reason_deny: {
+                    required: true
+                },
+            },
+            messages: {
+                reason_deny: {
+                    required: 'Chưa nhập lý do từ chối.'
+                },
+            },
+            errorElement: 'em',
+            errorClass: 'mt-2 d-block text-danger text-left',
+            highlight: function (e) {
+                $(e).removeClass('is-valid').addClass('is-invalid');
+            },
+            unhighlight: function (e) {
+                $(e).removeClass('is-invalid').addClass('is-valid');
+            },
+        });
+    })
+</script>
+{{/section}}
+
+<section class="post mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="post-container">
+                    <div class="cover-image-container">
+                        <div class="cover-image">
+                            <img src="{{this.post.cover_image}}" alt="cover photo">
+                        </div>
+                        <p class="post-title">{{this.post.title}}</p>
+
+                        {{#if this.post.type_post}}
+                        <div class="premium-article" title="Bài viết premium">
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="post-description mt-3">
+                        <div class="category">Chuyên mục: &nbsp; <a
+                                href="/categories/{{this.post.id_category}}/posts">{{this.post.cat_name}}</a></div>
+                        <div class="posted-date mt-2">Ngày nộp bài: <span>{{this.post.date_created}}</span></div>
+                        {{#if this.tags}}
+                        <div class="list-tags mt-2">
+                            <span>Thẻ:</span> &nbsp;
+                            <ul class="tags" style="display: inline-block;">
+                                {{#each this.tags}}
+                                <li class="item">
+                                    <a class="link" href="/tags/{{id}}/posts">{{tag_name}}</a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="container-post mt-3">
+                        {{{this.post.content}}}
+                    </div>
+
+                    <hr />
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="sidebar-wrapper mt-4 mt-lg-0">
+                    <div class="most-view related-news">
+                        <h2 class="article-header">Chức năng</h2>
+                        <ul class="list-article mt-4">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#AcceptPostModal" data-backdrop="static">Duyệt bài</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#DenyPostModal" data-backdrop="static">Từ chối</button>
+                            {{#if this.is_premium}}
+                            <a href="/editor/detail/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
+                                Premium</a>
+                            {{else}}
+                            <a href="/editor/detail/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
+                                Premium</a>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal duyệt bài -->
+<div class="modal fade" id="AcceptPostModal" tabindex="-1" role="dialog" aria-labelledby="AcceptPostModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Duyệt bài viết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form novalidate id="AcceptedForm" method="POST" action="/editor/detail/accept/{{this.post.id}}">
+                    <div class="form-group">
+                        <label for="date_posted">Chọn ngày xuất bản</label>
+                        <input id="dtpicker_date_posted" type="text" class="form-control" name="date_posted">
+                    </div>
+                    <div class="form-group">
+                        <label for="post-category"><b>Chuyên mục</b></label>
+                        <div class="wrapper-control">
+                            <select class="form-control" name="post_category" id="post_category">
+                                {{#each this.Categories}}
+                                {{#if selected}}
+                                <option value={{id}} selected>{{cat_name}}</option>
+                                {{else}}
+                                <option value={{id}}>{{cat_name}}</option>
+                                {{/if}}
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tagPosts"><b>Gán nhãn</b></label>
+                        <select class="selectpicker form-control" multiple data-live-search="true" name="post_tags[]"
+                            id="select_post_tags">
+                            {{#each this.listTags}}
+                            {{#if selected}}
+                            <option value={{id}} selected>{{tag_name}}</option>
+                            {{else}}
+                            <option value={{id}}>{{tag_name}}</option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Hoàn tất</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở về</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal từ chối -->
+<div class="modal fade" id="DenyPostModal" tabindex="-1" role="dialog" aria-labelledby="DenyPostModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Từ chối bài viết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form novalidate id="DenyForm" method="POST"
+                    action="/editor/detail/deny/{{this.post.id}}">
+                    <div class="form-group">
+                        <label for="reasonDenyPost">
+                            Nhập lý do từ chối
+                        </label>
+                        <textarea class="form-control" rows="5" id="reasonDenyPost" name="reason_deny"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Hoàn tất</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở về</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
