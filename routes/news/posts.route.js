@@ -1,5 +1,6 @@
 var express = require('express');
 var moment = require('moment');
+var fs = require('fs');
 
 var post_model = require('../../models/post.model');
 var tag_model = require('../../models/tag.model');
@@ -149,8 +150,8 @@ router.get('/:id', (req, res, next) => {
                                 comments: {
                                     listComment: comments,
                                     isViewMoreComment:
-                                         +commentCount[0].totalComment > limitComment * 1 ? true : false,
-                                    commentPage : 1
+                                        +commentCount[0].totalComment > limitComment * 1 ? true : false,
+                                    commentPage: 1
                                 },
                                 msgToView: {
                                     msg_type: msg_type,
@@ -224,18 +225,18 @@ router.get('/:id/comment', (req, res, next) => {
     let commentPage = req.query.commentPage || null;
     commentPage = +commentPage;
 
-    if (!Number.isInteger(postID)){
+    if (!Number.isInteger(postID)) {
         res.setHeader('Content-Type', 'application/json');
         return res.json({
-            status : false,
-            msg : 'PostID bị sai.'
+            status: false,
+            msg: 'PostID bị sai.'
         })
     }
 
-    if (!Number.isInteger(commentPage)){
+    if (!Number.isInteger(commentPage)) {
         return res.json({
-            status : false,
-            msg : 'Offset bị sai.'
+            status: false,
+            msg: 'Offset bị sai.'
         })
     }
 
@@ -248,34 +249,88 @@ router.get('/:id/comment', (req, res, next) => {
         comment_model.count(postID),
         comment_model.withPostID(postID, limit, offset)
     ])
-    .then(([totalComment, rows]) => {
+        .then(([totalComment, rows]) => {
 
-        if (rows.length == 0){
-            return res.json({
-                status : false,
-            })
-        } else {
+            if (rows.length == 0) {
+                return res.json({
+                    status: false,
+                })
+            } else {
 
-            const commentCount = totalComment[0].totalComment;
+                const commentCount = totalComment[0].totalComment;
 
-            rows = rows.map((val, idx) => {
-                val.date_submit = moment(val.date_submit).format('DD/MM/YYYY HH:mm');
-                return val;
-            })
-            return res.json({
-                status : true,
-                comments : rows,
-                commentPage : commentPage,
-                nextPage : commentCount > (offset + limit) ? true : false
-            })
-        }
-    })
-    .catch(err => {
-        return res.json({
-            status : false,
-            msg : err.message
+                rows = rows.map((val, idx) => {
+                    val.date_submit = moment(val.date_submit).format('DD/MM/YYYY HH:mm');
+                    return val;
+                })
+                return res.json({
+                    status: true,
+                    comments: rows,
+                    commentPage: commentPage,
+                    nextPage: commentCount > (offset + limit) ? true : false
+                })
+            }
         })
-    })
+        .catch(err => {
+            return res.json({
+                status: false,
+                msg: err.message
+            })
+        })
+})
+
+
+router.get('/:id/download-doc', (req, res, next) => {
+    const postID = +req.params.id;
+
+    console.log(postID);
+
+    if (!Number.isInteger(postID)) {
+        throw new Event('PostID is not valid')
+    } else {
+        post_model.detailByPostId(postID)
+            .then(rows => {
+                if (rows.length === 0) {
+                    res.locals.pageTitle = 'Thông báo'
+                    return res.render('notify', {
+                        msg_title: 'Bài viết không tồn tại.',
+                        msg_detail: 'Bài viết này hiện đã không còn tồn tại trong máy chủ.'
+                    })
+                }
+
+                let post = rows[0];
+
+                if (post.download_link === null || typeof post.download_link === 'undefined'){
+                    return res.render('notify', {
+                        msg_title: 'File không tồn tại.',
+                        msg_detail: 'Tập tin bạn tải không còn tồn tại ở máy chủ.'
+                    })
+                }
+                
+                let download_link = post.download_link;
+
+                if (String(download_link).startsWith('.')){
+                    download_link = download_link.replace('.','');
+                    download_link = download_link.split('/').join('\\');
+                }
+
+                let rootPath = __dirname.replace('\\routes\\news', '');
+
+                const file = `${rootPath}\\${download_link}`;
+
+                fs.access(file, fs.F_OK, (err) => {
+                    if (err) {
+                        return res.render('notify', {
+                            msg_title: 'File không tồn tại.',
+                            msg_detail: 'Tập tin bạn tải không còn tồn tại ở máy chủ.'
+                        })
+                    }
+
+                    return res.download(file);
+                })
+            })
+            .catch(next)
+    }
 })
 
 module.exports = router;

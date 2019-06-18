@@ -146,24 +146,10 @@ router.post('/add-new-post', uploadText.none(), (req, res, next) => {
                             )
                             .then(tagIds => {
                                 if (tagIds.length > 0) {
-                                    // thêm thành công
-                                    // return res.render('management/writer/writer.view.hbs', {
-                                    //     msg : {
-                                    //         msg_type : 'success',
-                                    //         message : 'Thêm bài viết thành công.'
-                                    //     }
-                                    // })
                                     req.flash('msg_type', 'success');
                                     req.flash('msg', 'Thêm bài viết thành công.');
                                     return res.redirect('/writer/add-new-post');
                                 }
-
-                                // return res.render('management/writer/writer.view.hbs', {
-                                //     msg : {
-                                //         msg_type : 'danger',
-                                //         message : 'Thêm bài viết không thành công.'
-                                //     }
-                                // })
 
                                 req.flash('msg_type', 'success');
                                 req.flash('msg', 'Thêm bài viết thành công.');
@@ -388,5 +374,6 @@ router.post('/upload-file', (req, res, next) => {
         })
     })
 })
+
 
 module.exports = router;
