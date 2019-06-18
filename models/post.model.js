@@ -180,6 +180,59 @@ module.exports = {
         return db.update('post', 'id', entity);
     },
 
+    // ---------------- writer --------------------
+    postsWithAuthorID : (UserID, limit, offset) => {
+        return db.load(`select p.*, c.cat_name from post p, category c
+            where p.id_writer=${UserID} and p.is_deleted=0 and p.id_category=c.id 
+            limit ${limit} offset ${offset}`);
+    },
+
+    publishedPostsWithUserID : (UserID, limit, offset) => {
+        return db.load(`select p.*, c.cat_name from post p, category c 
+            where p.id_writer=${UserID} and p.is_deleted=0 and p.id_category=c.id
+            and p.id_status=1 and date_posted is not null and date_posted<=NOW()
+            limit ${limit} offset ${offset}`);
+    },
+
+    waitingForPublicationPostsWithUserID : (UserID, limit, offset) => {
+        return db.load(`select p.*, c.cat_name from post p, category c
+            where p.id_writer=${UserID} and p.is_deleted=0 and p.id_category=c.id
+            and p.id_status=1 and date_posted is not null and date_posted>=NOW()
+            limit ${limit} offset ${offset}`);
+    },
+
+    createdPostsWithUserID : (UserID, limit, offset) => {
+        return db.load(`select p.*, c.cat_name from post p, category c
+            where p.id_writer=${UserID} and p.is_deleted=0 and p.id_category=c.id
+            and p.id_status=4 limit ${limit} offset ${offset}`);
+    },
+
+    refusedPostsWithUserID : (UserID, limit, offset) => {
+        return db.load(`select p.*, c.cat_name from post p, category c
+            where p.id_writer=${UserID} and p.is_deleted=0 and p.id_category=c.id
+            and p.id_status=3 limit ${limit} offset ${offset}`);
+    },
+
+    countAllPostWithUserID : UserID => {
+        return db.load(`select count(*) as total from post p where p.id_writer=${UserID} and p.is_deleted=0`);
+    },
+    countPublishedPostWithUserID : UserID => {
+        return db.load(`select count(*) as total from post p
+            where p.id_writer=${UserID} and p.is_deleted=0 
+            and p.id_status=1 and date_posted is not null and date_posted<=NOW()`);
+    },
+    countWaitingPostWithUserID : UserID => {
+        return db.load(`select count(*) as total from post p where p.id_writer=${UserID} and p.is_deleted=0 
+            and p.id_status=1 and date_posted is not null and date_posted>=NOW()`);
+    },
+    countCreatedPostWithUserID : UserID => {
+        return db.load(`select count(*) as total from post p where p.id_writer=${UserID} and p.is_deleted=0 
+            and p.id_status=4`);
+    },
+    countRefusedPostWithUserID : UserID => {
+        return db.load(`select count(*) as total from post p where p.id_writer=${UserID} and p.is_deleted=0
+            and p.id_status=3`);
+    },
 
     // ---------------- full text search
     searchWithTitle: title => {

@@ -21,10 +21,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
-<script src="asset/js/widget_utility.js"></script>
-
-<script src="asset/js/writer.js"></script>
-
 <script>
     $("#edition").fileinput({
         theme: 'fa',
@@ -138,13 +134,14 @@
                 <div class="wrapper shadow">
                     <ul class="menu-management">
                         <li class="menu-management-item active">
-                            <a class="link" href="#create-news"><i class="icon fa fa-pencil-square-o"
-                                    aria-hidden="true"></i>
+                            <a class="link" href="/writer/add-new-post">
+                                <i class="icon fa fa-pencil-square-o" aria-hidden="true"></i>
                                 <div class="linkText">Đăng bài viết mới</div>
                             </a>
                         </li>
                         <li class="menu-management-item">
-                            <a class="link" href="#view-posts"><i class="icon fa fa-newspaper-o" aria-hidden="true"></i>
+                            <a class="link" href="/writer/view-posts">
+                                <i class="icon fa fa-newspaper-o" aria-hidden="true"></i>
                                 <div class="linkText">Các bài viết</div>
                             </a>
                         </li>
@@ -154,7 +151,6 @@
             <div class="col">
                 <div class="wrapper wrapper-content shadow">
                     <div class="content-menu-item" id="create-news">
-
                         {{#if this.msg.msg_type}}
                         <div id="my-alert" class="alert alert-{{this.msg.msg_type}} alert-dismissible fade show"
                             role="alert">
@@ -165,7 +161,7 @@
                         </div>
                         {{/if}}
 
-                        <h3 class="mb-3 mt-3">Đăng bài viết mới</h3>
+                        <h3 class="mb-4">Đăng bài viết mới</h3>
                         <form action="/writer/add-new-post" method="POST" enctype="multipart/form-data"
                             id="form-created-news">
 
@@ -291,47 +287,6 @@
                                 <button class="btn btn-primary" type="submit">Đăng bài</button>
                             </div>
                         </form>
-                    </div>
-
-                    <div style="display : none;" class="content-menu-item" id="view-posts">
-                        <h3 class="mb-3 mt-3">Các bài viết</h3>
-                        <table class="table table-hover table-bordered mb-0">
-                            <col style="width:5%">
-                            <col style="width:20%">
-                            <col style="width:40%">
-                            <col style="width:10%">
-                            <col style="width:10%">
-                            <col style="width:20%">
-
-                            <thead class="thead-dark">
-                                <tr class="text-center">
-                                    <th style="vertical-align: top;">#</th>
-                                    <th style="vertical-align: top;">Chuyên mục</th>
-                                    <th style="vertical-align: top;">Tiêu đề bài viết</th>
-                                    <th style="vertical-align: top;">Thời gian đăng</th>
-                                    <th style="vertical-align: top;">Thời gian xuất bản</th>
-                                    <th style="vertical-align: top;">Người duyệt</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr onclick="openDetailPost(0)">
-                                    <td>1</td>
-                                    <td>Giáo dục</td>
-                                    <td>Những bất cập trong nền giáo dục Việt Nam</td>
-                                    <td>21/04/2019</td>
-                                    <td>30/04/2019</td>
-                                    <td>Nguyễn B</td>
-                                </tr>
-                                <tr onclick="openDetailPost(0)">
-                                    <td>2</td>
-                                    <td>Công nghệ</td>
-                                    <td>Một ngày làm việc ở Google</td>
-                                    <td>25/04/2019</td>
-                                    <td>01/05/2019</td>
-                                    <td>Trần L</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
