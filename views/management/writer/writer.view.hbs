@@ -5,7 +5,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all"
     rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="asset/css/news_management.css">
+<link rel="stylesheet" href="/asset/css/news_management.css">
 {{/section}}
 
 {{#section 'js1'}}
@@ -19,14 +19,114 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 <script src="asset/js/widget_utility.js"></script>
 
 <script src="asset/js/writer.js"></script>
 
 <script>
     $("#edition").fileinput({
-        theme : 'fa'
+        theme: 'fa',
+        dropZoneEnabled: false,
+        showPreview: false,
+        maxFileCount: 1,
+        allowedFileExtensions: ['pdf'],
+        uploadUrl: '/writer/upload-file',
+        uploadAsync: true,
+        initialPreviewAsData: true
+    }).on('fileuploaded', function (e, params) {
+        // params
+        const { fileName, destination } = params.response;
+
+        // lưu lại đường dẫn ở nơi nào đó
+        $('#upload-file-wrapper input[name="file_uploaded"]').val(destination + fileName);
+
+        $('#upload-file-success-alert').removeClass('d-none');
+
+        $('#upload-file-success-alert .file-location').html(destination + fileName);
+
     });
+
+    $('#form-created-news').submit(function () {
+        //$('#upload-file-wrapper input[name="edition"]').prop('disabled', true);
+
+        if (CKEDITOR.instances['summary-content-post'].getData().length === 0) {
+            alert('Mô tả bài viết không được trống.')
+            return false;
+        }
+        if (CKEDITOR.instances['content-post'].getData().length === 0) {
+            alert('Nội dung bài viết không được trống.')
+            return false;
+        }
+
+        return true;
+    })
+
+    // form validate
+    $('#form-created-news').validate({
+        rules: {
+            post_title: {
+                required: true
+            },
+            post_category: {
+                required: true
+            },
+            insert_tags: {
+                required: true
+            },
+            summary_content_post: {
+                required: true
+            },
+            content_post: {
+                required: true
+            },
+            post_type: {
+                required: true
+            },
+            cover_image_uploaded: {
+                required: true
+            }
+        },
+        messages: {
+            post_title: {
+                required: 'Tiêu đề không được trống.'
+            },
+            post_category: {
+                required: 'Loại danh mục không được trống.'
+            },
+            insert_tags: {
+                required: 'Thêm ít nhất một thẻ.'
+            },
+            summary_content_post: {
+                required: 'Mô tả bài viết không được trống.'
+            },
+            content_post: {
+                required: 'Nội dung bài viết không được trống.'
+            },
+            post_type: {
+                required: 'Chọn loại bài viết.'
+            },
+            cover_image_uploaded: {
+                required: 'Phải upload ảnh đại diện cho bài viết.'
+            }
+        },
+        errorElement: 'em',
+        errorClass: 'mt-2 d-block text-danger text-left',
+        highlight: function (e) {
+            $(e).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (e) {
+            $(e).removeClass('is-invalid').addClass('is-valid');
+        },
+    });
+
+
+    $(function () {
+        setTimeout(function () {
+            $('#my-alert').alert('close');
+        }, 2000)
+    })
 </script>
 
 {{/section}}
@@ -35,7 +135,7 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <div class="wrapper">
+                <div class="wrapper shadow">
                     <ul class="menu-management">
                         <li class="menu-management-item active">
                             <a class="link" href="#create-news"><i class="icon fa fa-pencil-square-o"
@@ -44,8 +144,7 @@
                             </a>
                         </li>
                         <li class="menu-management-item">
-                            <a class="link" href="#view-posts"><i class="icon fa fa-newspaper-o"
-                                    aria-hidden="true"></i>
+                            <a class="link" href="#view-posts"><i class="icon fa fa-newspaper-o" aria-hidden="true"></i>
                                 <div class="linkText">Các bài viết</div>
                             </a>
                         </li>
@@ -53,15 +152,28 @@
                 </div>
             </div>
             <div class="col">
-                <div class="wrapper wrapper-content">
+                <div class="wrapper wrapper-content shadow">
                     <div class="content-menu-item" id="create-news">
+
+                        {{#if this.msg.msg_type}}
+                        <div id="my-alert" class="alert alert-{{this.msg.msg_type}} alert-dismissible fade show"
+                            role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{this.msg.message}}
+                        </div>
+                        {{/if}}
+
                         <h3 class="mb-3 mt-3">Đăng bài viết mới</h3>
-                        <form action="" id="form-created-news" onsubmit="return false">
+                        <form action="/writer/add-new-post" method="POST" enctype="multipart/form-data"
+                            id="form-created-news">
+
                             <div class="form-group">
                                 <label for="post_title">Tiêu đề</label>
                                 <div class="wrapper-control">
                                     <input type="text" class="form-control" name="post_title" id="post_title"
-                                        aria-describedby="helpId" placeholder="Tiêu đề">
+                                        placeholder="Tiêu đề">
                                 </div>
                             </div>
 
@@ -69,18 +181,9 @@
                                 <label for="post_category">Chuyên mục</label>
                                 <div class="wrapper-control">
                                     <select class="form-control" name="post_category" id="post_category">
-                                        <option value="uid_value_123">Tin tuyển sinh</option>
-                                        <option value="uid_value_123">Khuyến học</option>
-                                        <option value="uid_value_123">Du học</option>
-                                        <option value="uid_value_123">Thể thao trong nước</option>
-                                        <option value="uid_value_123">Thể thao ngoài nước</option>
-                                        <option value="uid_value_123">Bóng đá trong nước</option>
-                                        <option value="uid_value_123">Công nghệ</option>
-                                        <option value="uid_value_123">Sao Việt</option>
-                                        <option value="uid_value_123">Thời trang</option>
-                                        <option value="uid_value_123">Xem - Ăn - Chơi</option>
-                                        <option value="uid_value_123">Kiến thức giới tính</option>
-                                        <option value="uid_value_123">Làm đẹp</option>
+                                        {{#each this.categories}}
+                                        <option value="{{id}}">{{cat_name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
@@ -89,12 +192,11 @@
                                 <label for="insert-tags">Gán nhãn</label>
                                 <div class="wrapper-control">
                                     <div class="d-flex">
-                                        <select class="selectpicker form-control" name="insert-tags" id="insert-tags"
+                                        <select class="selectpicker form-control" name="insert_tags" id="insert-tags"
                                             multiple data-live-search="true">
-                                            {{!-- <option value="" disabled>Chọn thẻ</option> --}}
-                                            <option value="uid_value_456">Thời sự</option>
-                                            <option value="uid_value_456">Kinh tế</option>
-                                            <option value="uid_value_456">Sức khỏe</option>
+                                            {{#each this.tags}}
+                                            <option value="{{id}}">{{tag_name}}</option>
+                                            {{/each}}
                                         </select>
                                     </div>
                                 </div>
@@ -103,7 +205,7 @@
                             <div class="form-group">
                                 <label for="summary-content-post">Nội dung tóm tắt</label>
                                 <div class="wrapper-control">
-                                    <textarea class="form-control" name="summary-content-post" id="summary-content-post"
+                                    <textarea class="form-control" name="summary_content_post" id="summary-content-post"
                                         rows="3"></textarea>
 
                                     <script>
@@ -122,16 +224,22 @@
                             <div class="form-group">
                                 <label for="content-post">Nội dung</label>
                                 <div class="wrapper-control">
-                                    <textarea class="form-control" name="content-post" id="content-post"
+                                    <textarea class="form-control" name="content_post" id="content-post"
                                         rows="3"></textarea>
 
                                     <script>
-                                        CKEDITOR.replace('content-post', {
+                                        let my_editor = CKEDITOR.replace('content-post', {
                                             language: 'en',
-                                            extraPlugins: 'easyimage',
-                                            removePlugins: 'image',
                                             toolbarCanCollapse: true,
-                                            customConfig: '/asset/ckeditor/custom/post_content.js'
+                                            customConfig: '/asset/ckeditor/custom/post_content.js',
+                                        });
+
+                                        my_editor.on('dialogHide', function (evt) {
+                                            var widget = evt.data.widget;
+
+                                            if (widget && widget.name === 'image' && widget.element) {
+                                                widget.element.addClass('width-fluid');
+                                            }
                                         });
                                     </script>
                                 </div>
@@ -139,28 +247,43 @@
 
                             <div class="form-group">
                                 <label for="post_type_normal">Loại bài viết</label>
-                                <div class="wrapper-control text-center">
-                                    <span>
-                                        <input type="radio" name="post_type" id="post_type_normal" value="Thường">
-                                        <label for="post_type_normal">Thường</label>
-                                    </span>
-
-                                    &nbsp;
-                                    &nbsp;
-
-                                    <span>
-                                        <input type="radio" name="post_type" id="post_type_premium" value="Premium">
-                                        <label for="post_type_premium">Premium</label>
-                                    </span>
+                                <div class="wrapper-control text-center post_type">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="post_type_normal"
+                                            name="post_type" required="" value="normal" checked>
+                                        <label class="custom-control-label" for="post_type_normal">Thường</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="post_type_premium"
+                                            name="post_type" required="" value="premium">
+                                        <label class="custom-control-label" for="post_type_premium">Premium</label>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="upload-cover-wrapper">
+                                <label for="cover_image">Link ảnh đại diện</label>
+                                <div class="wrapper-control">
+                                    <input type="text" name="cover_image_uploaded" class="form-control">
+                                </div>
+                            </div>
+
+                            <div id="upload-file-success-alert"
+                                class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <span>File uploaded at : <strong class="file-location"></strong></span>
+                            </div>
+
+                            <div class="form-group" id="upload-file-wrapper">
                                 <label for="edition">Tải lên ấn bản</label>
                                 <div class="wrapper-control">
                                     <div class="file-loading">
                                         <input type="file" name="edition" id="edition" class="form-control">
                                     </div>
+
+                                    <input type="text" name="file_uploaded" style="display: none;">
                                 </div>
                             </div>
 

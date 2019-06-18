@@ -47,13 +47,14 @@ router.post('/login', (req, res, next) => {
 
         if (!user) {
             return res.render('account/login', {
+                hasRetUrl: req.query.retUrl ? true : false,
+                retUrl: req.query.retUrl ? req.query.retUrl : '',
                 message: {
                     msg_type: 'danger',
                     msg: info.message
                 }
             });
         }
-
         var retUrl = req.query.retUrl || '/';
         req.logIn(user, (err) => {
             if (err) {
@@ -220,7 +221,7 @@ router.post('/profile/update-info', auth, (req, res, next) => {
 
 router.post('/profile/change-password', auth, (req, res, next) => {
     let { oldPw, newPw, confirmPw } = req.body;
-    
+
     const user_id = req.user.id;
 
     user_model.detailUserByID(user_id)
@@ -238,7 +239,7 @@ router.post('/profile/change-password', auth, (req, res, next) => {
 
             const isSame = bcrypt.compareSync(oldPw, User.password);
 
-            if (isSame === false){
+            if (isSame === false) {
                 // password cũ không đúng
                 req.flash('msg_type', 'danger');
                 req.flash('msg', 'Mật khẩu cũ không đúng.');
@@ -249,13 +250,13 @@ router.post('/profile/change-password', auth, (req, res, next) => {
             const newPwHash = bcrypt.hashSync(newPw, saltRounds);
 
             let entity = {
-                id : user_id,
-                password : newPwHash
+                id: user_id,
+                password: newPwHash
             }
 
             user_model.update(entity)
                 .then(successRows => {
-                    if (successRows >= 1){
+                    if (successRows >= 1) {
                         req.flash('msg_type', 'success');
                         req.flash('msg', 'Đổi mật khẩu thành công!');
                         return res.redirect('/account/profile');
