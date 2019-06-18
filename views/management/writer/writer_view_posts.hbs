@@ -1,0 +1,154 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
+<link rel="stylesheet" href="/asset/css/news_management.css">
+{{/section}}
+
+{{#section 'js1'}}
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#post_status').niceSelect();
+
+        $('#post_status').change(function () {
+            $('#frmSelectStatus').submit();
+        })
+    });
+</script>
+{{/section}}
+
+<section id="news-management" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-3 mb-4 mb-lg-0">
+                <div class="wrapper shadow">
+                    <ul class="menu-management">
+                        <li class="menu-management-item">
+                            <a class="link" href="/writer/add-new-post">
+                                <i class="icon fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <div class="linkText">Đăng bài viết mới</div>
+                            </a>
+                        </li>
+                        <li class="menu-management-item active">
+                            <a class="link" href="/writer/view-posts">
+                                <i class="icon fa fa-newspaper-o" aria-hidden="true"></i>
+                                <div class="linkText">Các bài viết</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9">
+                <div class="wrapper wrapper-content shadow">
+                    <div class="content-menu-item" id="view-posts">
+                        <div class="d-flex align-items-center mb-3">
+                            <h3 style="flex:1;">Các bài viết</h3>
+                            {{#if this.status}}
+                            <form action="/writer/view-posts" method="GET" id="frmSelectStatus">
+                                <select name="post_status" id="post_status">
+                                    {{#each this.status}}
+                                    {{#if isActive}}
+                                    <option selected value="{{id}}">{{status_name}}</option>
+                                    {{else}}
+                                    <option value="{{id}}">{{status_name}}</option>
+                                    {{/if}}
+                                    {{/each}}
+                                </select>
+                            </form>
+                            {{/if}}
+                        </div>
+                        <table class="table table-hover table-bordered mb-0">
+                            <col style="width:5%">
+                            <col style="width:20%">
+                            <col style="width:40%">
+                            <col style="width:10%">
+                            <col style="width:10%">
+                            <col style="width:20%">
+
+                            <thead class="thead-dark">
+                                <tr class="text-center">
+                                    <th style="vertical-align: top;">#</th>
+                                    <th style="vertical-align: top;">Chuyên mục</th>
+                                    <th style="vertical-align: top;">Tiêu đề bài viết</th>
+                                    <th style="vertical-align: top;">Thời gian đăng</th>
+                                    <th style="vertical-align: top;">Thời gian xuất bản</th>
+                                    <th style="vertical-align: top;">Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#if this.posts}}
+                                {{#each this.posts}}
+                                <tr>
+                                    <td>{{id}}</td>
+                                    <td>{{cat_name}}</td>
+                                    <td>{{title}}</td>
+                                    <td>{{date_created}}</td>
+                                    <td>{{date_posted}}</td>
+                                    <td class="text-center">
+                                        <span class="badge badge-{{post_status.badge}}">{{post_status.text}}</span>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                {{/if}}
+                            </tbody>
+                        </table>
+                        {{#if this.paging}}
+                        <nav class="mt-4">
+                            <ul class="pagination mb-0 justify-content-center">
+                                {{#if this.prev.isActive}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{this.post_status}}&p={{this.prev.val}}">
+                                        Prev</a>
+                                </li>
+                                {{else}}
+                                <li class="page-item disabled">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{this.post_status}}&p={{this.prev.val}}"
+                                        aria-disabled="true">
+                                        Prev</a>
+                                </li>
+                                {{/if}}
+
+
+                                {{#each this.paging}}
+                                {{#if isActive}}
+                                <li class="page-item active">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{post_status}}&p={{page}}">{{page}}</a>
+                                </li>
+                                {{else}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{post_status}}&p={{page}}">{{page}}</a>
+                                </li>
+                                {{/if}}
+                                {{/each}}
+
+                                {{#if this.next.isActive}}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{this.post_status}}&p={{this.next.val}}">
+                                        Next</a>
+                                </li>
+                                {{else}}
+                                <li class="page-item disabled">
+                                    <a class="page-link"
+                                        href="/writer/view-posts?post_status={{this.post_status}}&p={{this.next.val}}"
+                                        aria-disabled="true">
+                                        Next</a>
+                                </li>
+                                {{/if}}
+                            </ul>
+                        </nav>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
