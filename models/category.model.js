@@ -15,7 +15,8 @@ module.exports = {
     //and p.id_status=2
     exceptRootCatExistPost: () => {
         return db.load(`select DISTINCT c.id, c.cat_name, c.parent_cat, c.is_deleted from category c, post p 
-        where c.is_deleted = 0 and c.parent_cat is not null and c.id = p.id_category`);
+            where c.is_deleted = 0 and c.parent_cat is not null and c.id = p.id_category 
+            and p.id_status=1 and p.date_posted is not null and p.date_posted<=NOW()`);
     },
 
     subCategories: (CatId) => {

@@ -1,6 +1,10 @@
 var db = require('../utils/database');
 
 module.exports = {
+    all : () => {
+        return db.load('select * from tags where is_deleted=0');
+    },
+
     getHotestTags: (limit) => {
         if (limit <= 0) {
             return db.load(`select post_tag.id_tag, tags.tag_name, count(post_tag.id_post) as count 

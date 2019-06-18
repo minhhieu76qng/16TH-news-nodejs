@@ -123,3 +123,18 @@
 .form-group label {
     margin-bottom: .25rem;
 }
+
+.wrapper-control.post_type{
+    display: flex;
+    justify-content: space-around;
+}
+
+.wrapper-control.post_type label.custom-control-label:before,
+.wrapper-control.post_type label.custom-control-label:after{
+    top: .1rem;
+    left: -1.5rem;
+}
+
+img.width-fluid{
+    max-width: 100% !important;
+}

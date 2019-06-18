@@ -63,14 +63,14 @@
                     <div class="card-body">
                         <nav class="navbar navbar-expand-xs navbar-light bg-light">
                             <h4 class="card-title">Tìm kiếm nâng cao</h4>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
                                 data-target="#navbar-advanced-search" aria-controls="navbar-advanced-search"
                                 aria-expanded="false" aria-label="Toggle navigation">
                                 {{!-- <span class="navbar-toggler-icon"></span> --}}
                                 <i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>
                             </button>
 
-                            <div class="collapse navbar-collapse show" id="navbar-advanced-search">
+                            <div class="collapse navbar-collapse" id="navbar-advanced-search">
                                 <form id="frm-advanced-search" action="/search/advanced" method="POST">
                                     <div class="search-wrapper">
                                         <div class="left_box custom-control custom-checkbox">
@@ -182,7 +182,7 @@
                             </div>
                             {{/if}}
                             <div class="article-abstract mt-3">
-                                <small>{{abstract}}</small>
+                                <small>{{{abstract}}}</small>
                             </div>
                         </div>
                     </div>
