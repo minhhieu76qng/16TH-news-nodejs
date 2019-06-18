@@ -20,7 +20,7 @@ var router = exp.Router();
 //Phân quản lý category ----------------------------------------------------------
 //#region
 router.get('/', (req, res, next) => {
-
+    res.locals.pageTitle = "ADMIN:Quản lý chuyên mục";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -200,7 +200,7 @@ router.get('/delete/:id', (req, res, next) => {
 //------------------------------- Quản lý nhãn tag -------------------------------------
 //#region 
 router.get('/tag', (req, res, next) => {
-
+    res.locals.pageTitle = "ADMIN:Quản lý nhãn tag";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -368,7 +368,7 @@ router.get('/tag/delete/:id', (req, res, next) => {
 //----------------------- Bài viết chưa duyệt ------------------------------------
 //#region
 router.get('/not-accepted-news', (req, res, next) => {
-
+    res.locals.pageTitle = "ADMIN:Bài viết chưa duyệt";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -751,6 +751,7 @@ router.post('/not-accepted-news/detail/deny/:id', (req, res, next) => {
 //------------------------ Bài viết chờ xuất bản ----------------------------------------
 //#region
 router.get('/accepted-news', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Bài viết chờ xuất bản";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -806,6 +807,7 @@ router.get('/accepted-news', (req, res, next) => {
 })
 
 router.get('/accepted-news/detail/:id', (req, res, next) => {
+    
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -997,6 +999,7 @@ router.get('/accepted-news/detail/delete/:id', (req, res, next) => {
 //------------------------ Bài viết đã xuất bản ----------------------------------------
 //#region
 router.get('/published-news', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Bài viết đã xuất bản";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -1240,6 +1243,7 @@ router.get('/published-news/detail/delete/:id', (req, res, next) => {
 //------------------------ Bài viết bị từ chối ----------------------------------------
 //#region
 router.get('/denied-news', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Bài viết bị từ chối";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -1290,6 +1294,7 @@ router.get('/denied-news', (req, res, next) => {
 })
 
 router.get('/denied-news/detail/:id', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Chi tiết bài viết";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -1569,6 +1574,7 @@ router.post('/denied-news/detail/accept/:id', (req, res, next) => {
 //------------------------ Phóng viên ----------------------------------------
 //#region
 router.get('/writer', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Quản lý phóng viên";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -1740,6 +1746,7 @@ router.get('/writer/ban/:id', (req, res, next) => {
 //------------------------ Biên tập viên ----------------------------------------
 //#region
 router.get('/editor', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Quản lý biên tập viên";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)
@@ -2034,6 +2041,7 @@ router.get('/editor/ban/:id', (req, res, next) => {
 //------------------------ Độc giả ----------------------------------------
 //#region
 router.get('/subscriber', (req, res, next) => {
+    res.locals.pageTitle = "ADMIN:Quản lý độc giả";
     const UserID = req.user.id;
 
     user_model.detailUserByID(UserID)

@@ -283,6 +283,18 @@ module.exports = {
         and category.id = post.id_category and post.is_deleted = 0 and post.id_status = '1' and post.date_posted > '${currentDate}'`);
     },
 
+    getPublishedPost: (currentDate, limit, offset) => {
+        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
+        and category.is_deleted = 0 and post.is_deleted = 0 and post.id_status = '1' 
+        and post.date_posted < '${currentDate}' ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countPublishedPost: (currentDate) => {
+        return db.load(`SELECT COUNT(*) as total FROM post, category WHERE category.is_deleted = 0 
+        and category.id = post.id_category and post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}'`);
+    },
+
     //lấy danh sách bài viết chưa duyệt trong chuyên mục quản lý của editor
     getListNotAcceptedEditor: (id_user, id_status, limit, offset) => {
         return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
@@ -298,16 +310,43 @@ module.exports = {
         and u_cat.id_category = post.id_category and u_cat.id_category = category.id and category.is_deleted = 0`);
     },
 
-    getPublishedPost: (currentDate, limit, offset) => {
-        return db.load(`SELECT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
-        FROM post, user, category WHERE post.id_writer = user.id and post.id_category = category.id 
-        and category.is_deleted = 0 and post.is_deleted = 0 and post.id_status = '1' 
-        and post.date_posted < '${currentDate}' ORDER by post.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    getListDeniedEditor: (id_user, id_status, limit, offset) => {
+        return db.load(`SELECT DISTINCT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category, post_action WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = ${id_status} and category.is_deleted = 0 and post_action.id_user = ${id_user} 
+        and post_action.id_post = post.id ORDER by post_action.id DESC LIMIT ${limit} OFFSET ${offset}`);
     },
 
-    countPublishedPost: (currentDate) => {
-        return db.load(`SELECT COUNT(*) as total FROM post, category WHERE category.is_deleted = 0 
-        and category.id = post.id_category and post.is_deleted = 0 and post.id_status = '1' and post.date_posted < '${currentDate}'`);
+    countListDeniedEditor: (id_user, id_status) => {
+        return db.load(`SELECT COUNT(DISTINCT post.id) as total FROM post, category, post_action 
+        WHERE post.is_deleted = 0 and post.id_status = ${id_status} and post.id_category = category.id 
+        and category.is_deleted = 0 and post_action.id_user = ${id_user} and post_action.id_post = post.id`);
+    },
+
+    getAcceptPostEditor: (id_user, currentDate, limit, offset) => {
+        return db.load(`SELECT DISTINCT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category, post_action WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = '1' and category.is_deleted = 0 and post_action.id_user = ${id_user} 
+        and post_action.id_post = post.id and post.date_posted > '${currentDate}' ORDER by post_action.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countAcceptPostEditor: (id_user, currentDate) => {
+        return db.load(`SELECT COUNT(DISTINCT post.id) as total FROM post, category, post_action 
+        WHERE post.is_deleted = 0 and post.id_status = '1' and post.id_category = category.id 
+        and category.is_deleted = 0 and post_action.id_user = ${id_user} and post_action.id_post = post.id and post.date_posted > '${currentDate}'`);
+    },
+
+    getPublishedPostEditor: (id_user, currentDate, limit, offset) => {
+        return db.load(`SELECT DISTINCT post.id, category.cat_name, post.title, user.name as author, post.date_posted 
+        FROM post, user, category, post_action WHERE post.id_writer = user.id and post.id_category = category.id 
+        and post.is_deleted = 0 and post.id_status = '1' and category.is_deleted = 0 and post_action.id_user = ${id_user} 
+        and post_action.id_post = post.id and post.date_posted < '${currentDate}' ORDER by post_action.id DESC LIMIT ${limit} OFFSET ${offset}`);
+    },
+
+    countPublishedPostEditor: (id_user, currentDate) => {
+        return db.load(`SELECT COUNT(DISTINCT post.id) as total FROM post, category, post_action 
+        WHERE post.is_deleted = 0 and post.id_status = '1' and post.id_category = category.id 
+        and category.is_deleted = 0 and post_action.id_user = ${id_user} and post_action.id_post = post.id and post.date_posted < '${currentDate}'`);
     },
 
 

@@ -74,12 +74,12 @@
                     <div class="most-view related-news">
                         <h2 class="article-header">Chức năng</h2>
                         <ul class="list-article mt-4">
-                            <a class="btn btn-danger" href="/admin/published-news/detail/delete/{{this.post.id}}">Gỡ bỏ</a>
+                            <a class="btn btn-danger" href="/editor/published-news/detail/delete/{{this.post.id}}">Gỡ bỏ</a>
                             {{#if this.is_premium}}
-                            <a href="/admin/accepted-news/published-news/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
+                            <a href="/editor/accepted-news/published-news/set-premium-false/{{this.post.id}}" class="btn btn-warning">Gỡ
                                 Premium</a>
                             {{else}}
-                            <a href="/admin/accepted-news/published-news/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
+                            <a href="/editor/accepted-news/published-news/set-premium-true/{{this.post.id}}" class="btn btn-success">Đặt
                                 Premium</a>
                             {{/if}}
                         </ul>
