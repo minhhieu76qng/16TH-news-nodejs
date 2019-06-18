@@ -1,0 +1,296 @@
+{{#section 'css'}}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="asset/css/slick_custom.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+
+<script src="asset/js/widget_utility.js"></script>
+
+<script src="asset/js/editor.js"></script>
+<script src="asset/js/edit_post_writer.js"></script>
+
+{{/section}}
+
+<div class="container">
+    <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <!-- bao gom menu
+                    * neu la editor:
+                        + Bài viết đã xuất bản
+                        + Bài viết đã được duyệt & chờ xuất bản
+                        + Bài viết chưa duyệt
+                        -->
+                    <div class="wrapper">
+                        <ul class="menu-management">
+                            <li class="menu-management-item active">
+                                <a class="link" href="/editor/waitingpost">
+                                    <i class="icon fa fa-check-square-o" aria-hidden="true"></i>
+                                    <div class="linkText">Bài viết đã duyệt</div>
+                                </a>
+                            </li>
+                            <li class="menu-management-item">
+                                <a class="link" href="/editor/draftpost"><i class="icon fa fa-tasks"
+                                        aria-hidden="true"></i>
+                                    <div class="linkText">Bài
+                                        viết chưa duyệt</div>
+                                </a>
+                            </li>
+                            <li class="menu-management-item">
+                                <a class="link" href="/editor/publishpost/"><i class="icon fa fa-newspaper-o"
+                                        aria-hidden="true"></i>
+                                    <div class="linkText">Bài viết đã xuất bản</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="wrapper wrapper-content">
+                        <div class="content-menu-item" id="accepted-news">
+                            <h3 class="mb-3 mt-3">Bài viết đã duyệt</h3>
+                            <table class="can-be-edit table table-hover table-bordered mb-0" id="accepted-news-table">
+                                <col style="width:5%">
+                                <col style="width:15%">
+                                <col style="width:20%">
+                                <col style="width:30%">
+                                <col style="width:10%">
+                                <col style="width:20%">
+
+                                <thead class="thead-dark">
+                                    <tr class="text-center">
+                                        <th style="vertical-align: top;">#</th>
+                                        <th style="vertical-align: top;">Chuyên đề</th>
+                                        <th style="vertical-align: top;">Tiêu đề bài viết</th>
+                                        <th style="vertical-align: top;">Tóm tắt</th>
+                                        <th style="vertical-align: top;">Ngày gởi bài</th>
+                                        <th style="vertical-align: top;">Ngày công bố</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each this.waitingposts}}
+                                        <tr  style="height: 100px !important; text-overflow: ellipsis; overflow: hidden;" onclick="openDetailPost(this, 'accepted-news-table')">
+                                            <td>{{id}}</td>
+                                            <td>{{cat_name}}</td>
+                                            <td>{{title}}</td>
+                                            <td>{{abstract}}</td>
+                                            <td>{{date_created}}</td>
+                                            <td>{{date_modified}}</td>
+                                            
+                                        </tr>
+                                    {{/each}}
+                                    
+                                </tbody>
+                            </table>
+                            <div class="pageNumber mt-4">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    {{#each this.paging}}
+                                    {{#if active}}
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link" href="javascript:;">{{value}}</a>
+                                    </li>
+                                    {{else}}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                    </li>
+                                    {{/if}}
+                                        
+                                    {{/each}}
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="modal fade" id="ShowMessage" tabindex="-1" role="dialog" aria-labelledby="ShowMessageLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ShowMessageLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal: detail_post-->
+    <div class="modal fade" id="DetailPostModal" tabindex="-1" role="dialog" aria-labelledby="DetailPostModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Body-->
+                <div class="modal-body mb-0 p-0" id="iframe-detail-post-container">
+                    <iframe height="500px" width="100%" src="iframe_detail_post.html"></iframe>
+                </div>
+                <!-- Duyệt bài -->
+                <div id="AcceptPost-container" class="p-3">
+                    <h5>Nhập thông tin cần thiết</h5>
+                    <hr>
+                    <form>
+                        <div class="form-group">
+                            <label for="publicationDate">
+                                <b>Nhập ngày xuất bản</b>
+                            </label>
+                            <input name="publicationDate" type="date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="post-category"><b>Chuyên mục</b></label>
+                            <div class="wrapper-control">
+                                <select class="form-control" name="post-category" id="post-category">
+                                    <option value="uid_value_123">Tin tuyển sinh</option>
+                                    <option value="uid_value_123">Khuyến học</option>
+                                    <option value="uid_value_123">Du học</option>
+                                    <option value="uid_value_123">Thể thao trong nước</option>
+                                    <option value="uid_value_123">Thể thao ngoài nước</option>
+                                    <option value="uid_value_123">Bóng đá trong nước</option>
+                                    <option value="uid_value_123">Công nghệ</option>
+                                    <option value="uid_value_123">Sao Việt</option>
+                                    <option value="uid_value_123">Thời trang</option>
+                                    <option value="uid_value_123">Xem - Ăn - Chơi</option>
+                                    <option value="uid_value_123">Kiến thức giới tính</option>
+                                    <option value="uid_value_123">Làm đẹp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="insert-tags"><b>Gán nhãn</b></label>
+                            <div class="wrapper-control">
+                                <div class="d-flex">
+                                    <select class="form-control mr-3" name="insert-tags" id="insert-tags">
+                                        <option value="" disabled>Chọn thẻ</option>
+                                        <option value="uid_value_456">ngày mai em đi</option>
+                                        <option value="uid_value_456">xe ducati</option>
+                                        <option value="uid_value_456">bị xì 1 lỗ</option>
+                                    </select>
+
+                                    <button type="button" class="btn-AddNewTag btn btn-success" data-toggle="modal"
+                                        data-target="#AddNewTag" title="Thêm mới thẻ">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="AddNewTag" tabindex="-1" role="dialog"
+                                    aria-labelledby="AddNewTagTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="AddNewTagTitle">Thêm mới thẻ</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="NewTagName"
+                                                        id="NewTagName" placeholder="Tên thẻ">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+                                                <button type="button" class="btnSave btn btn-primary"
+                                                    data-dismiss="modal">Lưu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="preview-tags" class="list-tags mt-3 d-block">
+                                    <div class="mb-2"><b>Tags:</b></div>
+                                    <ul class="tags">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <button type="button" class="btn btn-primary" onclick="AcceptComplete()">Hoàn tất</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="BackMainDetailPost('AcceptPost-container')">Trở về</button>
+                    </form>
+                </div>
+                <!-- Gỡ bài viết -->
+                <div id="RemovePost-container" class="p-3">
+                    <form>
+                        <div class="form-group">
+                            <label for="reasonDenyPost">
+                                <h5>Nhập lý do gỡ bỏ</h5>
+                            </label>
+                            <textarea class="form-control" rows="5" id="reasonRemovePost"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="RemoveComplete()">Hoàn tất</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="BackMainDetailPost('RemovePost-container')">Trở về</button>
+                    </form>
+                </div>
+                <!-- Từ chối bài viết -->
+                <div id="DenyPost-container" class="p-3">
+                    <form>
+                        <div class="form-group">
+                            <label for="reasonDenyPost">
+                                <h5>Nhập lý do từ chối</h5>
+                            </label>
+                            <textarea class="form-control" rows="5" id="reasonDenyPost"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="DenyComplete()">Hoàn tất</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="BackMainDetailPost('DenyPost-container')">Trở về</button>
+                    </form>
+                </div>
+                <!-- Chỉnh sửa ngày xuất bản -->
+                <div id="UpdateDatePublishPost-container" class="p-3">
+                    <form>
+                        <div class="form-group">
+                            <label for="UpdateDatePublishPost">
+                                <h5>Chỉnh sửa thời gian phát hành</h5>
+                            </label>
+                            <input name="publicationDate" type="date" class="form-control" id="UpdateDatePublishPost">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="UpdateDatePublishComplete()">Hoàn
+                            tất</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="BackMainDetailPost('UpdateDatePublishPost-container')">Trở
+                            về</button>
+                    </form>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer justify-content-center" id="DetailPostModalFooter">
+                    <button type="button" class="btn btn-primary" id="btnAcceptPost"
+                        onclick="openContainerActionDetailPost('AcceptPost-container')">Duyệt</button>
+                    <button type="button" class="btn btn-info" id="btnUpdateDatePublishPost"
+                        onclick="openContainerActionDetailPost('UpdateDatePublishPost-container')">Chỉnh sửa</button>
+                    <button type="button" class="btn btn-danger" id="btnDenyPost"
+                        onclick="openContainerActionDetailPost('DenyPost-container')">Từ chối</button>
+                    <button type="button" class="btn btn-danger" id="btnRemovePost"
+                        onclick="openContainerActionDetailPost('RemovePost-container')">Gỡ bỏ</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
