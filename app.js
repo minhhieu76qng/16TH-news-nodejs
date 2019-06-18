@@ -30,9 +30,11 @@ app.use('/tags', require('./routes/news/tags.route'));
 app.use('/search', require('./routes/news/search.route'));
 app.use('/', require('./routes/news/index.route'));
 
+app.use('/dashboard', auth, require('./routes/dashboard/dashboard.route'));
+
 app.use('/writer', auth , require('./routes/writer/writer.route.js'));
 app.use('/admin', auth , require('./routes/admin/admin.route'));
-app.use('/editor', require('./routes/editor/editor.route'));
+app.use('/editor', auth, require('./routes/editor/editor.route'));
 
 app.use((req, res, next) => {
     res.render('404', {

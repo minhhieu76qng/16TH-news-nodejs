@@ -148,11 +148,14 @@
                                 <a class="dropdown-item" href="/account/profile">
                                     <i class="fa fa-user-circle-o mr-2" aria-hidden="true"></i> Tài khoản
                                 </a>
-                                <a class="dropdown-item" href="./news_management_phongvien.html">
+                                {{#if isManager}}
+                                <a class="dropdown-item" href="/dashboard">
                                     <i class="fa fa-cog mr-2" aria-hidden="true"></i> Quản lí
-                                    <a class="dropdown-item" href="javascript:$('#frmSignOut').submit();">
-                                        <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Đăng xuất
-                                    </a>
+                                </a>
+                                {{/if}}
+                                <a class="dropdown-item" href="javascript:$('#frmSignOut').submit();">
+                                    <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Đăng xuất
+                                </a>
                             </div>
                         </div>
                         {{else}}
